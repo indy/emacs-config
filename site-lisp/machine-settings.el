@@ -60,20 +60,18 @@
 
    ((string-match "^che" system-name)  ; asus ul20a
     '((post-setup-fn (lambda ()
-                       (require 'multi-term)
                        (setq
                         default-directory "~/"
                         browse-url-browser-function 'browse-url-generic
                         browse-url-generic-program "chromium-browser"
                         multi-term-program "/bin/bash")
-                       (ido-mode)
                        (when (fboundp 'windmove-default-keybindings)
                          (windmove-default-keybindings))
                        (when (fboundp 'winner-mode)
                          (winner-mode 1))
-                       (electric-pair-mode)
-                       (require 'edit-server)
-                       (edit-server-start)
+;                      (electric-pair-mode)
+;                       (require 'edit-server)
+;                       (edit-server-start)
                        (new-frame)
                                         ;                      (global-set-key "\C-x1" 'isg-hack-delete-other-windows)
                        ))

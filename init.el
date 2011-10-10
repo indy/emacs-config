@@ -5,17 +5,15 @@
 
 ;  installed the following packages:
 ;
+;  starter-kit        2.0.2
+;  starter-kit-lisp   2.0.3
+;  slime              20100404.1
 ;  clojure-mode       1.11.1
 ;  clojure-test-mode  1.5.6
 ;  clojurescript-mode 0.5
+;  markdown-mode      1.8.1
 ;  color-theme        6.6.1
 ;  color-theme-actress 0.1.0
-;  ido-ubiquitous     0.1
-;  magit              1.0.0
-;  markdown-mode      1.8.1
-;  slime              20100404.1
-;  starter-kit        2.0.2
-;  starter-kit-lisp   2.0.3
 
 (push "~/.emacs.d/site-lisp" load-path) ; my customisations
 (push "~/.emacs.d/external" load-path)  ; third party code that hasn't
