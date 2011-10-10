@@ -17,7 +17,6 @@
 ;  starter-kit        2.0.2
 ;  starter-kit-lisp   2.0.3
 
-
 (push "~/.emacs.d/site-lisp" load-path) ; my customisations
 (push "~/.emacs.d/external" load-path)  ; third party code that hasn't
                                         ; been packaged yet
@@ -26,11 +25,13 @@
 (require 'helper-functions)
 (require 'machine-settings)
 (require 'mode-configs)
-(require 'global-settings)
 
 (require 'color-theme-actress)
 (color-theme-actress)
 
 (require 'keys)
+
 (run-isg-machine-function 'frame-setup-fn)
 (run-isg-machine-function 'post-setup-fn)
+(require 'global-settings)
+

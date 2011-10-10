@@ -98,17 +98,27 @@
     '((hyperspec-root "file:////home/user/docs/cl/HyperSpec/")
                                         ;(default-font "-unknown-DejaVu Sans Mono-normal-normal-normal-*-20-*-*-*-m-0-fontset-startup")
       (post-setup-fn (lambda ()
+                       (setenv "PATH" 
+                               (concat
+                                (concat (getenv "HOME") "/local/bin:")
+                                "/usr/local/bin:" 
+                                (getenv "PATH")))
+                       (setenv "CLOJURESCRIPT_HOME"
+                               (concat (getenv "HOME")
+                                       "/code/clojure/clojurescript"))
+                       (setq inferior-lisp-program
+                             (concat (getenv "HOME")
+                                     "/code/clojure/clojurescript/script/browser-repl"))                       
                        (setq
                         browse-url-browser-function 'browse-url-generic
                         browse-url-generic-program "chromium-browser")
-                       (ido-mode)
                        (when (fboundp 'windmove-default-keybindings)
                          (windmove-default-keybindings))
                        (when (fboundp 'winner-mode)
                          (winner-mode 1))
-                                        ;                        (isg-start-shell "default-shell")
-                                        ;                        (require 'edit-server)
-                                        ;                        (edit-server-start)
+;                        (isg-start-shell "default-shell")
+;                        (require 'edit-server)
+;                        (edit-server-start)
                        (new-frame)
                        (switch-to-buffer "*scratch*")))
       (frame-setup-fn (lambda ()
