@@ -60,6 +60,17 @@
 
    ((string-match "^che" system-name)  ; asus ul20a
     '((post-setup-fn (lambda ()
+                       (setenv "PATH" 
+                               (concat
+                                (concat (getenv "HOME") "/local/bin:")
+                                "/usr/local/bin:" 
+                                (getenv "PATH")))
+                       (setenv "CLOJURESCRIPT_HOME"
+                               (concat (getenv "HOME")
+                                       "/code/clojure/clojurescript"))
+                       (setq inferior-lisp-program
+                             (concat (getenv "HOME")
+                                     "/code/clojure/clojurescript/script/browser-repl"))
                        (setq
                         default-directory "~/"
                         browse-url-browser-function 'browse-url-generic
