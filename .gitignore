@@ -1,0 +1,10 @@
+auto-save-list
+tramp
+elpa
+*~
+*.elc
+places
+bookmarks
+ac-comphist.dat
+scratch-lisp
+url
