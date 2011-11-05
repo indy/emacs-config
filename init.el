@@ -1,3 +1,5 @@
+(require 'cl)
+
 (require 'package)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
@@ -5,8 +7,9 @@
 
 ;  installed the following packages:
 ;
-;  starter-kit        2.0.2
-;  starter-kit-lisp   2.0.3
+;  ido-ubiquitous     0.4
+;  magit              1.0.0
+;  paredit            22
 ;  slime              20100404.1
 ;  clojure-mode       1.11.1
 ;  clojure-test-mode  1.5.6

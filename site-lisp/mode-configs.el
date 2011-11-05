@@ -12,4 +12,24 @@
       '(lambda ()
          (setq espresso-indent-level 2)))
 
+(defun turn-on-paredit ()
+  (paredit-mode t))
+
+(dolist (mode '(scheme emacs-lisp lisp clojure)) 
+  (when (> (display-color-cells) 8) 
+    (font-lock-add-keywords (intern (concat (symbol-name mode) "-mode")) 
+                            '(("(\\|)" quote actress-paren-face)))) 
+  (add-hook (intern (concat (symbol-name mode) "-mode-hook")) 
+            'turn-on-paredit))
+
+;;; display 'fn' as the lambda symbol
+(defun pretty-fn nil 
+  (font-lock-add-keywords
+   nil `(("(\\(fn\\>\\)" 
+          (0 (progn (compose-region (match-beginning 1) (match-end 1) 
+                                    ,(make-char 'greek-iso8859-7 107))
+                    nil))))))
+
+(add-hook 'clojure-mode-hook 'pretty-fn)
+
 (provide 'mode-configs)
