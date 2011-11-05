@@ -88,13 +88,13 @@
                        ))
       (frame-setup-fn (lambda ()
                         (setq initial-frame-alist '((top . 0)
-                                                    (left . 200)
+                                                    (left . 340)
                                                     (width . 80)
-                                                    (height . 61))
+                                                    (height . 59))
                               default-frame-alist '((top . 0)
-                                                    (left . 722)
+                                                    (left . 880)
                                                     (width . 80)
-                                                    (height . 61)))
+                                                    (height . 59)))
                         (add-to-list 'default-frame-alist
                                      (cons 'font
                                            (isg-val 'default-font)))))
