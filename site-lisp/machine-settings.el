@@ -48,6 +48,9 @@
                          (windmove-default-keybindings))
                        (when (fboundp 'winner-mode)
                          (winner-mode 1))
+
+                       (isg-start-eshell "shelly")
+                       (isg-other-frame)
 ;                       (electric-pair-mode)
                     ;                      (require 'edit-server)
                     ;                      (edit-server-start)
