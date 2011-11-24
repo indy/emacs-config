@@ -6,10 +6,13 @@
 ;;; commands in the org-load-hook or org-mode-hook doesn't revert back
 ;;; the behaviour. So I'm giving up, assigning new keys for windmove
 ;;; and setting them as globals:
-;(global-set-key "\M-1"  'windmove-left)
-;(global-set-key "\M-2"  'windmove-down)
-;(global-set-key "\M-3"  'windmove-up)
-;(global-set-key "\M-4"  'windmove-right)
+(global-set-key "\M-1"  'windmove-left)
+(global-set-key "\M-2"  'windmove-down)
+(global-set-key "\M-3"  'windmove-up)
+(global-set-key "\M-4"  'windmove-right)
+
+(global-set-key "\M-5"  'winner-undo)
+(global-set-key "\M-6"  'winner-redo)
 
 ;;; use winner mode keys for undo/redo operations on window configurations
 ;;; C-c left 
