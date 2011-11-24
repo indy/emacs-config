@@ -18,15 +18,18 @@
       (save-folder (("." . "~/.emacs.d/saves")))
 
       (post-setup-fn (lambda ()
+                       (ido-mode)
                        ; need to update path so lein can work
-                       (setenv "PATH" 
-                               (concat
-                                (concat (getenv "HOME") "/local/bin:")
-                                "/usr/local/bin:" 
-                                (getenv "PATH")))
                        (setenv "CLOJURESCRIPT_HOME"
                                (concat (getenv "HOME")
                                        "/code/clojure/clojurescript"))
+                       (setenv "PATH" 
+                               (concat
+                                (concat (getenv "CLOJURESCRIPT_HOME") "/bin:")
+                                (concat (getenv "HOME") "/local/bin:")
+                                "/usr/local/bin:" 
+                                (getenv "PATH")))
+                       
                        (setq inferior-lisp-program
                              (concat (getenv "HOME")
                                      "/code/clojure/clojurescript/script/browser-repl"))                       
@@ -45,6 +48,9 @@
                          (windmove-default-keybindings))
                        (when (fboundp 'winner-mode)
                          (winner-mode 1))
+
+                       (isg-start-eshell "shelly")
+                       (isg-other-frame)
 ;                       (electric-pair-mode)
                     ;                      (require 'edit-server)
                     ;                      (edit-server-start)

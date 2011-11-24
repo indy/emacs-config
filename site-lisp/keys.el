@@ -29,6 +29,7 @@
 (global-set-key "\C-cv" 'magit-status)
 
 (global-set-key [f1] 'isg-start-shell)
+(global-set-key [f2] 'isg-start-eshell)
 
 (isg-machine-set-keys)                 ; machine specific key bindings
 
