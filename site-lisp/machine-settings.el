@@ -18,7 +18,6 @@
       (save-folder (("." . "~/.emacs.d/saves")))
 
       (post-setup-fn (lambda ()
-                       (ido-mode)
                        ; need to update path so lein can work
                        (setenv "CLOJURESCRIPT_HOME"
                                (concat (getenv "HOME")
