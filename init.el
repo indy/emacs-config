@@ -7,16 +7,18 @@
 
 ;  installed the following packages:
 ;
-;  ido-ubiquitous     0.4
-;  magit              1.0.0
-;  paredit            22
-;  slime              20100404.1
-;  clojure-mode       1.11.1
-;  clojure-test-mode  1.5.6
-;  clojurescript-mode 0.5
-;  markdown-mode      1.8.1
-;  color-theme        6.6.1
-;  color-theme-actress 0.1.0
+;  clojure-mode       1.11.1       installed  Major mode for Clojure code
+;  clojure-test-mode  1.5.6        installed  Minor mode for Clojure tests
+;  clojurescript-mode 0.5          installed  Major mode for ClojureScript code
+;  color-theme        6.6.1        installed  install color themes
+;  color-theme-actress0.1.0        installed  A dark color theme for GNU Emacs.
+;  ido-ubiquitous     0.8          installed  Use ido (nearly) everywhere.
+;  magit              1.0.0        installed  Control Git from Emacs.
+;  markdown-mode      1.8.1        installed  Emacs Major mode for Markdown-formatted text files
+;  paredit            22           installed  minor mode for editing parentheses  -*- Mode: Emacs-Lisp -*-
+;  parenface          1.1          installed  Provide a face for parens in lisp modes.
+;  slime              20100404.1   installed  Superior Lisp Interaction Mode for Emacs
+
 
 (push "~/.emacs.d/site-lisp" load-path) ; my customisations
 (push "~/.emacs.d/external" load-path)  ; third party code that hasn't
