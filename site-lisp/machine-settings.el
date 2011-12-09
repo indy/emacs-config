@@ -41,7 +41,7 @@
                         multi-term-program "/bin/bash")
 
                        (fset 'insertPound "#")
-                       (global-set-key (kbd "M-3") 'insertPound)
+                       (global-set-key (kbd "C-M-3") 'insertPound)
 
                        (when (fboundp 'windmove-default-keybindings)
                          (windmove-default-keybindings))
