@@ -55,8 +55,11 @@
 
 
       (frame-setup-fn (lambda ()
-                        (set-frame-position (selected-frame) 780 0)
-                        (set-frame-size (selected-frame) 80 55)
+                        (setq 
+                         default-frame-alist '((top . 0)
+                                               (left . 100)
+                                               (width . 164)
+                                               (height . 55)))
                         (add-to-list 'default-frame-alist
                                      (cons 'font
                                            (isg-val 'default-font)))))))
@@ -85,15 +88,6 @@
 
                        ))
       (frame-setup-fn (lambda ()
-                        (setq initial-frame-alist '((top . 0)
-                                                    (left . 340)
-                                                    (width . 80)
-                                                    (height . 59))
-                              default-frame-alist
-                        '((top . 0)
-                          (left . 880)
-                          (width . 80)
-                          (height . 59)))
                         (add-to-list 'default-frame-alist
                                      (cons 'font
                                            (isg-val 'default-font)))))
