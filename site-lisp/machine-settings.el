@@ -71,7 +71,6 @@
                                 (concat (getenv "HOME") "/local/bin:")
                                 "/usr/local/bin:" 
                                 (getenv "PATH")))
-
                        (setq
                         default-directory "~/"
                         browse-url-browser-function 'browse-url-generic
