@@ -40,6 +40,7 @@
                         browse-url-generic-program "chromium-browser"
                         multi-term-program "/bin/bash")
 
+                       ;; stupid mac keyboard layout
                        (fset 'insertPound "#")
                        (global-set-key (kbd "C-M-3") 'insertPound)
 
