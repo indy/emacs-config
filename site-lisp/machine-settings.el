@@ -31,7 +31,15 @@
                        
                        (setq inferior-lisp-program
                              (concat (getenv "HOME")
-                                     "/code/clojure/clojurescript/script/browser-repl"))                       
+                                     "/code/clojure/clojurescript/script/browser-repl"))
+                       ;; use ido-mode but override C-w so that it's 
+                       ;; consistent with the rest of my emacs config
+                       (ido-mode)
+                       (let ((map (make-sparse-keymap)))
+                         (define-key map "\C-w" 'ido-delete-backward-word-updir)
+                         (set-keymap-parent map ido-file-dir-completion-map)
+                         (setq ido-file-completion-map map))
+
                        (setq
                         ring-bell-function (lambda () (message "*beep*"))
                         mac-command-modifier 'meta
