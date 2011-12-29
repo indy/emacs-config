@@ -57,6 +57,7 @@
                        (when (fboundp 'winner-mode)
                          (winner-mode 1))
 
+;                       (new-frame)
                        (isg-start-eshell "shelly")
                     ;                      (require 'edit-server)
                     ;                      (edit-server-start)
@@ -65,7 +66,13 @@
 
 
       (frame-setup-fn (lambda ()
+                        ;; (set-frame-position (selected-frame) 780 0)
+                        ;; (set-frame-size (selected-frame) 80 55)
                         (setq 
+                         initial-frame-alist '((top . 0)
+                                               (left . 340)
+                                               (width . 80)
+                                               (height . 55))
                          default-frame-alist '((top . 0)
                                                (left . 100)
                                                (width . 164)
@@ -94,6 +101,7 @@
 ;                       (require 'edit-server)
 ;                       (edit-server-start)
 
+                       (new-frame)
 
                        ))
       (frame-setup-fn (lambda ()
