@@ -48,21 +48,9 @@
                        (server-start)
                        (new-frame)
                        ))
-
-
-      (frame-setup-fn (lambda ()
-                        (setq 
-                         initial-frame-alist '((top . 0)
-                                               (left . 780)
-                                               (width . 80)
-                                               (height . 55))
-                         default-frame-alist '((top . 0)
-                                               (left . 195)
-                                               (width . 80)
-                                               (height . 55)))
-                        (add-to-list 'default-frame-alist
-                                     (cons 'font
-                                           (isg-val 'default-font)))))))
+      
+      (frame-r ((top . 0) (left . 780) (width . 80) (height . 55)))
+      (frame-l ((top . 0) (left . 195) (width . 80) (height . 55)))))
 
    ((string-match "^che" system-name)  ; asus ul20a
     '((post-setup-fn (lambda ()
@@ -78,10 +66,7 @@
                        (new-frame)
 
                        ))
-      (frame-setup-fn (lambda ()
-                        (add-to-list 'default-frame-alist
-                                     (cons 'font
-                                           (isg-val 'default-font)))))
+
       (key-setup (([mouse-1] . nil)
                   ([double-mouse-1] . nil)
                   ([drag-mouse-1] . nil)
@@ -108,18 +93,11 @@
 ;                        (edit-server-start)
                        (new-frame)
                        (switch-to-buffer "*scratch*")))
-      (frame-setup-fn (lambda ()
-                        (setq initial-frame-alist '((top . 1)
-                                                    (left . 5)
-                                                    (width . 80)
-                                                    (height . 46))
-                              default-frame-alist '((top . 0)
-                                                    (left . 509)
-                                                    (width . 80)
-                                                    (height . 46)))
-                        (add-to-list 'default-frame-alist
-                                     (cons 'font
-                                           (isg-val 'default-font)))))
+
+
+      (frame-r ((top . 1) (left . 5) (width . 80) (height . 46)))
+      (frame-l ((top . 0) (left . 509) (width . 80) (height . 46)))
+
       (key-setup (([mouse-1] . nil) ; accidently touching touchpad won't shift cursor
                   ([double-mouse-1] . nil)
                   ([drag-mouse-1] . nil)
@@ -129,18 +107,9 @@
       (extra-exec-paths ("/Users/indy/bin" "/usr/local/bin" "/opt/local/bin"))
       (machine-os "osx")
       (save-folder (("." . "~/.emacs.d/saves")))
-      (frame-setup-fn (lambda ()
-                        (setq initial-frame-alist '((top . 20)
-                                                    (left . 320)
-                                                    (width . 80)
-                                                    (height . 71))
-                              default-frame-alist '((top . 20)
-                                                    (left . 902)
-                                                    (width . 80)
-                                                    (height . 71)))
-                        (add-to-list 'default-frame-alist
-                                     (cons 'font
-                                           (isg-val 'default-font)))))))
+
+      (frame-r ((top . 20) (left . 320) (width . 80) (height . 71)))
+      (frame-l ((top . 20) (left . 902) (width . 80) (height . 71)))))
    ((string-match "^GOSHCC" system-name)  ; GOSH PC
     '(
       (default-font "-outline-Courier New-normal-normal-normal-mono-13-*-*-*-c-*-fontset-startup")
@@ -152,18 +121,9 @@
                        (find-file "k:/Direct Marketing/Data Analyst/indy/notes/done.org")
                        (find-file "k:/Direct Marketing/Data Analyst/indy/notes/notes.org")
                        (find-file "k:/Direct Marketing/Data Analyst/indy/notes/tasks.org")))
-      (frame-setup-fn (lambda ()
-                        (setq initial-frame-alist '((top . 0)
-                                                    (left . 0)
-                                                    (width . 80)
-                                                    (height . 60))
-                              default-frame-alist '((top . 20)
-                                                    (left . 510)
-                                                    (width . 80)
-                                                    (height . 60)))
-                        (add-to-list 'default-frame-alist
-                                     (cons 'font
-                                           (isg-val 'default-font)))))))
+
+      (frame-r ((top . 0) (left . 0) (width . 80) (height . 60)))
+      (frame-l ((top . 20) (left . 510) (width . 80) (height . 60)))))
 
    ((equal system-name "green")         ; old laptop thrown out by orange
     '((hyperspec-root "file:///usr/share/common-lisp/isg-hyperspec/HyperSpec/")))))

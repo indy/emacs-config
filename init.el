@@ -34,7 +34,7 @@
 
 (require 'keys)
 
-(run-isg-machine-function 'frame-setup-fn)
+(isg-frame-setup)
 (run-isg-machine-function 'post-setup-fn)
 (require 'global-settings)
 

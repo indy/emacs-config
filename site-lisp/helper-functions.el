@@ -34,4 +34,12 @@
   (let ((fn (isg-val property)))
     (if fn (funcall fn))))
 
+(defun isg-frame-setup ()
+  (when (and (isg-val 'frame-r) (isg-val 'frame-l))
+    (setq initial-frame-alist (isg-val 'frame-r)
+          default-frame-alist (isg-val 'frame-l)))
+  (add-to-list 'default-frame-alist
+               (cons 'font
+                     (isg-val 'default-font))))
+
 (provide 'helper-functions)
