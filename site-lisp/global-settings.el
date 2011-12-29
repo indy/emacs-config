@@ -55,4 +55,9 @@
    default-directory "~/"
    multi-term-program "/bin/bash")))
 
+;(require 'edit-server)
+;(edit-server-start)
+(server-start)
+(new-frame)
+
 (provide 'global-settings)

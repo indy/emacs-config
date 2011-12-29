@@ -17,6 +17,9 @@
       (machine-os "osx")
       (save-folder (("." . "~/.emacs.d/saves")))
 
+      (frame-r ((top . 0) (left . 780) (width . 80) (height . 55)))
+      (frame-l ((top . 0) (left . 195) (width . 80) (height . 55)))
+
       (post-setup-fn (lambda ()
                        ; need to update path so lein can work
                        (setenv "CLOJURESCRIPT_HOME"
@@ -40,17 +43,7 @@
                          (set-keymap-parent map ido-file-dir-completion-map)
                          (setq ido-file-completion-map map))
 
-                       
-;                       (new-frame)
-                       (isg-start-eshell "shelly")
-                    ;                      (require 'edit-server)
-                    ;                      (edit-server-start)
-                       (server-start)
-                       (new-frame)
-                       ))
-      
-      (frame-r ((top . 0) (left . 780) (width . 80) (height . 55)))
-      (frame-l ((top . 0) (left . 195) (width . 80) (height . 55)))))
+                       (isg-start-eshell "shelly")))))
 
    ((string-match "^che" system-name)  ; asus ul20a
     '((post-setup-fn (lambda ()
@@ -58,14 +51,7 @@
                                (concat
                                 (concat (getenv "HOME") "/local/bin:")
                                 "/usr/local/bin:" 
-                                (getenv "PATH")))
-
-;                       (require 'edit-server)
-;                       (edit-server-start)
-
-                       (new-frame)
-
-                       ))
+                                (getenv "PATH")))))
 
       (key-setup (([mouse-1] . nil)
                   ([double-mouse-1] . nil)
@@ -89,9 +75,6 @@
                                      "/code/clojure/clojurescript/script/browser-repl"))                       
 
 ;                        (isg-start-shell "default-shell")
-;                        (require 'edit-server)
-;                        (edit-server-start)
-                       (new-frame)
                        (switch-to-buffer "*scratch*")))
 
 
@@ -160,5 +143,4 @@
 ;;(post-setup-fn (lambda ()
 ;;(if window-system
 ;;(require 'w3m-load))
-;;(new-frame)
 ;;(setq browse-url-browser-function 'w3m-browse-url)))
