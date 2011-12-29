@@ -51,8 +51,6 @@
 
 
       (frame-setup-fn (lambda ()
-                        ;; (set-frame-position (selected-frame) 780 0)
-                        ;; (set-frame-size (selected-frame) 80 55)
                         (setq 
                          initial-frame-alist '((top . 0)
                                                (left . 780)
