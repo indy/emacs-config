@@ -40,23 +40,7 @@
                          (set-keymap-parent map ido-file-dir-completion-map)
                          (setq ido-file-completion-map map))
 
-                       (setq
-                        ring-bell-function (lambda () (message "*beep*"))
-                        mac-command-modifier 'meta
-                        default-directory "~/"
-                        browse-url-browser-function 'browse-url-generic
-                        browse-url-generic-program "chromium-browser"
-                        multi-term-program "/bin/bash")
-
-                       ;; stupid mac keyboard layout
-                       (fset 'insertPound "#")
-                       (global-set-key (kbd "C-M-3") 'insertPound)
-
-                       (when (fboundp 'windmove-default-keybindings)
-                         (windmove-default-keybindings))
-                       (when (fboundp 'winner-mode)
-                         (winner-mode 1))
-
+                       
 ;                       (new-frame)
                        (isg-start-eshell "shelly")
                     ;                      (require 'edit-server)
@@ -89,15 +73,6 @@
                                 (concat (getenv "HOME") "/local/bin:")
                                 "/usr/local/bin:" 
                                 (getenv "PATH")))
-                       (setq
-                        default-directory "~/"
-                        browse-url-browser-function 'browse-url-generic
-                        browse-url-generic-program "chromium-browser"
-                        multi-term-program "/bin/bash")
-                       (when (fboundp 'windmove-default-keybindings)
-                         (windmove-default-keybindings))
-                       (when (fboundp 'winner-mode)
-                         (winner-mode 1))
 
 ;                       (require 'edit-server)
 ;                       (edit-server-start)
@@ -129,13 +104,7 @@
                        (setq inferior-lisp-program
                              (concat (getenv "HOME")
                                      "/code/clojure/clojurescript/script/browser-repl"))                       
-                       (setq
-                        browse-url-browser-function 'browse-url-generic
-                        browse-url-generic-program "chromium-browser")
-                       (when (fboundp 'windmove-default-keybindings)
-                         (windmove-default-keybindings))
-                       (when (fboundp 'winner-mode)
-                         (winner-mode 1))
+
 ;                        (isg-start-shell "default-shell")
 ;                        (require 'edit-server)
 ;                        (edit-server-start)

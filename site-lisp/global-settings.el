@@ -13,7 +13,17 @@
 
 (setq isg-save-folder (isg-val 'save-folder))
 
+(when (fboundp 'windmove-default-keybindings)
+  (windmove-default-keybindings))
+(when (fboundp 'winner-mode)
+  (winner-mode 1))
+
 (setq exec-path (append (isg-val 'extra-exec-paths)  exec-path)
+      ring-bell-function (lambda () (message "*beep*"))
+
+      browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "chromium-browser"
+
       line-move-visual nil
       line-number-mode t
       european-calendar-style t
@@ -29,5 +39,20 @@
       kept-new-versions 6
       kept-old-versions 2
       version-control t)          ; use versioned backups
+
+;;; os specific settings
+(cond 
+ ((string-match "osx" (isg-val 'machine-os))
+  (setq
+   mac-command-modifier 'meta
+   default-directory "~/"
+   multi-term-program "/bin/bash")
+  (fset 'insertPound "#")
+  (global-set-key (kbd "C-M-3") 'insertPound))
+
+ ((string-match "linux" (isg-val 'machine-os))
+  (setq
+   default-directory "~/"
+   multi-term-program "/bin/bash")))
 
 (provide 'global-settings)
