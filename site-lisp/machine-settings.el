@@ -62,6 +62,7 @@
                     ;                      (require 'edit-server)
                     ;                      (edit-server-start)
                        (server-start)
+                       (new-frame)
                        ))
 
 
@@ -70,12 +71,12 @@
                         ;; (set-frame-size (selected-frame) 80 55)
                         (setq 
                          initial-frame-alist '((top . 0)
-                                               (left . 340)
+                                               (left . 780)
                                                (width . 80)
                                                (height . 55))
                          default-frame-alist '((top . 0)
-                                               (left . 100)
-                                               (width . 164)
+                                               (left . 195)
+                                               (width . 80)
                                                (height . 55)))
                         (add-to-list 'default-frame-alist
                                      (cons 'font
