@@ -60,6 +60,7 @@
                        (isg-start-eshell "shelly")
                     ;                      (require 'edit-server)
                     ;                      (edit-server-start)
+                       (server-start)
                        ))
 
 
