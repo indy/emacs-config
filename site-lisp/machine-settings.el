@@ -67,13 +67,6 @@
                                 (concat (getenv "HOME") "/local/bin:")
                                 "/usr/local/bin:" 
                                 (getenv "PATH")))
-                       (setenv "CLOJURESCRIPT_HOME"
-                               (concat (getenv "HOME")
-                                       "/code/clojure/clojurescript"))
-                       (setq inferior-lisp-program
-                             (concat (getenv "HOME")
-                                     "/code/clojure/clojurescript/script/browser-repl"))                       
-
 ;                        (isg-start-shell "default-shell")
                        (switch-to-buffer "*scratch*")))
 
