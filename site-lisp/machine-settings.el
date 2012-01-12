@@ -21,20 +21,11 @@
       (frame-l ((top . 0) (left . 195) (width . 80) (height . 55)))
 
       (post-setup-fn (lambda ()
-                       ; need to update path so lein can work
-                       (setenv "CLOJURESCRIPT_HOME"
-                               (concat (getenv "HOME")
-                                       "/code/clojure/clojurescript"))
                        (setenv "PATH" 
                                (concat
-                                (concat (getenv "CLOJURESCRIPT_HOME") "/bin:")
                                 (concat (getenv "HOME") "/local/bin:")
                                 "/usr/local/bin:" 
                                 (getenv "PATH")))
-                       
-                       (setq inferior-lisp-program
-                             (concat (getenv "HOME")
-                                     "/code/clojure/clojurescript/script/browser-repl"))
                        ;; use ido-mode but override C-w so that it's 
                        ;; consistent with the rest of my emacs config
                        (ido-mode)
