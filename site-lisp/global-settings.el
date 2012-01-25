@@ -18,11 +18,13 @@
 (when (fboundp 'winner-mode)
   (winner-mode 1))
 
+(defalias 'list-buffers 'ibuffer)
+
 (setq exec-path (append (isg-val 'extra-exec-paths)  exec-path)
       ring-bell-function (lambda () (message "*beep*"))
 
       browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "chromium-browser"
+      browse-url-generic-program (isg-val 'url-opener)
 
       line-move-visual nil
       line-number-mode t

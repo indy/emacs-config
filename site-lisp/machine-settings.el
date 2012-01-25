@@ -5,6 +5,7 @@
     (background-color "black")
     (default-font "6x12")
     (machine-os "linux") ; one of "linux" "osx" "windows"
+    (url-opener "chromium-browser")
     (save-folder (("." . "/tmp/emacs.d-saves")))
     (extra-exec-paths ("/usr/local/bin"))))
 
@@ -15,6 +16,7 @@
     '((default-font "-apple-Menlo-medium-normal-normal-*-11-*-*-*-m-0-iso10646-1")
       (extra-exec-paths ("/Users/indy/local/bin" "/usr/local/bin"))
       (machine-os "osx")
+      (url-opener "open")
       (save-folder (("." . "~/.emacs.d/saves")))
 
       (frame-r ((top . 0) (left . 780) (width . 80) (height . 55)))
@@ -26,6 +28,7 @@
                                 (concat (getenv "HOME") "/local/bin:")
                                 "/usr/local/bin:" 
                                 (getenv "PATH")))
+
                        ;; use ido-mode but override C-w so that it's 
                        ;; consistent with the rest of my emacs config
                        (ido-mode)
