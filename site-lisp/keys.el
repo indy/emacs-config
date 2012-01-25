@@ -30,6 +30,7 @@
 
 (global-set-key [f1] 'isg-start-shell)
 (global-set-key [f2] 'isg-start-eshell)
+(global-set-key [f3] 'isg-start-clojure-repl-shell)
 
 (isg-machine-set-keys)                 ; machine specific key bindings
 

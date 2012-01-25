@@ -17,8 +17,9 @@
 ;  markdown-mode      1.8.1        installed  Emacs Major mode for Markdown-formatted text files
 ;  paredit            22           installed  minor mode for editing parentheses  -*- Mode: Emacs-Lisp -*-
 ;  parenface          1.1          installed  Provide a face for parens in lisp modes.
+;  php-mode           1.5.0        installed  major mode for editing PHP code
 ;  slime              20100404.1   installed  Superior Lisp Interaction Mode for Emacs
-
+;  yasnippet          0.6.1        installed  Yasnippet template engine
 
 (push "~/.emacs.d/site-lisp" load-path) ; my customisations
 (push "~/.emacs.d/external" load-path)  ; third party code that hasn't
@@ -37,4 +38,3 @@
 (isg-frame-setup)
 (run-isg-machine-function 'post-setup-fn)
 (require 'global-settings)
-
