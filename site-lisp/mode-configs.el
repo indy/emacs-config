@@ -1,4 +1,4 @@
-
+(add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 
 (autoload 'imbue-mode "imbue" nil t)
@@ -11,6 +11,8 @@
 (add-hook 'espresso-mode-hook
       '(lambda ()
          (setq espresso-indent-level 2)))
+
+(add-hook 'css-mode-hook 'rainbow-mode)
 
 (defun turn-on-paredit ()
   (paredit-mode t))

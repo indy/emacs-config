@@ -18,6 +18,7 @@
 ;  paredit            22           installed  minor mode for editing parentheses  -*- Mode: Emacs-Lisp -*-
 ;  parenface          1.1          installed  Provide a face for parens in lisp modes.
 ;  php-mode           1.5.0        installed  major mode for editing PHP code
+;  rainbow-mode       0.2          installed  Colorize color names in buffers
 ;  slime              20100404.1   installed  Superior Lisp Interaction Mode for Emacs
 ;  yasnippet          0.6.1        installed  Yasnippet template engine
 
