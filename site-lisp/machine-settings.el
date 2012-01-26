@@ -29,6 +29,13 @@
                                 "/usr/local/bin:" 
                                 (getenv "PATH")))
 
+
+                       (setenv "CLOJURESCRIPT_HOME"
+                               (concat (getenv "HOME")
+                                       "/code/clojure/clojurescript"))
+
+                       (setq inferior-lisp-program "lein repl") 
+
                        ;; use ido-mode but override C-w so that it's 
                        ;; consistent with the rest of my emacs config
                        (ido-mode)
