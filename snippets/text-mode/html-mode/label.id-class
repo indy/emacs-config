@@ -1,0 +1,5 @@
+#name : <label id="..." class="...">...</label>
+# --
+<label id="$1" class="$2">
+  $0
+</label>
