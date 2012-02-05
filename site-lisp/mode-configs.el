@@ -1,5 +1,6 @@
 (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 
 (autoload 'imbue-mode "imbue" nil t)
 (add-to-list 'auto-mode-alist '("\\.imd$" . imbue-mode))
