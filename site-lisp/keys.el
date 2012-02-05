@@ -26,12 +26,15 @@
 (global-set-key "\M-m" 'call-last-kbd-macro)
 (global-set-key "\M-j" 'eval-print-last-sexp)
 
-(global-set-key "\C-cv" 'magit-status)
 (global-set-key "\C-c\C-v" 'magit-status)
 
 (global-set-key [f1] 'isg-start-shell)
 (global-set-key [f2] 'isg-start-eshell)
 (global-set-key [f3] 'isg-start-clojure-repl-shell)
+(global-set-key "\C-c\C-s" 'isg-start-shell)
+(global-set-key "\C-c\C-e" 'isg-start-eshell)
+(global-set-key "\C-c\C-j" 'isg-start-clojure-repl-shell)
+
 
 (isg-machine-set-keys)                 ; machine specific key bindings
 
