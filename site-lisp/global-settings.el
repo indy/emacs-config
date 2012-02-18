@@ -31,6 +31,7 @@
       european-calendar-style t
       display-time-24hr-format t
       default-tab-width 2
+      js-indent-level 2
       column-number-mode t
       enable-local-variables nil  ; ignore local variables defined in files
       inhibit-startup-message t

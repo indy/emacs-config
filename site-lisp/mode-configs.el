@@ -5,13 +5,13 @@
 (autoload 'imbue-mode "imbue" nil t)
 (add-to-list 'auto-mode-alist '("\\.imd$" . imbue-mode))
 
-(autoload 'espresso-mode "espresso" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . espresso-mode))
-(add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode))
-
-(add-hook 'espresso-mode-hook
-      '(lambda ()
-         (setq espresso-indent-level 2)))
+(add-hook 'org-mode-hook 'soft-wrap-lines)
+(defun soft-wrap-lines ()
+  "Make lines wrap at window edge and on word boundary,
+in current buffer."
+  (interactive)
+  (setq truncate-lines nil)
+  (setq word-wrap t))
 
 (add-hook 'css-mode-hook 'rainbow-mode)
 
