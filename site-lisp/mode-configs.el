@@ -28,7 +28,19 @@ in current buffer."
    nil `(("(\\(fn\\>\\)" 
           (0 (progn (compose-region (match-beginning 1) (match-end 1) 
                                     ,(make-char 'greek-iso8859-7 107))
-                    nil))))))
+                    nil)))
+
+         ("\\(#\\)("
+          (0 (progn (compose-region (match-beginning 1) (match-end 1) 
+                                    402)
+                    nil)))
+
+         ("\\(#\\){"
+          (0 (progn (compose-region (match-beginning 1) (match-end 1) 
+                                    "∈")
+                    nil)))
+
+         )))
 
 (add-hook 'clojure-mode-hook 'pretty-fn)
 
