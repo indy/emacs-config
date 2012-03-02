@@ -12,15 +12,15 @@
 (defun isg-machine-settings ()
   "system specific overrides go here"
   (cond
-   ((string-match "^ernesto.local" system-name) ; Macbook Air i5
-    '((default-font "-apple-Menlo-medium-normal-normal-*-11-*-*-*-m-0-iso10646-1")
+   ((string-match "^ernesto" system-name) ; Macbook Air i5
+    '((default-font "-apple-Monaco-medium-normal-normal-*-10-*-*-*-m-0-iso10646-1")
       (extra-exec-paths ("/Users/indy/local/bin" "/usr/local/bin"))
       (machine-os "osx")
       (url-opener "open")
       (save-folder (("." . "~/.emacs.d/saves")))
 
-      (frame-r ((top . 0) (left . 780) (width . 80) (height . 55)))
-      (frame-l ((top . 0) (left . 195) (width . 80) (height . 55)))
+      (frame-r ((top . 0) (left . 864) (width . 80) (height . 55)))
+      (frame-l ((top . 0) (left . 362) (width . 80) (height . 55)))
 
       (post-setup-fn (lambda ()
                        (setenv "PATH" 
