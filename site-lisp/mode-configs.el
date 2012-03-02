@@ -5,6 +5,8 @@
 (autoload 'imbue-mode "imbue" nil t)
 (add-to-list 'auto-mode-alist '("\\.imd$" . imbue-mode))
 
+(setq js-indent-level 2)
+
 (add-hook 'org-mode-hook 'soft-wrap-lines)
 (defun soft-wrap-lines ()
   "Make lines wrap at window edge and on word boundary,
