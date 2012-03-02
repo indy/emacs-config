@@ -22,9 +22,13 @@
 ;  slime              20100404.1   installed  Superior Lisp Interaction Mode for Emacs
 ;  yasnippet          0.6.1        installed  Yasnippet template engine
 
+
 (push "~/.emacs.d/site-lisp" load-path) ; my customisations
 (push "~/.emacs.d/external" load-path)  ; third party code that hasn't
                                         ; been packaged yet
+(push "~/.emacs.d/external/auto-complete" load-path)
+
+
 
 (require 'magit)
 (require 'helper-functions)
