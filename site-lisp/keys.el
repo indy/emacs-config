@@ -26,6 +26,7 @@
 (global-set-key "\M-m" 'call-last-kbd-macro)
 (global-set-key "\M-j" 'eval-print-last-sexp)
 
+(global-set-key "\C-cv" 'magit-status)
 (global-set-key "\C-c\C-v" 'magit-status)
 
 (global-set-key [f1] 'isg-start-shell)
