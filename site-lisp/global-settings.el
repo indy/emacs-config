@@ -1,28 +1,29 @@
+; auto-complete configuration
+; ---------------------------
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories 
+             "~/.emacs.d/external/auto-complete/dict")
+; Use dictionaries and yasnippet by default
+(setq-default ac-sources 
+              (cons 'ac-source-yasnippet 
+                    (cons 'ac-source-dictionary ac-sources)))
+(global-auto-complete-mode t)
+(setq ac-auto-start 2     ; Start auto-completion after 2 characters of a word
+      ac-ignore-case nil  ; case sensitivity is important when finding matches
+      ac-use-menu-map t)  ; navigate pop-up menu with C-n, C-p
 
-;;; yasnippets for autocompletion
+
+; yasnippet configuration
+; ------------------------
 (require 'yasnippet)
 (require 'dropdown-list)
+(yas/initialize)
 (setq yas/root-directory "~/.emacs.d/snippets")
 (yas/load-directory yas/root-directory)
 (setq yas/prompt-functions '(yas/dropdown-prompt
                              yas/ido-prompt
                              yas/completing-prompt))
-(yas/global-mode)
 
-
-; auto-complete configuration
-
-; load the default configuration
-(require 'auto-complete-config)
-; Make sure we can find the dictionaries
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/external/auto-complete/dict")
-; Use dictionaries by default
-(setq-default ac-sources (add-to-list 'ac-sources 'ac-source-dictionary))
-(global-auto-complete-mode t)
-; Start auto-completion after 2 characters of a word
-(setq ac-auto-start 2)
-; case sensitivity is important when finding matches
-(setq ac-ignore-case nil)
 
 (show-paren-mode t)
 (global-font-lock-mode t)
