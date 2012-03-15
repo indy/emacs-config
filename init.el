@@ -29,7 +29,6 @@
 (push "~/.emacs.d/external/auto-complete" load-path)
 
 
-
 (require 'magit)
 (require 'helper-functions)
 (require 'machine-settings)

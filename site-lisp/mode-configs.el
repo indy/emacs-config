@@ -5,8 +5,18 @@
 (autoload 'imbue-mode "imbue" nil t)
 (add-to-list 'auto-mode-alist '("\\.imd$" . imbue-mode))
 
-(setq js-indent-level 2)
+;;; flymake
+; show flymake notifications using cursor position rather than hovering with a mouse
+(require 'flymake-cursor)               
 
+;;; javascript
+(require 'flymake-node-jshint)
+(setq js-indent-level 2)
+(setq flymake-node-jshint-config "~/.emacs.d/site-lisp/jshint-config.json")
+(add-hook 'js-mode-hook (lambda () (flymake-mode 1)))
+
+
+;;; org-mode
 (add-hook 'org-mode-hook 'soft-wrap-lines)
 (defun soft-wrap-lines ()
   "Make lines wrap at window edge and on word boundary,
@@ -15,8 +25,10 @@ in current buffer."
   (setq truncate-lines nil)
   (setq word-wrap t))
 
+;;; css-mode
 (add-hook 'css-mode-hook 'rainbow-mode)
 
+;;; paredit
 (defun turn-on-paredit ()
   (paredit-mode t))
 
@@ -36,8 +48,8 @@ in current buffer."
                                     402)
                     nil))))))
 
+;;; clojure
 (add-hook 'clojure-mode-hook 'pretty-fn)
-
 (add-hook 'clojure-mode-hook
           '(lambda ()
              (define-key clojure-mode-map (kbd "C-c e") 'shell-eval-last-expression)
