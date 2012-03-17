@@ -1,0 +1,5 @@
+# -*- coding: utf-8; mode: snippet -*-
+# name: log
+# contributor: Inderjit Gill <email@indy.io>
+# --
+console.log("$0");
