@@ -52,7 +52,8 @@
                                (concat
                                 (concat (getenv "HOME") "/local/bin:")
                                 "/usr/local/bin:" 
-                                (getenv "PATH")))))
+                                (getenv "PATH")))
+                       (push (concat (getenv "HOME") "/local/bin") exec-path)))
 
       (key-setup (([mouse-1] . nil)
                   ([double-mouse-1] . nil)
