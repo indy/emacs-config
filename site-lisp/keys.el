@@ -32,6 +32,7 @@
 (global-set-key [f1] 'isg-start-shell)
 (global-set-key [f2] 'isg-start-eshell)
 (global-set-key [f3] 'isg-start-clojure-repl-shell)
+(global-set-key "\C-c\C-f" 'flymake-mode)
 (global-set-key "\C-c\C-s" 'isg-start-shell)
 (global-set-key "\C-c\C-e" 'isg-start-eshell)
 (global-set-key "\C-c\C-j" 'isg-start-clojure-repl-shell)
