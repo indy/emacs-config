@@ -28,7 +28,6 @@
                                         ; been packaged yet
 (push "~/.emacs.d/external/auto-complete" load-path)
 
-
 (require 'magit)
 (require 'helper-functions)
 (require 'machine-settings)
@@ -37,8 +36,8 @@
 (require 'color-theme-actress)
 (color-theme-actress)
 
-(require 'keys)
-
 (isg-frame-setup)
 (run-isg-machine-function 'post-setup-fn)
 (require 'global-settings)
+
+(require 'keys)

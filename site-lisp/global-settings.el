@@ -1,3 +1,5 @@
+(require 'find-file-in-git-repo)
+
 ; auto-complete configuration
 ; ---------------------------
 (require 'auto-complete-config)
