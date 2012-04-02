@@ -5,15 +5,17 @@
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories 
              "~/.emacs.d/external/auto-complete/dict")
+
 ; Use dictionaries and yasnippet by default
 (setq-default ac-sources 
-              (cons 'ac-source-yasnippet 
-                    (cons 'ac-source-dictionary ac-sources)))
+              (append '(ac-source-yasnippet ac-source-dictionary) 
+                      ac-sources))
+
 (global-auto-complete-mode t)
 (setq ac-auto-start 2     ; Start auto-completion after 2 characters of a word
       ac-ignore-case nil  ; case sensitivity is important when finding matches
-      ac-use-menu-map t)  ; navigate pop-up menu with C-n, C-p
-
+      ac-use-menu-map t  ; navigate pop-up menu with C-n, C-p
+      ac-modes (cons 'go-mode ac-modes)) ; enable ac when in go-mode
 
 ; yasnippet configuration
 ; ------------------------
@@ -88,7 +90,7 @@
 
 ;(require 'edit-server)
 ;(edit-server-start)
-(server-start)
+;(server-start)
 (new-frame)
 
 (provide 'global-settings)

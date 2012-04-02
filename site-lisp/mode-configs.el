@@ -15,6 +15,9 @@
 (setq flymake-node-jshint-config "~/.emacs.d/site-lisp/jshint-config.json")
 ;(add-hook 'js-mode-hook (lambda () (flymake-mode 1)))
 
+;;; go mode
+(require 'go-mode-load)
+(add-hook 'before-save-hook #'gofmt-before-save)
 
 ;;; org-mode
 (add-hook 'org-mode-hook 'soft-wrap-lines)

@@ -26,7 +26,8 @@
                        (setenv "PATH" 
                                (concat
                                 (concat (getenv "HOME") "/local/bin:")
-                                "/usr/local/bin:" 
+                                "/usr/local/bin:"
+                                "/usr/local/go/bin:"
                                 (getenv "PATH")))
 
 
