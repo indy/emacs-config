@@ -29,7 +29,9 @@ in current buffer."
   (setq word-wrap t))
 
 ;;; css-mode
+(setq css-indent-offset 2)
 (add-hook 'css-mode-hook 'rainbow-mode)
+
 
 ;;; paredit
 (defun turn-on-paredit ()
