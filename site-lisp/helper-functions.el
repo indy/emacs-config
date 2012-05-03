@@ -1,4 +1,7 @@
 
+(defun isg-ido-key ()
+  (define-key ido-file-completion-map "\C-w" 'ido-delete-backward-word-updir))
+
 (defun isg-val (property)
   (get 'isg-local property))
 

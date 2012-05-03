@@ -39,12 +39,8 @@
 
                        ;; use ido-mode but override C-w so that it's 
                        ;; consistent with the rest of my emacs config
+                       (add-hook 'ido-setup-hook 'isg-ido-key)
                        (ido-mode)
-                       (let ((map (make-sparse-keymap)))
-                         (define-key map "\C-w" 'ido-delete-backward-word-updir)
-                         (set-keymap-parent map ido-file-dir-completion-map)
-                         (setq ido-file-completion-map map))
-
                        (isg-start-eshell "shelly")))))
 
    ((string-match "^che" system-name)  ; asus ul20a
