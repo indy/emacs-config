@@ -19,7 +19,9 @@
     "predef"        : [  // Custom globals.
       "Modernizr",
       "describe",
-      "it"
+      "it",
+      "test",
+      "suite"
     ],
 
 
