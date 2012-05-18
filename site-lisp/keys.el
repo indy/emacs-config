@@ -30,8 +30,8 @@
 (global-set-key "\C-c\C-v" 'magit-status)
 
 (global-set-key "\C-c\C-f" 'flymake-mode)
-(global-set-key "\C-c\C-s" 'isg-start-shell)
-(global-set-key "\C-c\C-e" 'isg-start-eshell)
+(global-set-key "\M-7" 'isg-start-shell)
+(global-set-key "\M-8" 'isg-start-eshell)
 (global-set-key "\C-c\C-j" 'isg-start-clojure-repl-shell)
 
 ;;; 
