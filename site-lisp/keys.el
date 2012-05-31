@@ -32,7 +32,7 @@
 (global-set-key "\C-c\C-f" 'flymake-mode)
 (global-set-key "\M-7" 'isg-start-shell)
 (global-set-key "\M-8" 'isg-start-eshell)
-(global-set-key "\C-c\C-j" 'isg-start-clojure-repl-shell)
+(global-set-key "\M-9" 'isg-seni-eval-defn)
 
 ;;; 
 (global-set-key "\C-x\C-g" 'find-file-in-git-repo)
