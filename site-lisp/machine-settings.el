@@ -17,7 +17,7 @@
       (extra-exec-paths ("/Users/indy/local/bin" "/usr/local/bin"))
       (machine-os "osx")
       (url-opener "open")
-      (save-folder (("." . "~/.emacs.d/saves")))
+      (save-folder (("." . "~/mem")))
 
       (frame-r ((top . 0) (left . 864) (width . 80) (height . 55)))
       (frame-l ((top . 0) (left . 362) (width . 80) (height . 55)))
