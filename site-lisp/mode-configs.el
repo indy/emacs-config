@@ -60,9 +60,5 @@ in current buffer."
 
 ;;; clojure
 (add-hook 'clojure-mode-hook 'pretty-fn)
-(add-hook 'clojure-mode-hook
-          '(lambda ()
-             (define-key clojure-mode-map (kbd "C-c e") 'shell-eval-last-expression)
-             (define-key clojure-mode-map (kbd "C-c x") 'shell-eval-defun)))
 
 (provide 'mode-configs)
