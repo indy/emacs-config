@@ -1,4 +1,6 @@
 
+(global-set-key (kbd "C-=") 'er/expand-region)
+
 (global-set-key "\C-x!" 'delete-other-windows)
 
 ;;; org mode overrides the default "Shift-cursor keys" navigation

@@ -61,4 +61,7 @@ in current buffer."
 ;;; clojure
 (add-hook 'clojure-mode-hook 'pretty-fn)
 
+;;; clojurescript
+(add-hook 'clojurescript-mode-hook 'er/add-clojure-mode-expansions)
+
 (provide 'mode-configs)

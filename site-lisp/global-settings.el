@@ -1,3 +1,7 @@
+
+(require 'expand-region)
+
+
 (require 'find-file-in-git-repo)
 
 ; auto-complete configuration
