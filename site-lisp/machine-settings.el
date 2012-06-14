@@ -6,7 +6,7 @@
     (default-font "6x12")
     (machine-os "linux") ; one of "linux" "osx" "windows"
     (url-opener "chromium-browser")
-    (save-folder (("." . "/tmp/emacs.d-saves")))
+    (save-folder "/tmp/emacs.d-saves")
     (extra-exec-paths ("/usr/local/bin"))))
 
 (defun isg-machine-settings ()
@@ -17,7 +17,7 @@
       (extra-exec-paths ("/Users/indy/local/bin" "/usr/local/bin"))
       (machine-os "osx")
       (url-opener "open")
-      (save-folder (("." . "~/mem")))
+      (save-folder "~/mem/emacs-save-folder")
 
       (frame-r ((top . 0) (left . 864) (width . 80) (height . 55)))
       (frame-l ((top . 0) (left . 362) (width . 80) (height . 55)))
@@ -81,7 +81,7 @@
     '((default-font "-apple-andale mono-medium-r-normal--0-0-0-0-m-0-mac-roman")
       (extra-exec-paths ("/Users/indy/bin" "/usr/local/bin" "/opt/local/bin"))
       (machine-os "osx")
-      (save-folder (("." . "~/.emacs.d/saves")))
+      (save-folder "~/.emacs.d/saves")
 
       (frame-r ((top . 20) (left . 320) (width . 80) (height . 71)))
       (frame-l ((top . 20) (left . 902) (width . 80) (height . 71)))))
@@ -89,7 +89,7 @@
     '(
       (default-font "-outline-Courier New-normal-normal-normal-mono-13-*-*-*-c-*-fontset-startup")
       (machine-os "windows") ; one of "linux" "osx" "windows"
-      (save-folder (("." . "~/emacs-saves")))
+      (save-folder "~/emacs-saves")
       (extra-exec-paths ("c:\\home\\bin\\emacs-23.1\\bin"))
       (post-setup-fn (lambda ()
                        (ido-mode)

@@ -46,7 +46,8 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
-(setq isg-save-folder (isg-val 'save-folder))
+(if (not (file-exists-p (isg-val 'save-folder)))
+    (make-directory (isg-val 'save-folder)))
 
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
@@ -71,7 +72,7 @@
       inhibit-startup-message t
       initial-scratch-message nil
       backup-by-copying t         ; don't clobber symlinks
-      backup-directory-alist (isg-val 'save-folder)
+      backup-directory-alist (list (cons "." (isg-val 'save-folder)))
       delete-old-versions t
       kept-new-versions 6
       kept-old-versions 2
