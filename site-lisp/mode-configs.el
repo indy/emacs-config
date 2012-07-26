@@ -59,7 +59,9 @@ in current buffer."
                     nil))))))
 
 ;;; clojure
-(add-hook 'clojure-mode-hook 'pretty-fn)
+(add-hook 'clojure-mode-hook (lambda () 
+                               (require 'nrepl)
+                               (pretty-fn)))
 
 ;;; clojurescript
 (add-hook 'clojurescript-mode-hook 'er/add-clojure-mode-expansions)
