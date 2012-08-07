@@ -60,7 +60,7 @@ in current buffer."
 
 ;;; clojure
 (add-hook 'clojure-mode-hook (lambda () 
-                               (require 'nrepl)
+;                               (require 'nrepl)
                                (pretty-fn)))
 
 ;;; clojurescript
