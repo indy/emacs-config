@@ -13,7 +13,8 @@
   "system specific overrides go here"
   (cond
    ((string-match "^ernesto" system-name) ; Macbook Air i5
-    '((default-font "-apple-Monaco-medium-normal-normal-*-10-*-*-*-m-0-iso10646-1")
+    '((old-default-font "-apple-Monaco-medium-normal-normal-*-10-*-*-*-m-0-iso10646-1")
+      (default-font "-apple-Inconsolata-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
       (extra-exec-paths ("/Users/indy/local/bin" "/usr/local/bin"))
       (machine-os "osx")
       (url-opener "open")
