@@ -2,6 +2,10 @@
  (interactive)
  (run-lisp "lein trampoline cljsbuild repl-listen"))
 
+(defun clojurescript-seni-repl ()
+ (interactive)
+ (run-lisp "lein emacs-cljs"))
+
 ;;; send the last sexp to the inferior lisp 
 ;;; process and then call (main) to re-render
 (defun isg-seni-eval-defn (&optional and-go)

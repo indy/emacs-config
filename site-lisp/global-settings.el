@@ -1,9 +1,12 @@
+(require 'deft)
+(setq deft-directory "~/work/j2/notes"
+      deft-extension "org"
+      deft-text-mode 'org-mode
+      deft-use-filename-as-title t
+      deft-auto-save-interval 5.0)
 
 (require 'ace-jump-mode)
-
 (require 'expand-region)
-
-
 (require 'find-file-in-git-repo)
 
 ; auto-complete configuration
@@ -21,7 +24,7 @@
 (setq ac-auto-start 2     ; Start auto-completion after 2 characters of a word
       ac-ignore-case nil  ; case sensitivity is important when finding matches
       ac-use-menu-map t  ; navigate pop-up menu with C-n, C-p
-      ac-modes (cons 'go-mode ac-modes)) ; enable ac when in go-mode
+      ac-modes (cons 'clojurescript-mode (cons 'go-mode ac-modes))) ; enable ac when in go-mode
 
 ; yasnippet configuration
 ; ------------------------

@@ -1,3 +1,6 @@
+(require 'coffee-mode)
+(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
+
 (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
 (add-to-list 'auto-mode-alist '("\\.scss$" . sass-mode))
@@ -60,7 +63,6 @@ in current buffer."
 
 ;;; clojure
 (add-hook 'clojure-mode-hook (lambda () 
-;                               (require 'nrepl)
                                (pretty-fn)))
 
 ;;; clojurescript
