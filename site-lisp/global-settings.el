@@ -30,12 +30,13 @@
 ; ------------------------
 (require 'yasnippet)
 (require 'dropdown-list)
-(yas/initialize)
-(setq yas/root-directory "~/.emacs.d/snippets")
-(yas/load-directory yas/root-directory)
-(setq yas/prompt-functions '(yas/dropdown-prompt
-                             yas/ido-prompt
-                             yas/completing-prompt))
+(yas-global-mode 1)
+(setq yas-snippet-dirs "~/.emacs.d/snippets")
+(yas/load-directory yas-snippet-dirs)
+(setq yas-prompt-functions '(yas-dropdown-prompt
+                             yas-ido-prompt
+                             yas-completing-prompt))
+
 
 
 (show-paren-mode t)
