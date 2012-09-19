@@ -32,7 +32,7 @@
 (require 'dropdown-list)
 (yas-global-mode 1)
 (setq yas-snippet-dirs "~/.emacs.d/snippets")
-(yas/load-directory yas-snippet-dirs)
+;(yas/load-directory yas-snippet-dirs)
 (setq yas-prompt-functions '(yas-dropdown-prompt
                              yas-ido-prompt
                              yas-completing-prompt))
