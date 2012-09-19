@@ -6,6 +6,6 @@ elpa
 *.elc
 places
 bookmarks
-ac-comphist.dat
+ac-comphist*.dat
 scratch-lisp
 url
