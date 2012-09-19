@@ -44,6 +44,7 @@
 ;;; 
 (global-set-key "\C-x\C-g" 'find-file-in-git-repo)
 
+(global-set-key "\C-c\C-d" 'deft)
 
 (isg-machine-set-keys)                 ; machine specific key bindings
 
