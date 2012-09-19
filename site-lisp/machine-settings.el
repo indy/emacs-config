@@ -29,6 +29,7 @@
                                 (concat (getenv "HOME") "/local/bin:")
                                 "/usr/local/bin:"
                                 "/usr/local/go/bin:"
+                                "/Applications/Postgres.app/Contents/MacOS/bin:"
                                 (getenv "PATH")))
 
 
