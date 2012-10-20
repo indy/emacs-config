@@ -1,4 +1,3 @@
-
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 ;;; C-c SPC -> ace-jump-word-mode
 ;;; C-u C-c SPC -> ace-jump-char-mode
@@ -41,10 +40,11 @@
 (global-set-key "\M-8" 'isg-start-eshell)
 (global-set-key "\M-9" 'isg-seni-eval-defn)
 
+(global-set-key "\M-n" 'scroll-up-line)
+(global-set-key "\M-p" 'scroll-down-line)
+
 ;;; 
 (global-set-key "\C-x\C-g" 'find-file-in-git-repo)
-
-(global-set-key "\C-c\C-d" 'deft)
 
 (isg-machine-set-keys)                 ; machine specific key bindings
 

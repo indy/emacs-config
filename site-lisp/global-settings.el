@@ -1,5 +1,5 @@
 (require 'deft)
-(setq deft-directory "~/work/j2/notes"
+(setq deft-directory "~/notes/deft"
       deft-extension "org"
       deft-text-mode 'org-mode
       deft-use-filename-as-title t
