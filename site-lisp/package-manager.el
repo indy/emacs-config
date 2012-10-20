@@ -1,4 +1,8 @@
+(if (< (emacs-major-version) 24)
+    (push "~/.emacs.d/elpa" load-path))
+
 (require 'package)
+
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
 
