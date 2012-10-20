@@ -1,6 +1,9 @@
 (require 'coffee-mode)
 (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
 
+;;;(require 'typescript)
+;;;(add-to-list 'auto-mode-alist '("\\.ts$" . typescript-mode))
+
 (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
 (add-to-list 'auto-mode-alist '("\\.scss$" . sass-mode))
