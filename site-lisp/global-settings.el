@@ -5,6 +5,9 @@
       deft-use-filename-as-title t
       deft-auto-save-interval 5.0)
 
+; reload files that have been changed outside of emacs (e.g. Eclipse autoformat)
+(global-auto-revert-mode t)
+
 (require 'ace-jump-mode)
 (require 'expand-region)
 (require 'find-file-in-git-repo)
