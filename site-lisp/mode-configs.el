@@ -73,10 +73,15 @@ in current buffer."
 ;;; clojurescript
 (add-hook 'clojurescript-mode-hook 'er/add-clojure-mode-expansions)
 
+
+(add-hook 'nrepl-interaction-mode-hook
+  'nrepl-turn-on-eldoc-mode)
+(setq nrepl-popup-stacktraces nil)
+(add-to-list 'same-window-buffer-names "*nrepl*") 
+
 (require 'ac-nrepl)
- (add-hook 'nrepl-mode-hook 'ac-nrepl-setup)
- (add-hook 'clojure-nrepl-mode-hook 'ac-nrepl-setup)
- (eval-after-load "auto-complete"
-   '(add-to-list 'ac-modes 'nrepl-mode))
+(add-hook 'nrepl-mode-hook 'ac-nrepl-setup)
+(add-hook 'clojure-nrepl-mode-hook 'ac-nrepl-setup)
+(eval-after-load "auto-complete" '(add-to-list 'ac-modes 'nrepl-mode))
 
 (provide 'mode-configs)
