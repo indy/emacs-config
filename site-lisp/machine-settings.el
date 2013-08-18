@@ -17,8 +17,8 @@
       (default-font "-apple-Inconsolata-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
       (extra-exec-paths ("/Users/indy/local/bin" "/usr/local/bin"))
       (machine-os "osx")
-      (url-opener "open")
       (save-folder "~/mem/emacs-save-folder")
+      (url-opener "open")
 
       (frame-r ((top . 0) (left . 864) (width . 80) (height . 55)))
       (frame-l ((top . 0) (left . 362) (width . 80) (height . 55)))
@@ -43,7 +43,8 @@
                        ;; consistent with the rest of my emacs config
                        (add-hook 'ido-setup-hook 'isg-ido-key)
                        (ido-mode)
-                       (isg-start-eshell "shelly")))))
+                       ;;(isg-start-eshell "shelly")
+                       ))))
 
    ((string-match "^che" system-name)  ; asus ul20a
     '((post-setup-fn (lambda ()
