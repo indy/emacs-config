@@ -1,6 +1,3 @@
-(if (< (emacs-major-version) 24)
-    (push "~/.emacs.d/elpa" load-path))
-
 (require 'package)
 
 (add-to-list 'package-archives
@@ -14,19 +11,28 @@
 ;;; copied from http://batsov.com/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/
 
 (defvar prelude-packages
-  '(ace-jump-mode
+  '(ac-nrepl
+    ace-jump-mode
+    auto-complete
     clojure-mode
     clojure-test-mode
     clojurescript-mode
     coffee-mode
     color-theme
     color-theme-actress
+    dash
     deft
     edit-server
     find-file-in-git-repo
+    git-commit-mode
+    git-rebase-mode
     go-mode
+    groovy-mode
     haml-mode
+    htmlize
     ido-ubiquitous
+    impatient-mode
+    js-comint
     lua-mode
     magit
     markdown-mode
@@ -34,8 +40,10 @@
     paredit
     parenface
     php-mode
+    popup
     rainbow-mode
     sass-mode
+    simple-httpd
     slime
     yasnippet)
   "A list of packages to ensure are installed at launch.")
