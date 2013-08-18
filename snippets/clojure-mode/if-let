@@ -1,0 +1,5 @@
+#name: if-let
+# --
+(if-let [${1:test-expr}]
+  ${2:then-expr}
+  ${3:else-expr})

@@ -1,5 +1,0 @@
-#name : <label id="...">...</label>
-# --
-<label id="$1">
-  $0
-</label>

@@ -1,0 +1,4 @@
+#name: when-let
+# --
+(when-let [${1:test-expr}]
+  ${2:then-expr})
