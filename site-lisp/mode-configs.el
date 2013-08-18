@@ -23,7 +23,7 @@
 (require 'flymake-node-jshint)
 (setq js-indent-level 2)
 (setq flymake-node-jshint-config "~/.emacs.d/site-lisp/jshint-config.json")
-;(add-hook 'js-mode-hook (lambda () (flymake-mode 1)))
+(add-hook 'js-mode-hook (lambda () (flymake-mode 1)))
 
 ;;; go mode
 (require 'go-mode-load)
