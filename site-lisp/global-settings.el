@@ -15,13 +15,10 @@
 ; auto-complete configuration
 ; ---------------------------
 (require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories 
-             "~/.emacs.d/external/auto-complete/dict")
 
 ; Use dictionaries and yasnippet by default
 (setq-default ac-sources 
-              (append '(ac-source-yasnippet ac-source-dictionary) 
-                      ac-sources))
+              (append '(ac-source-yasnippet ac-source-dictionary) ac-sources))
 
 (global-auto-complete-mode t)
 (setq ac-auto-start 2     ; Start auto-completion after 2 characters of a word
@@ -32,15 +29,13 @@
 ; yasnippet configuration
 ; ------------------------
 (require 'yasnippet)
-(require 'dropdown-list)
+;(require 'dropdown-list)
 (yas-global-mode 1)
 (setq yas-snippet-dirs "~/.emacs.d/snippets")
 ;(yas/load-directory yas-snippet-dirs)
-(setq yas-prompt-functions '(yas-dropdown-prompt
+(setq yas-prompt-functions '(;yas-dropdown-prompt
                              yas-ido-prompt
                              yas-completing-prompt))
-
-
 
 (show-paren-mode t)
 (global-font-lock-mode t)
@@ -81,7 +76,8 @@
       inhibit-startup-message t
       initial-scratch-message nil
       backup-by-copying t         ; don't clobber symlinks
-      backup-directory-alist (list (cons "." (isg-val 'save-folder)))
+      backup-directory-alist `((".*" . ,(isg-val 'save-folder)))
+      auto-save-file-name-transforms `((".*" ,(isg-val 'save-folder) t))
       delete-old-versions t
       kept-new-versions 6
       kept-old-versions 2
@@ -94,17 +90,20 @@
    mac-command-modifier 'meta
    default-directory "~/"
    multi-term-program "/bin/bash")
+  
   (fset 'insertPound "#")
   (global-set-key (kbd "C-M-3") 'insertPound))
-
  ((string-match "linux" (isg-val 'machine-os))
   (setq
    default-directory "~/"
    multi-term-program "/bin/bash")))
 
-(require 'edit-server)
-(edit-server-start)
-(server-start)
+;(require 'edit-server)
+;(edit-server-start)
+
+(load "server")
+(unless (server-running-p) (server-start))
+;(server-start)
 (new-frame)
 
 (provide 'global-settings)
