@@ -15,7 +15,9 @@
    ((string-match "^ernesto" system-name) ; Macbook Air i5
     '((old-default-font "-apple-Monaco-medium-normal-normal-*-10-*-*-*-m-0-iso10646-1")
       (default-font "-apple-Inconsolata-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
-      (extra-exec-paths ("/Users/indy/local/bin" "/usr/local/bin"))
+      (extra-exec-paths ("/Users/indy/local/bin" 
+                         "/usr/local/bin" 
+                         "/usr/local/go/bin"))
       (machine-os "osx")
       (save-folder "~/mem/emacs-save-folder")
       (url-opener "open")
