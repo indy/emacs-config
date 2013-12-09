@@ -1,3 +1,8 @@
+
+; give buffers unique names
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward)
+
 (require 'deft)
 (setq deft-directory "~/notes/deft"
       deft-extension "org"
