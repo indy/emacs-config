@@ -14,6 +14,7 @@
   '(ac-nrepl
     ace-jump-mode
     auto-complete
+    cider
     clojure-mode
     clojure-test-mode
     clojurescript-mode
@@ -36,15 +37,15 @@
     lua-mode
     magit
     markdown-mode
-    nrepl
     paredit
     parenface
     php-mode
+    pkg-info
     popup
     rainbow-mode
     sass-mode
     simple-httpd
-    slime
+    ;slime
     yasnippet)
   "A list of packages to ensure are installed at launch.")
 
