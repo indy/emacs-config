@@ -12,6 +12,17 @@
 (defun isg-machine-settings ()
   "system specific overrides go here"
   (cond
+   ((string-match "^debian" system-name)  ; debian vm on ernesto
+    '((post-setup-fn (lambda ()
+                       (setq x-super-keysym 'meta)
+                       (setenv "PATH" 
+                               (concat
+                                (concat (getenv "HOME") "/local/bin:")
+                                "/usr/local/bin:" 
+                                (getenv "PATH")))
+                       (push (concat (getenv "HOME") "/local/bin") exec-path)))))
+
+      
    ((string-match "^ernesto" system-name) ; Macbook Air i5
     '((old-default-font "-apple-Monaco-medium-normal-normal-*-10-*-*-*-m-0-iso10646-1")
       (default-font "-apple-Inconsolata-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
@@ -82,6 +93,7 @@
                   ([double-mouse-1] . nil)
                   ([drag-mouse-1] . nil)
                   ([down-mouse-1] . nil)))))
+   
    ((string-match "^blue" system-name) ; G5 iMac at home
     '((default-font "-apple-andale mono-medium-r-normal--0-0-0-0-m-0-mac-roman")
       (extra-exec-paths ("/Users/indy/bin" "/usr/local/bin" "/opt/local/bin"))
@@ -90,6 +102,7 @@
 
       (frame-r ((top . 20) (left . 320) (width . 80) (height . 71)))
       (frame-l ((top . 20) (left . 902) (width . 80) (height . 71)))))
+   
    ((string-match "^GOSHCC" system-name)  ; GOSH PC
     '(
       (default-font "-outline-Courier New-normal-normal-normal-mono-13-*-*-*-c-*-fontset-startup")
