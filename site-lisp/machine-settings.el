@@ -29,6 +29,7 @@
                        (setenv "PATH" 
                                (concat
                                 (concat (getenv "HOME") "/local/bin:")
+                                (concat (getenv "HOME") "/local/gradle/bin:")
                                 "/usr/local/bin:"
                                 "/usr/local/go/bin:"
                                 "/Applications/Postgres.app/Contents/MacOS/bin:"
