@@ -3,8 +3,13 @@
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
 
+;;; the bleeding edge melpa library can be added with:
+;
+; (add-to-list 'package-archives
+;              '("melpa" . "http://melpa.milkbox.net/packages/") t)
+
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+             '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
 
 (package-initialize)
 
@@ -15,6 +20,7 @@
     ace-jump-mode
     auto-complete
     cider
+    clojure-cheatsheet
     clojure-mode
     clojure-test-mode
     clojurescript-mode
@@ -28,11 +34,10 @@
     git-commit-mode
     git-rebase-mode
     go-mode
-    groovy-mode
+;    groovy-mode
     haml-mode
     htmlize
     ido-ubiquitous
-    impatient-mode
     js-comint
     lua-mode
     magit
@@ -45,7 +50,6 @@
     rainbow-mode
     sass-mode
     simple-httpd
-    ;slime
     yasnippet)
   "A list of packages to ensure are installed at launch.")
 
