@@ -1,4 +1,3 @@
-
 ; give buffers unique names
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
@@ -103,8 +102,8 @@
    default-directory "~/"
    multi-term-program "/bin/bash")))
 
-;(require 'edit-server)
-;(edit-server-start)
+;;; allow emacs to edit chrome textboxes
+; (edit-server-start)
 
 (load "server")
 (unless (server-running-p) (server-start))
