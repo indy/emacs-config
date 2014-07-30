@@ -31,6 +31,7 @@
     deft
     edit-server
     find-file-in-git-repo
+    flx-ido
     git-commit-mode
     git-rebase-mode
     go-mode

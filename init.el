@@ -21,6 +21,7 @@
 (color-theme-actress)
 
 (isg-frame-setup)
+
 (run-isg-machine-function 'post-setup-fn)
 
 (require 'global-settings)

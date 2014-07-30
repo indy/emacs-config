@@ -53,11 +53,6 @@
 
                        (setq inferior-lisp-program "lein repl") 
 
-                       ;; use ido-mode but override C-w so that it's 
-                       ;; consistent with the rest of my emacs config
-                       (add-hook 'ido-setup-hook 'isg-ido-key)
-                       (ido-mode)
-                       ;;(isg-start-eshell "shelly")
                        ))))
 
    ((string-match "^che" system-name)  ; asus ul20a
