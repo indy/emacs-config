@@ -22,9 +22,7 @@
     cider
     clojure-cheatsheet
     clojure-mode
-    clojure-test-mode
     clojurescript-mode
-    coffee-mode
     color-theme
     color-theme-actress
     dash
@@ -36,20 +34,16 @@
     git-rebase-mode
     go-mode
 ;    groovy-mode
-    haml-mode
     htmlize
     ido-ubiquitous
     js-comint
-    lua-mode
     magit
     markdown-mode
     paredit
     parenface
-    php-mode
     pkg-info
     popup
     rainbow-mode
-    sass-mode
     simple-httpd
     yasnippet)
   "A list of packages to ensure are installed at launch.")
