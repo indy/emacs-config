@@ -52,7 +52,7 @@ in current buffer."
 (defun turn-on-paredit ()
   (paredit-mode t))
 
-(dolist (mode '(scheme emacs-lisp lisp clojure)) 
+(dolist (mode '(scheme emacs-lisp lisp clojure cider-repl)) 
   (add-hook (intern (concat (symbol-name mode) "-mode-hook")) 
             'turn-on-paredit))
 
@@ -71,10 +71,28 @@ in current buffer."
 ;;; clojure
 (add-hook 'clojure-mode-hook (lambda () 
                                (pretty-fn)))
-(add-hook 'clojure-mode-hook 'paredit-mode)
-(add-hook 'cider-repl-mode-hook 'paredit-mode)
 
 ; hide the *nrepl-connection* and *nrepl-server* buffers
 (setq nrepl-hide-special-buffers t)
+
+
+(require 'ac-nrepl)
+
+(dolist (mode '(cider-repl cider)) 
+  (add-hook (intern (concat (symbol-name mode) "-mode-hook")) 
+            'ac-nrepl-setup))
+
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes 'cider-repl-mode))
+
+(defun set-auto-complete-as-completion-at-point-function ()
+  (setq completion-at-point-functions '(auto-complete)))
+
+(dolist (mode '(auto-complete cider-repl cider)) 
+  (add-hook (intern (concat (symbol-name mode) "-mode-hook")) 
+            'set-auto-complete-as-completion-at-point-function))
+
+;(define-key cider-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc)
+
 
 (provide 'mode-configs)
