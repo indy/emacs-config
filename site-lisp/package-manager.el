@@ -44,6 +44,7 @@
     pkg-info
     popup
     rainbow-mode
+    rust-mode
     simple-httpd
     yasnippet)
   "A list of packages to ensure are installed at launch.")
