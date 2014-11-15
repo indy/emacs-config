@@ -16,7 +16,7 @@
 ;;; copied from http://batsov.com/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/
 
 (defvar prelude-packages
-  '(ac-nrepl
+  '(;ac-nrepl
     ace-jump-mode
     auto-complete
     cider
@@ -25,6 +25,7 @@
     clojurescript-mode
     color-theme
     color-theme-actress
+    company
     dash
     deft
     edit-server

@@ -38,7 +38,7 @@
 (setq-default ac-sources 
               (append '(ac-source-yasnippet ac-source-dictionary) ac-sources))
 
-(global-auto-complete-mode t)
+;(global-auto-complete-mode t)
 (setq ac-auto-start 2     ; Start auto-completion after 2 characters of a word
       ac-ignore-case nil  ; case sensitivity is important when finding matches
       ac-use-menu-map t  ; navigate pop-up menu with C-n, C-p
@@ -48,7 +48,7 @@
 ; ------------------------
 (require 'yasnippet)
 ;(require 'dropdown-list)
-(yas-global-mode 1)
+;(yas-global-mode 1)
 (setq yas-snippet-dirs "~/.emacs.d/snippets")
 ;(yas/load-directory yas-snippet-dirs)
 (setq yas-prompt-functions '(;yas-dropdown-prompt
