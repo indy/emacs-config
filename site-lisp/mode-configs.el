@@ -75,19 +75,6 @@ in current buffer."
 ; hide the *nrepl-connection* and *nrepl-server* buffers
 (setq nrepl-hide-special-buffers t)
 
-
-
-;(defun set-auto-complete-as-completion-at-point-function ()
-;  (setq completion-at-point-functions '(auto-complete)))
-
-;(dolist (mode '(auto-complete cider-repl cider)) 
-;  (add-hook (intern (concat (symbol-name mode) "-mode-hook")) 
-;            'set-auto-complete-as-completion-at-point-function))
-
-
-
-;(define-key cider-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc)
-
 (add-hook 'cider-repl-mode-hook 'company-mode)
 (add-hook 'cider-mode-hook 'company-mode)
 
