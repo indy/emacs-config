@@ -1,3 +1,6 @@
+(autoload 'zap-up-to-char "misc"
+  "Kill up to, but not including ARGth occurrence of CHAR." t)
+
 (require 'flx-ido)
 (ido-mode 1)
 (ido-everywhere 1)
@@ -62,6 +65,16 @@
 
       browse-url-browser-function 'browse-url-generic
       browse-url-generic-program (isg-val 'url-opener)
+
+
+      x-select-enable-clipboard t
+      x-select-enable-primary t
+      save-interprogram-paste-before-kill t
+      apropos-do-all t
+      mouse-yank-at-point t
+      require-final-newline t
+      visible-bell t
+      ediff-window-setup-function 'ediff-setup-windows-plain
 
       line-move-visual nil
       line-number-mode t

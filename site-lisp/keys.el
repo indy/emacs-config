@@ -3,6 +3,12 @@
 ;;; C-u C-c SPC -> ace-jump-char-mode
 ;;; C-u C-u C-c SPC -> ace-jump-line-mode
 
+
+
+;; Font size
+(global-set-key (kbd "C-+") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+
 (global-set-key (kbd "C-=") 'er/expand-region)
 
 (global-set-key "\C-x!" 'delete-other-windows)
@@ -23,7 +29,6 @@
 ;;; use winner mode keys for undo/redo operations on window configurations
 ;;; C-c left 
 ;;; C-c right
-
 (global-set-key "\C-w"     'backward-kill-word)
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-c\C-k" 'kill-region)
@@ -31,6 +36,8 @@
 (global-set-key "\M-o" 'other-window)
 (global-set-key "\M-m" 'call-last-kbd-macro)
 (global-set-key "\M-j" 'eval-print-last-sexp)
+
+(global-set-key (kbd "M-z") 'zap-up-to-char)
 
 (global-set-key "\C-cv" 'magit-status)
 (global-set-key "\C-c\C-v" 'magit-status)
