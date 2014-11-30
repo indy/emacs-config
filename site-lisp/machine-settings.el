@@ -106,7 +106,6 @@
       (save-folder "~/emacs-saves")
       (extra-exec-paths ("c:\\home\\bin\\emacs-23.1\\bin"))
       (post-setup-fn (lambda ()
-                       (ido-mode)
                        (find-file "k:/Direct Marketing/Data Analyst/indy/notes/done.org")
                        (find-file "k:/Direct Marketing/Data Analyst/indy/notes/notes.org")
                        (find-file "k:/Direct Marketing/Data Analyst/indy/notes/tasks.org")))

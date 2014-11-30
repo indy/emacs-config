@@ -53,6 +53,15 @@
 ;;; 
 (global-set-key "\C-x\C-g" 'find-file-in-git-repo)
 
+
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+(global-set-key (kbd "C-x b") 'helm-mini)
+
+(define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
+(define-key helm-map (kbd "C-w") 'backward-kill-word)
+
+
 (isg-machine-set-keys)                 ; machine specific key bindings
 
 (provide 'keys)

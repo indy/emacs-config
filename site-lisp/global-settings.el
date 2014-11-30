@@ -1,18 +1,18 @@
+(require 'helm-config)
+
+(helm-mode 1)
+
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR." t)
 
-(require 'flx-ido)
-(ido-mode 1)
-(ido-everywhere 1)
-(flx-ido-mode 1)
 
 ;; disable ido faces to see flx highlights.
-(setq ido-enable-flex-matching t)
-(setq ido-use-faces nil)
+;(setq ido-enable-flex-matching t)
+;(setq ido-use-faces nil)
 
 ;; use ido-mode but override C-w so that it's 
 ;; consistent with the rest of my emacs config
-(add-hook 'ido-setup-hook 'isg-ido-key)
+;(add-hook 'ido-setup-hook 'isg-ido-key)
 
 
 ; give buffers unique names
@@ -111,9 +111,8 @@
 ;;; allow emacs to edit chrome textboxes
 ; (edit-server-start)
 
-(load "server")
-(unless (server-running-p) (server-start))
-;(server-start)
+;(load "server")
+;(unless (server-running-p) (server-start))
 (new-frame)
 
 (provide 'global-settings)
