@@ -29,13 +29,14 @@
     deft
     edit-server
     find-file-in-git-repo
-    flx-ido
+;    flx-ido
     git-commit-mode
     git-rebase-mode
     go-mode
 ;    groovy-mode
+    helm
     htmlize
-    ido-ubiquitous
+;    ido-ubiquitous
     js-comint
     magit
     markdown-mode

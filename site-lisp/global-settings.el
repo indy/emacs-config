@@ -1,15 +1,20 @@
-(require 'flx-ido)
-(ido-mode 1)
-(ido-everywhere 1)
-(flx-ido-mode 1)
+(require 'helm-config)
+
+(helm-mode 1)
+
+
+;(require 'flx-ido)
+;(ido-mode 1)
+;(ido-everywhere 1)
+;(flx-ido-mode 1)
 
 ;; disable ido faces to see flx highlights.
-(setq ido-enable-flex-matching t)
-(setq ido-use-faces nil)
+;(setq ido-enable-flex-matching t)
+;(setq ido-use-faces nil)
 
 ;; use ido-mode but override C-w so that it's 
 ;; consistent with the rest of my emacs config
-(add-hook 'ido-setup-hook 'isg-ido-key)
+;(add-hook 'ido-setup-hook 'isg-ido-key)
 
 
 ; give buffers unique names
@@ -52,7 +57,7 @@
 (setq yas-snippet-dirs "~/.emacs.d/snippets")
 ;(yas/load-directory yas-snippet-dirs)
 (setq yas-prompt-functions '(;yas-dropdown-prompt
-                             yas-ido-prompt
+;                             yas-ido-prompt
                              yas-completing-prompt))
 
 (show-paren-mode t)
@@ -119,9 +124,8 @@
 ;;; allow emacs to edit chrome textboxes
 ; (edit-server-start)
 
-(load "server")
-(unless (server-running-p) (server-start))
-;(server-start)
+;(load "server")
+;(unless (server-running-p) (server-start))
 (new-frame)
 
 (provide 'global-settings)
