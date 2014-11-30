@@ -5,16 +5,6 @@
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR." t)
 
-
-;; disable ido faces to see flx highlights.
-;(setq ido-enable-flex-matching t)
-;(setq ido-use-faces nil)
-
-;; use ido-mode but override C-w so that it's 
-;; consistent with the rest of my emacs config
-;(add-hook 'ido-setup-hook 'isg-ido-key)
-
-
 ; give buffers unique names
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)

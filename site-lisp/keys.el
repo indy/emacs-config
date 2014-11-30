@@ -58,7 +58,9 @@
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 (global-set-key (kbd "C-x b") 'helm-mini)
 
-(define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+(define-key helm-map (kbd "C-z") 'helm-select-action) ; list actions using C-z
 (define-key helm-map (kbd "C-w") 'backward-kill-word)
 
 

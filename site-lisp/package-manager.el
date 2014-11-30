@@ -23,20 +23,16 @@
     clojure-mode
     clojurescript-mode
     color-theme
-;    color-theme-actress
     company
     dash
     deft
     edit-server
     find-file-in-git-repo
-;    flx-ido
     git-commit-mode
     git-rebase-mode
     go-mode
-;    groovy-mode
     helm
     htmlize
-;    ido-ubiquitous
     js-comint
     magit
     markdown-mode

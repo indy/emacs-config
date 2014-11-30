@@ -10,9 +10,6 @@
   (if and-go (switch-to-lisp t))
   (comint-send-string (inferior-lisp-proc) "(main)\n"))
 
-;;(defun isg-ido-key ()
-;;  (define-key ido-file-completion-map "\C-w" 'ido-delete-backward-word-updir))
-
 (defun isg-val (property)
   (get 'isg-local property))
 
