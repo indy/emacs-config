@@ -2,11 +2,9 @@
 
 (helm-mode 1)
 
+(autoload 'zap-up-to-char "misc"
+  "Kill up to, but not including ARGth occurrence of CHAR." t)
 
-;(require 'flx-ido)
-;(ido-mode 1)
-;(ido-everywhere 1)
-;(flx-ido-mode 1)
 
 ;; disable ido faces to see flx highlights.
 ;(setq ido-enable-flex-matching t)
@@ -39,27 +37,6 @@
 ; ---------------------------
 (require 'auto-complete-config)
 
-; Use dictionaries and yasnippet by default
-(setq-default ac-sources 
-              (append '(ac-source-yasnippet ac-source-dictionary) ac-sources))
-
-(global-auto-complete-mode t)
-(setq ac-auto-start 2     ; Start auto-completion after 2 characters of a word
-      ac-ignore-case nil  ; case sensitivity is important when finding matches
-      ac-use-menu-map t  ; navigate pop-up menu with C-n, C-p
-      ac-modes (cons 'clojurescript-mode (cons 'go-mode ac-modes))) ; enable ac when in go-mode
-
-; yasnippet configuration
-; ------------------------
-(require 'yasnippet)
-;(require 'dropdown-list)
-(yas-global-mode 1)
-(setq yas-snippet-dirs "~/.emacs.d/snippets")
-;(yas/load-directory yas-snippet-dirs)
-(setq yas-prompt-functions '(;yas-dropdown-prompt
-;                             yas-ido-prompt
-                             yas-completing-prompt))
-
 (show-paren-mode t)
 (global-font-lock-mode t)
 
@@ -88,6 +65,16 @@
 
       browse-url-browser-function 'browse-url-generic
       browse-url-generic-program (isg-val 'url-opener)
+
+
+      x-select-enable-clipboard t
+      x-select-enable-primary t
+      save-interprogram-paste-before-kill t
+      apropos-do-all t
+      mouse-yank-at-point t
+      require-final-newline t
+      visible-bell t
+      ediff-window-setup-function 'ediff-setup-windows-plain
 
       line-move-visual nil
       line-number-mode t

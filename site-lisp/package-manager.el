@@ -16,15 +16,15 @@
 ;;; copied from http://batsov.com/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/
 
 (defvar prelude-packages
-  '(ac-nrepl
-    ace-jump-mode
+  '(ace-jump-mode
     auto-complete
     cider
     clojure-cheatsheet
     clojure-mode
     clojurescript-mode
     color-theme
-    color-theme-actress
+;    color-theme-actress
+    company
     dash
     deft
     edit-server
@@ -45,8 +45,8 @@
     pkg-info
     popup
     rainbow-mode
-    simple-httpd
-    yasnippet)
+    rust-mode
+    simple-httpd)
   "A list of packages to ensure are installed at launch.")
 
 (defun prelude-packages-installed-p ()

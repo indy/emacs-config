@@ -52,7 +52,7 @@ in current buffer."
 (defun turn-on-paredit ()
   (paredit-mode t))
 
-(dolist (mode '(scheme emacs-lisp lisp clojure)) 
+(dolist (mode '(scheme emacs-lisp lisp clojure cider-repl)) 
   (add-hook (intern (concat (symbol-name mode) "-mode-hook")) 
             'turn-on-paredit))
 
@@ -71,10 +71,11 @@ in current buffer."
 ;;; clojure
 (add-hook 'clojure-mode-hook (lambda () 
                                (pretty-fn)))
-(add-hook 'clojure-mode-hook 'paredit-mode)
-(add-hook 'cider-repl-mode-hook 'paredit-mode)
 
 ; hide the *nrepl-connection* and *nrepl-server* buffers
 (setq nrepl-hide-special-buffers t)
+
+(add-hook 'cider-repl-mode-hook 'company-mode)
+(add-hook 'cider-mode-hook 'company-mode)
 
 (provide 'mode-configs)
