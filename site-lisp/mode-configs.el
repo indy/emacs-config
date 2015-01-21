@@ -19,14 +19,20 @@
 (autoload 'imbue-mode "imbue" nil t)
 (add-to-list 'auto-mode-alist '("\\.imd$" . imbue-mode))
 
+(autoload 'glsl-mode "glsl-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.glsl\\'" . glsl-mode))
+(add-to-list 'auto-mode-alist '("\\.vert\\'" . glsl-mode))
+(add-to-list 'auto-mode-alist '("\\.frag\\'" . glsl-mode))
+(add-to-list 'auto-mode-alist '("\\.geom\\'" . glsl-mode))
+
 ;;; flymake
 ; show flymake notifications using cursor position rather than hovering with a mouse
-(require 'flymake-cursor)               
+;(require 'flymake-cursor)               
 
 ;;; javascript
-(require 'flymake-node-jshint)
+;(require 'flymake-node-jshint)
 (setq js-indent-level 2)
-(setq flymake-node-jshint-config "~/.emacs.d/site-lisp/jshint-config.json")
+;(setq flymake-node-jshint-config "~/.emacs.d/site-lisp/jshint-config.json")
 ;(add-hook 'js-mode-hook (lambda () (flymake-mode 1)))
 
 ;;; go mode
@@ -49,14 +55,84 @@ in current buffer."
 ;;; sass mode
 (add-hook 'sass-mode-hook 'rainbow-mode)
 
+(require 'smartparens-config)
+(smartparens-global-mode t)
+(show-smartparens-global-mode t)
+;(sp-autoskip-closing-pair 'always)
+;; smartparens notes:
 
-;;; paredit
-(defun turn-on-paredit ()
-  (paredit-mode t))
+;; 1. select some text in an html file and 
+;;    press '<' to wrap the selection in a tag
+;;
 
-(dolist (mode '(scheme emacs-lisp lisp clojure cider-repl)) 
-  (add-hook (intern (concat (symbol-name mode) "-mode-hook")) 
-            'turn-on-paredit))
+;; Add smartparens-strict-mode to all sp--lisp-modes hooks. C-h v sp--lisp-modes
+;; to customize/view this list.
+(mapc (lambda (mode)
+        (add-hook (intern (format "%s-hook" (symbol-name mode))) 'smartparens-strict-mode))
+      sp--lisp-modes)
+
+
+;; Conveniently set keys into the sp-keymap, limiting the keybinding to buffers
+;; with SP mode activated
+(mapc (lambda (info)
+        (let ((key (kbd (car info)))
+              (function (car (cdr info))))
+          (define-key sp-keymap key function)))
+      '(("C-)" sp-up-sexp)
+        ("M-s" sp-splice-sexp)
+
+        ("C-M-f" sp-forward-sexp)
+        ("C-M-b" sp-backward-sexp)
+ 
+        ("C-M-d" sp-down-sexp)
+        ("C-M-a" sp-backward-down-sexp)
+        ("C-S-a" sp-beginning-of-sexp)
+        ("C-S-d" sp-end-of-sexp)
+ 
+        ("C-M-e" sp-up-sexp)
+ 
+        ("C-M-u" sp-backward-up-sexp)
+        ("C-M-t" sp-transpose-sexp)
+ 
+        ("C-M-n" sp-next-sexp)
+        ("C-M-p" sp-previous-sexp)
+ 
+        ("C-M-k" sp-kill-sexp)
+        ("C-M-w" sp-copy-sexp)
+ 
+        ("M-<delete>" sp-unwrap-sexp)
+        ("M-<backspace>" sp-backward-unwrap-sexp)
+ 
+        ("C-<right>" sp-forward-slurp-sexp)
+        ("C-<left>" sp-forward-barf-sexp)
+        ("C-M-<left>" sp-backward-slurp-sexp)
+        ("C-M-<right>" sp-backward-barf-sexp)
+ 
+        ("C-M-<delete>" sp-splice-sexp-killing-forward)
+        ("C-M-<backspace>" sp-splice-sexp-killing-backward)
+        ("C-S-<backspace>" sp-splice-sexp-killing-around)
+
+        ("C-]" sp-select-next-thing-exchange)
+        ("C-<left_bracket>" sp-select-previous-thing)
+        ("C-M-]" sp-select-next-thing)
+ 
+        ("M-F" sp-forward-symbol)
+        ("M-B" sp-backward-symbol)
+ 
+        ("H-t" sp-prefix-tag-object)
+        ("H-p" sp-prefix-pair-object)
+        ("H-s c" sp-convolute-sexp)
+        ("H-s a" sp-absorb-sexp)
+        ("H-s e" sp-emit-sexp)
+        ("H-s p" sp-add-to-previous-sexp)
+        ("H-s n" sp-add-to-next-sexp)
+        ("H-s j" sp-join-sexp)
+        ("H-s s" sp-split-sexp)))
+ 
+;; This is from authors config, seems to let you jump to the end of the current
+;; sexp with paren?
+(define-key emacs-lisp-mode-map (kbd ")") 'sp-up-sexp)
+
 
 ;;; display 'fn' as the lambda symbol
 (defun pretty-fn nil 
@@ -71,13 +147,15 @@ in current buffer."
                     nil))))))
 
 ;;; clojure
-(add-hook 'clojure-mode-hook (lambda () 
+(add-hook 'clojure-mode-hook (lambda ()
                                (pretty-fn)))
 
-; hide the *nrepl-connection* and *nrepl-server* buffers
-(setq nrepl-hide-special-buffers t)
 
 (add-hook 'cider-repl-mode-hook 'company-mode)
 (add-hook 'cider-mode-hook 'company-mode)
+(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+
+; hide the *nrepl-connection* and *nrepl-server* buffers
+(setq nrepl-hide-special-buffers t)
 
 (provide 'mode-configs)

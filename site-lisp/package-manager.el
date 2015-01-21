@@ -36,13 +36,14 @@
     js-comint
     magit
     markdown-mode
-    paredit
+    ;paredit
     parenface
     pkg-info
     popup
     rainbow-mode
     rust-mode
-    simple-httpd)
+    simple-httpd
+    smartparens)
   "A list of packages to ensure are installed at launch.")
 
 (defun prelude-packages-installed-p ()

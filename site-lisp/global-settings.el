@@ -1,6 +1,9 @@
 (require 'helm-config)
-
+(setq helm-ff-skip-boring-files t)
+(setq helm-boring-file-regexp-list
+  '("\\.\\.$" "\\.$" "\\.git$" "\\.hg$" "\\.svn$" "\\.CVS$"  "\\.la$" "\\.o$" "~$" "\\.so$" "\\.a$" "\\.elc$" "\\.fas$" "\\.fasl$" "\\.pyc$" "\\.pyo$"))
 (helm-mode 1)
+
 
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR." t)
