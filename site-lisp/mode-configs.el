@@ -25,6 +25,10 @@
 (add-to-list 'auto-mode-alist '("\\.frag\\'" . glsl-mode))
 (add-to-list 'auto-mode-alist '("\\.geom\\'" . glsl-mode))
 
+;; load my atscript mode which was hacked together from typescript.el
+(autoload 'atscript-mode "atscript" nil t)
+(add-to-list 'auto-mode-alist '("\\.ats$" . atscript-mode))
+
 ;;; flymake
 ; show flymake notifications using cursor position rather than hovering with a mouse
 ;(require 'flymake-cursor)               
@@ -32,6 +36,7 @@
 ;;; javascript
 ;(require 'flymake-node-jshint)
 (setq js-indent-level 2)
+(setq atscript-indent-level 2)
 ;(setq flymake-node-jshint-config "~/.emacs.d/site-lisp/jshint-config.json")
 ;(add-hook 'js-mode-hook (lambda () (flymake-mode 1)))
 
