@@ -1,7 +1,7 @@
 (require 'package)
 
 (add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/") t)
+             '("marmalade" . "https://marmalade-repo.org/packages/") t)
 
 ;;; the bleeding edge melpa library can be added with:
 ;
@@ -34,6 +34,7 @@
     helm
     htmlize
     js-comint
+    jsx-mode
     magit
     markdown-mode
     ;paredit
