@@ -37,14 +37,14 @@
     jsx-mode
     magit
     markdown-mode
-    ;paredit
     parenface
     pkg-info
     popup
     rainbow-mode
     rust-mode
     simple-httpd
-    smartparens)
+    smartparens
+    typescript)
   "A list of packages to ensure are installed at launch.")
 
 (defun prelude-packages-installed-p ()
