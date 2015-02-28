@@ -3,8 +3,9 @@
 (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.es6$" . js2-mode))
 
-(add-to-list 'auto-mode-alist '("\\.es6$" . js-mode))
 ;(add-to-list 'auto-mode-alist '("\\.gradle$" . groovy-mode))
 (add-to-list 'auto-mode-alist 
              '("\\.sql$" . (lambda ()
@@ -35,6 +36,7 @@
 
 ;;; javascript
 ;(require 'flymake-node-jshint)
+(setq js2-basic-offset 2)
 (setq js-indent-level 2)
 (setq atscript-indent-level 2)
 ;(setq flymake-node-jshint-config "~/.emacs.d/site-lisp/jshint-config.json")
@@ -133,11 +135,12 @@ in current buffer."
         ("H-s n" sp-add-to-next-sexp)
         ("H-s j" sp-join-sexp)
         ("H-s s" sp-split-sexp)))
- 
+
 ;; This is from authors config, seems to let you jump to the end of the current
 ;; sexp with paren?
 (define-key emacs-lisp-mode-map (kbd ")") 'sp-up-sexp)
-
+;(define-key scheme-mode-map (kbd ")") 'sp-up-sexp)
+;(define-key clojure-mode-map (kbd ")") 'sp-up-sexp)
 
 ;;; display 'fn' as the lambda symbol
 (defun pretty-fn nil 
@@ -151,8 +154,15 @@ in current buffer."
                                     402)
                     nil))))))
 
+
+;;; scheme
+(add-hook 'scheme-mode-hook
+          (lambda ()
+            (define-key scheme-mode-map (kbd ")") 'sp-up-sexp)))
+
 ;;; clojure
 (add-hook 'clojure-mode-hook (lambda ()
+                               (define-key clojure-mode-map (kbd ")") 'sp-up-sexp)
                                (pretty-fn)))
 
 
