@@ -39,6 +39,7 @@
 (setq js2-basic-offset 2)
 (setq js-indent-level 2)
 (setq atscript-indent-level 2)
+(setq js2-global-externs '("Immutable" "CodeMirror" "expect" "describe" "it" "beforeEach" "mat4" "vec3"))
 ;(setq flymake-node-jshint-config "~/.emacs.d/site-lisp/jshint-config.json")
 ;(add-hook 'js-mode-hook (lambda () (flymake-mode 1)))
 
