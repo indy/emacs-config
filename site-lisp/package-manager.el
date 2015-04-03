@@ -17,6 +17,7 @@
 
 (defvar prelude-packages
   '(ace-jump-mode
+    ag
     auto-complete
     cider
     clojure-cheatsheet
@@ -34,7 +35,7 @@
     helm
     htmlize
     js-comint
-    jsx-mode
+    js2-mode
     magit
     markdown-mode
     parenface

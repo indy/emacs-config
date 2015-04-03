@@ -47,6 +47,8 @@
 (global-set-key "\M-8" 'isg-start-eshell)
 (global-set-key "\M-9" 'isg-seni-eval-defn)
 
+(global-set-key "\M-^"  'ag-project-at-point)
+
 (global-set-key "\M-n" 'scroll-up-line)
 (global-set-key "\M-p" 'scroll-down-line)
 

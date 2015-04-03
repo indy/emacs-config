@@ -79,12 +79,20 @@
       inhibit-startup-message t
       initial-scratch-message nil
       backup-by-copying t         ; don't clobber symlinks
-      backup-directory-alist `((".*" . ,(isg-val 'save-folder)))
-      auto-save-file-name-transforms `((".*" ,(isg-val 'save-folder) t))
       delete-old-versions t
       kept-new-versions 6
       kept-old-versions 2
       version-control t)          ; use versioned backups
+
+;; disable auto-save and auto-backup
+;; isg: these don't stop backup files from being created
+;(setq auto-save-default nil)
+;(setq make-backup-files nil)
+
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
 
 ;;; os specific settings
 (cond 
