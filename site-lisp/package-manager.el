@@ -36,6 +36,7 @@
     htmlize
     js-comint
     js2-mode
+    jsx-mode
     magit
     markdown-mode
     parenface
@@ -45,6 +46,7 @@
     rust-mode
     simple-httpd
     smartparens
+    toml-mode
     typescript)
   "A list of packages to ensure are installed at launch.")
 
