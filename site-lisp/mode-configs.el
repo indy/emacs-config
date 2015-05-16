@@ -5,7 +5,6 @@
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.es6$" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx$" . jsx-mode))
 
 ;(add-to-list 'auto-mode-alist '("\\.gradle$" . groovy-mode))
 (add-to-list 'auto-mode-alist 
@@ -26,7 +25,12 @@
 (add-to-list 'auto-mode-alist '("\\.frag\\'" . glsl-mode))
 (add-to-list 'auto-mode-alist '("\\.geom\\'" . glsl-mode))
 
-(autoload 'jsx-mode "jsx-mode" "JSX mode" t)
+(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+(defadvice web-mode-highlight-part (around tweak-jsx activate)
+  (if (equal web-mode-content-type "jsx")
+      (let ((web-mode-enable-part-face nil))
+        ad-do-it)
+    ad-do-it))
 
 ;;; flymake
 ; show flymake notifications using cursor position rather than hovering with a mouse
@@ -36,7 +40,6 @@
 ;(require 'flymake-node-jshint)
 (setq js2-basic-offset 2)
 (setq js-indent-level 2)
-(setq jsx-indent-level 2)
 (setq js2-global-externs '("require" "expect" "describe" "it" "beforeEach"))
 ;(setq flymake-node-jshint-config "~/.emacs.d/site-lisp/jshint-config.json")
 ;(add-hook 'js-mode-hook (lambda () (flymake-mode 1)))

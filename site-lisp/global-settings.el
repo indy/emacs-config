@@ -59,6 +59,7 @@
       browse-url-browser-function 'browse-url-generic
       browse-url-generic-program (isg-val 'url-opener)
 
+      standard-indent 2
 
       x-select-enable-clipboard t
       x-select-enable-primary t

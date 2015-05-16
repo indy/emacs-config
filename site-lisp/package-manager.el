@@ -36,7 +36,6 @@
     htmlize
     js-comint
     js2-mode
-    jsx-mode
     magit
     markdown-mode
     parenface
@@ -47,7 +46,8 @@
     simple-httpd
     smartparens
     toml-mode
-    typescript)
+    typescript
+    web-mode)
   "A list of packages to ensure are installed at launch.")
 
 (defun prelude-packages-installed-p ()
