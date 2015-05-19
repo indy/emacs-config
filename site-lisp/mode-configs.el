@@ -44,6 +44,9 @@
 ;(setq flymake-node-jshint-config "~/.emacs.d/site-lisp/jshint-config.json")
 ;(add-hook 'js-mode-hook (lambda () (flymake-mode 1)))
 
+; remove trailing whitespaces on save
+(add-hook 'js2-mode-hook 'ws-butler-mode)
+
 ;;; go mode
 ;(require 'go-mode)
 ;(add-hook 'before-save-hook #'gofmt-before-save)

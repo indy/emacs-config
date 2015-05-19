@@ -47,7 +47,8 @@
     smartparens
     toml-mode
     typescript
-    web-mode)
+    web-mode
+    ws-butler)
   "A list of packages to ensure are installed at launch.")
 
 (defun prelude-packages-installed-p ()
