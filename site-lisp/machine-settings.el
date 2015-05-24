@@ -45,8 +45,7 @@
                                 "/usr/local/go/bin:"
                                 "/Applications/Postgres.app/Contents/MacOS/bin:"
                                 (getenv "PATH")))
-
-
+                       
                        (setenv "CLOJURESCRIPT_HOME"
                                (concat (getenv "HOME")
                                        "/code/clojure/clojurescript"))
@@ -57,12 +56,18 @@
 
    ((string-match "^che" system-name)  ; asus ul20a
     '((post-setup-fn (lambda ()
+                       (setenv "GOPATH" (concat (getenv "HOME") "/scratch/go"))
+
                        (setenv "PATH" 
                                (concat
+                                (concat (getenv "GOPATH") "/bin:")
                                 (concat (getenv "HOME") "/local/bin:")
                                 "/usr/local/bin:" 
+                                "/usr/local/go/bin:" 
                                 (getenv "PATH")))
-                       (push (concat (getenv "HOME") "/local/bin") exec-path)))
+
+                       (push (concat (getenv "HOME") "/local/bin") exec-path)
+                       (push "/usr/local/go/bin" exec-path)))
 
       (key-setup (([mouse-1] . nil)
                   ([double-mouse-1] . nil)

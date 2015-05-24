@@ -49,7 +49,7 @@
 
 ;;; go mode
 ;(require 'go-mode)
-;(add-hook 'before-save-hook #'gofmt-before-save)
+(add-hook 'before-save-hook #'gofmt-before-save)
 
 ;;; org-mode
 (add-hook 'org-mode-hook 'soft-wrap-lines)
