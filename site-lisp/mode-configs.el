@@ -16,7 +16,6 @@
                              (sql-mode)
                              (sql-highlight-postgres-keywords))))
 
-
 (autoload 'imbue-mode "imbue" nil t)
 (add-to-list 'auto-mode-alist '("\\.imd$" . imbue-mode))
 
@@ -26,9 +25,12 @@
 (add-to-list 'auto-mode-alist '("\\.frag\\'" . glsl-mode))
 (add-to-list 'auto-mode-alist '("\\.geom\\'" . glsl-mode))
 
-;; load my atscript mode which was hacked together from typescript.el
-(autoload 'atscript-mode "atscript" nil t)
-(add-to-list 'auto-mode-alist '("\\.ats$" . atscript-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+(defadvice web-mode-highlight-part (around tweak-jsx activate)
+  (if (equal web-mode-content-type "jsx")
+      (let ((web-mode-enable-part-face nil))
+        ad-do-it)
+    ad-do-it))
 
 ;;; flymake
 ; show flymake notifications using cursor position rather than hovering with a mouse
@@ -38,10 +40,12 @@
 ;(require 'flymake-node-jshint)
 (setq js2-basic-offset 2)
 (setq js-indent-level 2)
-(setq atscript-indent-level 2)
-(setq js2-global-externs '("require" "Immutable" "CodeMirror" "expect" "describe" "it" "beforeEach" "mat4" "vec3"))
+(setq js2-global-externs '("require" "expect" "describe" "it" "beforeEach"))
 ;(setq flymake-node-jshint-config "~/.emacs.d/site-lisp/jshint-config.json")
 ;(add-hook 'js-mode-hook (lambda () (flymake-mode 1)))
+
+; remove trailing whitespaces on save
+(add-hook 'js2-mode-hook 'ws-butler-mode)
 
 ;;; go mode
 ;(require 'go-mode)

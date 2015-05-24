@@ -45,7 +45,10 @@
     rust-mode
     simple-httpd
     smartparens
-    typescript)
+    toml-mode
+    typescript
+    web-mode
+    ws-butler)
   "A list of packages to ensure are installed at launch.")
 
 (defun prelude-packages-installed-p ()
