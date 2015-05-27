@@ -53,8 +53,18 @@
 
 (defalias 'list-buffers 'ibuffer)
 
-(setq exec-path (append (isg-val 'extra-exec-paths)  exec-path)
-      ring-bell-function (lambda () (message "*beep*"))
+;; add the extra paths onto PATH
+(setenv "PATH"
+        (concat
+         (reduce (lambda (a b) (concat a b ":"))
+                 (run-isg-machine-function 'get-extra-paths)
+                 :initial-value "")
+         (getenv "PATH")))
+;; add the extra paths onto exec-path
+(setq exec-path (append (run-isg-machine-function 'get-extra-paths)
+                        exec-path))
+
+(setq ring-bell-function (lambda () (message "*beep*"))
 
       browse-url-browser-function 'browse-url-generic
       browse-url-generic-program (isg-val 'url-opener)

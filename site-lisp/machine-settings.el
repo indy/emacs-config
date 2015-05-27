@@ -7,7 +7,10 @@
     (machine-os "linux") ; one of "linux" "osx" "windows"
     (url-opener "chromium-browser")
     (save-folder "/tmp/emacs.d-saves")
-    (extra-exec-paths ("/usr/local/bin"))))
+    (get-extra-paths (lambda ()
+                            (list (concat (getenv "HOME") "/local/bin") 
+                                  "/usr/local/bin" 
+                                  "/usr/local/go/bin")))))
 
 (defun isg-machine-settings ()
   "system specific overrides go here"
@@ -26,9 +29,6 @@
    ((string-match "^ernesto" system-name) ; Macbook Air i5
     '((old-default-font "-apple-Monaco-medium-normal-normal-*-10-*-*-*-m-0-iso10646-1")
       (default-font "-apple-Inconsolata-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
-      (extra-exec-paths ("/Users/indy/local/bin" 
-                         "/usr/local/bin" 
-                         "/usr/local/go/bin"))
       (machine-os "osx")
       (save-folder "~/mem/emacs-save-folder")
       (url-opener "open")
@@ -37,38 +37,31 @@
       (frame-l ((top . 0) (left . 362) (width . 80) (height . 55)))
 
       (post-setup-fn (lambda ()
-                       (setenv "PATH" 
-                               (concat
-                                (concat (getenv "HOME") "/local/bin:")
-                                (concat (getenv "HOME") "/local/gradle/bin:")
-                                "/usr/local/bin:"
-                                "/usr/local/go/bin:"
-                                "/Applications/Postgres.app/Contents/MacOS/bin:"
-                                (getenv "PATH")))
-                       
+                       (setenv "GOPATH" (concat (getenv "HOME") "/scratch/go"))
                        (setenv "CLOJURESCRIPT_HOME"
                                (concat (getenv "HOME")
                                        "/code/clojure/clojurescript"))
+                       (setq inferior-lisp-program "lein repl")))
 
-                       (setq inferior-lisp-program "lein repl") 
-
-                       ))))
+      (get-extra-paths (lambda ()
+                         (list (concat (getenv "GOPATH") "/bin")
+                               (concat (getenv "HOME") "/local/bin")
+                               (concat (getenv "HOME") "/local/gradle/bin")
+                               "/usr/local/bin" 
+                               "/usr/local/go/bin"
+                               "/Applications/Postgres.app/Contents/MacOS/bin")))
+      
+      ))
 
    ((string-match "^che" system-name)  ; asus ul20a
     '((post-setup-fn (lambda ()
-                       (setenv "GOPATH" (concat (getenv "HOME") "/scratch/go"))
-
-                       (setenv "PATH" 
-                               (concat
-                                (concat (getenv "GOPATH") "/bin:")
-                                (concat (getenv "HOME") "/local/bin:")
-                                "/usr/local/bin:" 
-                                "/usr/local/go/bin:" 
-                                (getenv "PATH")))
-
-                       (push (concat (getenv "HOME") "/local/bin") exec-path)
-                       (push "/usr/local/go/bin" exec-path)))
-
+                       (setenv "GOPATH" (concat (getenv "HOME") "/scratch/go"))))
+      (get-extra-paths (lambda ()
+                         (list (concat (getenv "GOPATH") "/bin")
+                               (concat (getenv "HOME") "/local/bin")
+                               "/usr/local/bin" 
+                               "/usr/local/go/bin")))
+      
       (key-setup (([mouse-1] . nil)
                   ([double-mouse-1] . nil)
                   ([drag-mouse-1] . nil)
@@ -97,7 +90,6 @@
    
    ((string-match "^blue" system-name) ; G5 iMac at home
     '((default-font "-apple-andale mono-medium-r-normal--0-0-0-0-m-0-mac-roman")
-      (extra-exec-paths ("/Users/indy/bin" "/usr/local/bin" "/opt/local/bin"))
       (machine-os "osx")
       (save-folder "~/.emacs.d/saves")
 
@@ -109,7 +101,6 @@
       (default-font "-outline-Courier New-normal-normal-normal-mono-13-*-*-*-c-*-fontset-startup")
       (machine-os "windows") ; one of "linux" "osx" "windows"
       (save-folder "~/emacs-saves")
-      (extra-exec-paths ("c:\\home\\bin\\emacs-23.1\\bin"))
       (post-setup-fn (lambda ()
                        (find-file "k:/Direct Marketing/Data Analyst/indy/notes/done.org")
                        (find-file "k:/Direct Marketing/Data Analyst/indy/notes/notes.org")
