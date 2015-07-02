@@ -6,7 +6,7 @@
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.es6$" . js2-mode))
 
-;(add-to-list 'auto-mode-alist '("\\.gradle$" . groovy-mode))
+(add-to-list 'auto-mode-alist '("\\.gradle$" . groovy-mode))
 (add-to-list 'auto-mode-alist 
              '("\\.sql$" . (lambda ()
                              (sql-mode)

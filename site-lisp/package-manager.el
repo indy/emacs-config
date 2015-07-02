@@ -29,8 +29,6 @@
     deft
     edit-server
     find-file-in-git-repo
-    git-commit-mode
-    git-rebase-mode
     go-mode
     helm
     htmlize
