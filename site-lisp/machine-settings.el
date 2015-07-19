@@ -37,10 +37,6 @@
       (frame-l ((top . 0) (left . 362) (width . 80) (height . 55)))
 
       (post-setup-fn (lambda ()
-                       (setenv "GOPATH" (concat (getenv "HOME") "/scratch/go"))
-                       (setenv "CLOJURESCRIPT_HOME"
-                               (concat (getenv "HOME")
-                                       "/code/clojure/clojurescript"))
                        (setq inferior-lisp-program "lein repl")))
 
       (get-extra-paths (lambda ()
