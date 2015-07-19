@@ -1,9 +1,4 @@
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
-;;; C-c SPC -> ace-jump-word-mode
-;;; C-u C-c SPC -> ace-jump-char-mode
-;;; C-u C-u C-c SPC -> ace-jump-line-mode
-
-
+(global-set-key (kbd "C-c SPC") 'avy-goto-word-or-subword-1)
 
 ;; Font size
 (global-set-key (kbd "C-+") 'text-scale-increase)

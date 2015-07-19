@@ -16,9 +16,9 @@
 ;;; copied from http://batsov.com/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/
 
 (defvar prelude-packages
-  '(ace-jump-mode
-    ag
+  '(ag
     auto-complete
+    avy
     cider
     clojure-cheatsheet
     clojure-mode
