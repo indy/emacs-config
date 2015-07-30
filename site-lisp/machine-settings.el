@@ -118,9 +118,9 @@
 ; (setq gnuserv-frame(selected-frame)))))
 
 (cl-labels ((load-settings (which)
-                        (mapcar (lambda (pair)
-                                  (put 'isg-local (car pair) (cadr pair)))
-                                which)))
+                           (mapcar (lambda (pair)
+                                     (put 'isg-local (car pair) (cadr pair)))
+                                   which)))
   (load-settings (isg-default-machine-settings))
   (load-settings (isg-machine-settings)))
 
