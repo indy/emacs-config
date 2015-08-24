@@ -4,9 +4,8 @@
              '("marmalade" . "https://marmalade-repo.org/packages/") t)
 
 ;;; the bleeding edge melpa library can be added with:
-;
-; (add-to-list 'package-archives
-;              '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 (add-to-list 'package-archives
              '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
@@ -25,10 +24,13 @@
     clojurescript-mode
     color-theme
     company
+    company-racer
     dash
     deft
     edit-server
     find-file-in-git-repo
+    flycheck
+    flycheck-rust
     go-mode
     helm
     htmlize
@@ -39,6 +41,7 @@
     parenface
     pkg-info
     popup
+    racer
     rainbow-mode
     rust-mode
     simple-httpd
