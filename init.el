@@ -50,3 +50,8 @@
 (helm-autoresize-mode 1)
 (setq helm-autoresize-max-height 30)
 (setq helm-autoresize-min-height 30)
+
+;; quick fix so that C-M-s ignores the dist folder in seni-web
+(setq ag-ignore-list (list "dist"))
+
+(setq create-lockfiles nil)
