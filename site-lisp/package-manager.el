@@ -5,10 +5,10 @@
 
 ;;; the bleeding edge melpa library can be added with:
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+             '("melpa" . "https://melpa.milkbox.net/packages/") t)
 
 (add-to-list 'package-archives
-             '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
+             '("melpa-stable" . "https://melpa-stable.milkbox.net/packages/") t)
 
 (package-initialize)
 
@@ -29,8 +29,8 @@
     deft
     edit-server
     find-file-in-git-repo
-    flycheck
-    flycheck-rust
+    ; flycheck
+    ; flycheck-rust
     go-mode
     helm
     htmlize

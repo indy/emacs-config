@@ -1,4 +1,4 @@
-(add-hook 'after-init-hook #'global-flycheck-mode)
+; (add-hook 'after-init-hook #'global-flycheck-mode)
 
 (add-to-list 'auto-mode-alist '("\\.seni$" . scheme-mode))
 (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
@@ -187,16 +187,19 @@ in current buffer."
 
 (require 'company-racer)
 
+(add-hook 'racer-mode-hook #'eldoc-mode)
+
 (add-hook 'rust-mode-hook
           '(lambda ()
              (company-mode)
-             (racer-activate)
+             (racer-mode)
              ;; Use flycheck-rust in rust-mode
-             (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+             ; (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
              ;; Key binding to jump to method definition
              (local-set-key (kbd "M-.") #'racer-find-definition)
              ;; Key binding to auto complete and indent
-             (local-set-key (kbd "TAB") #'racer-complete-or-indent)))
+             ; (local-set-key (kbd "TAB") #'racer-complete-or-indent)
+             ))
 
 (eval-after-load 'company
   '(progn
