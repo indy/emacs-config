@@ -71,6 +71,8 @@
 
       standard-indent 2
 
+      create-lockfiles nil        ; don't create lockfiles
+
       x-select-enable-clipboard t
       x-select-enable-primary t
       save-interprogram-paste-before-kill t

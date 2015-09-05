@@ -1,3 +1,5 @@
+; (add-hook 'after-init-hook #'global-flycheck-mode)
+
 (add-to-list 'auto-mode-alist '("\\.seni$" . scheme-mode))
 (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
@@ -6,7 +8,7 @@
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.es6$" . js2-mode))
 
-;(add-to-list 'auto-mode-alist '("\\.gradle$" . groovy-mode))
+(add-to-list 'auto-mode-alist '("\\.gradle$" . groovy-mode))
 (add-to-list 'auto-mode-alist 
              '("\\.sql$" . (lambda ()
                              (sql-mode)
@@ -26,6 +28,7 @@
 (add-to-list 'auto-mode-alist '("\\.geom\\'" . glsl-mode))
 
 (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+(add-hook 'web-mode-hook 'ws-butler-mode)
 (defadvice web-mode-highlight-part (around tweak-jsx activate)
   (if (equal web-mode-content-type "jsx")
       (let ((web-mode-enable-part-face nil))
@@ -177,5 +180,38 @@ in current buffer."
 
 ; hide the *nrepl-connection* and *nrepl-server* buffers
 (setq nrepl-hide-special-buffers t)
+
+
+(setq racer-cmd "/Users/indy/code/rust/racer/target/release/racer"
+      racer-rust-src-path "/Users/indy/code/rust/rust/src/")
+
+(require 'company-racer)
+
+(add-hook 'racer-mode-hook #'eldoc-mode)
+
+(add-hook 'rust-mode-hook
+          '(lambda ()
+             (company-mode)
+             (racer-mode)
+             ;; Use flycheck-rust in rust-mode
+             ; (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+             ;; Key binding to jump to method definition
+             (local-set-key (kbd "M-.") #'racer-find-definition)
+             ;; Key binding to auto complete and indent
+             ; (local-set-key (kbd "TAB") #'racer-complete-or-indent)
+             ))
+
+(eval-after-load 'company
+  '(progn
+     (add-to-list 'company-backends 'company-racer)
+
+     ;; Reduce the time after which the company auto completion popup opens
+     ;; Reduce the number of characters before company kicks in
+     (setq company-idle-delay 0.2
+           company-minimum-prefix-length 1
+           company-tooltip-align-annotations t)
+     
+     (define-key company-active-map (kbd "C-n") 'company-select-next)
+     (define-key company-active-map (kbd "C-p") 'company-select-previous)))
 
 (provide 'mode-configs)

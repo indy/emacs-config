@@ -142,12 +142,6 @@
      (set-face-foreground 'diff-added "#0E3E24")
      (set-face-foreground 'diff-removed "#8B372E")))
 
-(eval-after-load 'magit
-  '(progn
-     (set-face-foreground 'magit-diff-add "#0E3E24")
-     (set-face-foreground 'magit-diff-del "#8B372E")
-     (set-face-background 'magit-item-highlight "#111111")))
-
 (eval-after-load 'yasnippet
   '(progn
      (set-face-foreground 'yas-field-highlight-face "#ffffff")

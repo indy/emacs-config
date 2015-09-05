@@ -4,33 +4,33 @@
              '("marmalade" . "https://marmalade-repo.org/packages/") t)
 
 ;;; the bleeding edge melpa library can be added with:
-;
-; (add-to-list 'package-archives
-;              '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.milkbox.net/packages/") t)
 
 (add-to-list 'package-archives
-             '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
+             '("melpa-stable" . "https://melpa-stable.milkbox.net/packages/") t)
 
 (package-initialize)
 
 ;;; copied from http://batsov.com/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/
 
 (defvar prelude-packages
-  '(ace-jump-mode
-    ag
+  '(ag
     auto-complete
+    avy
     cider
     clojure-cheatsheet
     clojure-mode
     clojurescript-mode
     color-theme
     company
+    company-racer
     dash
     deft
     edit-server
     find-file-in-git-repo
-    git-commit-mode
-    git-rebase-mode
+    ; flycheck
+    ; flycheck-rust
     go-mode
     helm
     htmlize
@@ -41,6 +41,7 @@
     parenface
     pkg-info
     popup
+    racer
     rainbow-mode
     rust-mode
     simple-httpd
