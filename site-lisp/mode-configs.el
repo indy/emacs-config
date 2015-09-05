@@ -181,9 +181,11 @@ in current buffer."
 ; hide the *nrepl-connection* and *nrepl-server* buffers
 (setq nrepl-hide-special-buffers t)
 
-
-(setq racer-cmd "/Users/indy/code/rust/racer/target/release/racer"
-      racer-rust-src-path "/Users/indy/code/rust/rust/src/")
+(if (string-match "osx" (isg-val 'machine-os))
+    (setq racer-cmd "/Users/indy/code/rust/racer/target/release/racer"
+          racer-rust-src-path "/Users/indy/code/rust/rust/src/")
+  (setq racer-cmd "/home/indy/code/rust/racer/target/release/racer"
+        racer-rust-src-path "/home/indy/code/rust/rust/src/"))
 
 (require 'company-racer)
 
@@ -196,10 +198,7 @@ in current buffer."
              ;; Use flycheck-rust in rust-mode
              ; (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
              ;; Key binding to jump to method definition
-             (local-set-key (kbd "M-.") #'racer-find-definition)
-             ;; Key binding to auto complete and indent
-             ; (local-set-key (kbd "TAB") #'racer-complete-or-indent)
-             ))
+             (local-set-key (kbd "M-.") #'racer-find-definition)))
 
 (eval-after-load 'company
   '(progn

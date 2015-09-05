@@ -56,7 +56,8 @@
                          (list (concat (getenv "GOPATH") "/bin")
                                (concat (getenv "HOME") "/local/bin")
                                "/usr/local/bin" 
-                               "/usr/local/go/bin")))
+                               "/usr/local/go/bin"
+                               "/home/indy/code/rust/racer/target/release")))
       
       (key-setup (([mouse-1] . nil)
                   ([double-mouse-1] . nil)
