@@ -126,7 +126,7 @@
 ; (edit-server-start)
 
 ;(load "server")
-;(unless (server-running-p) (server-start))
+(unless (server-running-p) (server-start))
 (new-frame)
 
 (provide 'global-settings)

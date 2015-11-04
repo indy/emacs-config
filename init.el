@@ -13,6 +13,8 @@
 (push "~/.emacs.d/external/expand-region.el" load-path)
 
 (require 'magit)
+(setq magit-push-always-verify nil)
+
 (require 'helper-functions)
 (require 'machine-settings)
 (require 'mode-configs)
@@ -33,13 +35,6 @@
  '(custom-safe-themes
    (quote
     ("09cf608f7247a53f1caffb909822e2f4cf8205dd9d6c0040c029d84e7d4eb5a1" default))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'actress)
@@ -55,3 +50,5 @@
 (setq ag-ignore-list (list "dist"))
 
 (setq create-lockfiles nil)
+
+; (message "startup time %s." (emacs-init-time))
