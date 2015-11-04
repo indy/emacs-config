@@ -1,14 +1,14 @@
-(defun clojurescript-repl ()
- (interactive)
- (run-lisp "lein trampoline cljsbuild repl-listen"))
-
-;;; send the last sexp to the inferior lisp 
-;;; process and then call (main) to re-render
-(defun isg-seni-eval-defn (&optional and-go)
-  (interactive "P")
-  (lisp-do-defun 'lisp-eval-string 'lisp-eval-region)
-  (if and-go (switch-to-lisp t))
-  (comint-send-string (inferior-lisp-proc) "(main)\n"))
+;;; display 'fn' as the lambda symbol
+(defun pretty-fn nil 
+  (font-lock-add-keywords
+   nil `(("(\\(fn\\>\\)" 
+          (0 (progn (compose-region (match-beginning 1) (match-end 1) 
+                                    ,(make-char 'greek-iso8859-7 107))
+                    nil)))
+         ("\\(#\\)("
+          (0 (progn (compose-region (match-beginning 1) (match-end 1)
+                                    402)
+                    nil))))))
 
 (defun isg-val (property)
   (get 'isg-local property))
