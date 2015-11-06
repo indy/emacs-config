@@ -14,6 +14,21 @@
 (defun isg-machine-settings ()
   "system specific overrides go here"
   (cond
+   ((string-match "^localhost" system-name)  ; chromebook
+    '((frame-r ((top . 0) (left . 780) (width . 80) (height . 59)))
+      (frame-l ((top . 0) (left . 210) (width . 80) (height . 59)))
+      (post-setup-fn (lambda ()
+                       (setenv "PATH" 
+                               (concat
+                                (concat (getenv "HOME") "/local/bin:")
+                                "/usr/local/bin:" 
+                                (getenv "PATH")))
+                       (push (concat (getenv "HOME") "/local/bin") exec-path)))
+      (get-extra-paths (lambda ()
+                         (list (concat (getenv "HOME") "/local/bin")
+                               "/usr/local/bin" )))))
+
+   
    ((string-match "^debian" system-name)  ; debian vm on ernesto
     '((post-setup-fn (lambda ()
                        (setq x-super-keysym 'meta)
@@ -47,6 +62,7 @@
       
       ))
 
+   
    ((string-match "^che" system-name)  ; asus ul20a
     '((post-setup-fn (lambda ()
                        (setenv "GOPATH" (concat (getenv "HOME") "/scratch/go"))))
@@ -62,6 +78,7 @@
                   ([drag-mouse-1] . nil)
                   ([down-mouse-1] . nil)))))
 
+   
    ((string-match "^raul" system-name)  ; eee 1000
     '((hyperspec-root "file:////home/user/docs/cl/HyperSpec/")
                                         ;(default-font "-unknown-DejaVu Sans Mono-normal-normal-normal-*-20-*-*-*-m-0-fontset-startup")
@@ -82,6 +99,7 @@
                   ([double-mouse-1] . nil)
                   ([drag-mouse-1] . nil)
                   ([down-mouse-1] . nil)))))
+
    
    ((string-match "^blue" system-name) ; G5 iMac at home
     '((default-font "-apple-andale mono-medium-r-normal--0-0-0-0-m-0-mac-roman")
@@ -90,6 +108,7 @@
 
       (frame-r ((top . 20) (left . 320) (width . 80) (height . 71)))
       (frame-l ((top . 20) (left . 902) (width . 80) (height . 71)))))
+   
    
    ((string-match "^GOSHCC" system-name)  ; GOSH PC
     '(
@@ -103,6 +122,7 @@
 
       (frame-r ((top . 0) (left . 0) (width . 80) (height . 60)))
       (frame-l ((top . 20) (left . 510) (width . 80) (height . 60)))))
+   
 
    ((equal system-name "green")         ; old laptop thrown out by orange
     '((hyperspec-root "file:///usr/share/common-lisp/isg-hyperspec/HyperSpec/")))))
