@@ -494,6 +494,9 @@
 
 (autoload 'seni-mode "seni" nil t)
 (add-to-list 'auto-mode-alist '("\\.seni$" . seni-mode))
+(add-hook 'seni-mode-hook 'smartparens-strict-mode)
+
+
 (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
 
