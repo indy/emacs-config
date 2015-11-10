@@ -84,8 +84,8 @@
   :init
   (use-package helm-ag
     :commands helm-ag)
-  :config
   (global-set-key "\C-\M-s"  'ag-project)
+  :config
   ;; quick fix so that C-M-s ignores the dist folder in seni-web
   (setq ag-ignore-list (list "dist")))
 
@@ -492,8 +492,8 @@
 (isg-time-section "ws-butler")
 ;; ----------------------------------------------------------------------------
 
-
-(add-to-list 'auto-mode-alist '("\\.seni$" . scheme-mode))
+(autoload 'seni-mode "seni" nil t)
+(add-to-list 'auto-mode-alist '("\\.seni$" . seni-mode))
 (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
 
@@ -523,6 +523,10 @@ in current buffer."
 (add-hook 'scheme-mode-hook
           (lambda ()
             (define-key scheme-mode-map (kbd ")") 'sp-up-sexp)))
+
+(add-hook 'seni-mode-hook
+          (lambda ()
+            (define-key seni-mode-map (kbd ")") 'sp-up-sexp)))
 
 
 ; hide the *nrepl-connection* and *nrepl-server* buffers
