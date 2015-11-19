@@ -218,6 +218,23 @@
 ;; ----------------------------------------------------------------------------
 
 
+(use-package exec-path-from-shell
+  :ensure t
+  :demand t
+  :config
+  ;; (exec-path-from-shell-copy-env "TWITTER_CONSUMER_KEY")
+  ;; (exec-path-from-shell-copy-env "TWITTER_CONSUMER_SECRET")
+  ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN")
+  ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN_SECRET")
+  ;; (exec-path-from-shell-copy-env "GOPATH")
+  (exec-path-from-shell-copy-env "RUST_SRC_PATH")
+  (when (memq window-system '(mac ns))
+    (exec-path-from-shell-initialize)))
+
+(isg-time-section "exec-path-from-shell")
+;; ----------------------------------------------------------------------------
+
+
 (use-package expand-region
   :commands er/expand-region
   :init
@@ -580,15 +597,15 @@ in current buffer."
 (defalias 'list-buffers 'ibuffer)
 
 ;; add the extra paths onto PATH
-(setenv "PATH"
-        (concat
-         (reduce (lambda (a b) (concat a b ":"))
-                 (run-isg-machine-function 'get-extra-paths)
-                 :initial-value "")
-         (getenv "PATH")))
+;(setenv "PATH"
+;        (concat
+;         (reduce (lambda (a b) (concat a b ":"))
+;                 (run-isg-machine-function 'get-extra-paths)
+;                 :initial-value "")
+;         (getenv "PATH")))
 ;; add the extra paths onto exec-path
-(setq exec-path (append (run-isg-machine-function 'get-extra-paths)
-                        exec-path))
+;(setq exec-path (append (run-isg-machine-function 'get-extra-paths)
+                                        ;                        exec-path))
 
 (setq ring-bell-function (lambda () (message "*beep*"))
 

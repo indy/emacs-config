@@ -49,17 +49,7 @@
       (frame-l ((top . 0) (left . 362) (width . 80) (height . 55)))
 
       (post-setup-fn (lambda ()
-                       (setq inferior-lisp-program "lein repl")))
-
-      (get-extra-paths (lambda ()
-                         (list (concat (getenv "GOPATH") "/bin")
-                               (concat (getenv "HOME") "/local/bin")
-                               (concat (getenv "HOME") "/local/gradle/bin")
-                               "/usr/local/bin" 
-                               "/usr/local/go/bin"
-                               "/Applications/Postgres.app/Contents/MacOS/bin")))
-      
-      ))
+                       (setq inferior-lisp-program "lein repl")))))
 
    
    ((string-match "^che" system-name)  ; asus ul20a
@@ -80,7 +70,7 @@
    
    ((string-match "^raul" system-name)  ; eee 1000
     '((hyperspec-root "file:////home/user/docs/cl/HyperSpec/")
-                                        ;(default-font "-unknown-DejaVu Sans Mono-normal-normal-normal-*-20-*-*-*-m-0-fontset-startup")
+      ;; (default-font "-unknown-DejaVu Sans Mono-normal-normal-normal-*-20-*-*-*-m-0-fontset-startup")
       (post-setup-fn (lambda ()
                        (setenv "PATH" 
                                (concat
