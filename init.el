@@ -596,17 +596,6 @@ in current buffer."
 
 (defalias 'list-buffers 'ibuffer)
 
-;; add the extra paths onto PATH
-;(setenv "PATH"
-;        (concat
-;         (reduce (lambda (a b) (concat a b ":"))
-;                 (run-isg-machine-function 'get-extra-paths)
-;                 :initial-value "")
-;         (getenv "PATH")))
-;; add the extra paths onto exec-path
-;(setq exec-path (append (run-isg-machine-function 'get-extra-paths)
-                                        ;                        exec-path))
-
 (setq ring-bell-function (lambda () (message "*beep*"))
 
       browse-url-browser-function 'browse-url-generic
@@ -720,10 +709,19 @@ in current buffer."
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("09cf608f7247a53f1caffb909822e2f4cf8205dd9d6c0040c029d84e7d4eb5a1" default))))
+    ("09cf608f7247a53f1caffb909822e2f4cf8205dd9d6c0040c029d84e7d4eb5a1" default)))
+ '(package-selected-packages
+   (quote
+    (exec-path-from-shell ws-butler web-mode use-package typescript toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode clojure-cheatsheet avy auto-complete ag ace-jump-mode))))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'actress)
 
 (isg-time-section "theme")
 ; (message "startup time %s." (emacs-init-time))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

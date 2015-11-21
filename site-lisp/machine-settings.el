@@ -16,30 +16,12 @@
   (cond
    ((string-match "^localhost" system-name)  ; chromebook
     '((frame-r ((top . 0) (left . 780) (width . 80) (height . 59)))
-      (frame-l ((top . 0) (left . 210) (width . 80) (height . 59)))
-      (post-setup-fn (lambda ()
-                       (setenv "PATH" 
-                               (concat
-                                (concat (getenv "HOME") "/local/bin:")
-                                "/usr/local/bin:" 
-                                (getenv "PATH")))
-                       (push (concat (getenv "HOME") "/local/bin") exec-path)))
-      (get-extra-paths (lambda ()
-                         (list (concat (getenv "HOME") "/local/bin")
-                               "/usr/local/bin" )))))
+      (frame-l ((top . 0) (left . 210) (width . 80) (height . 59)))))
 
-   
    ((string-match "^debian" system-name)  ; debian vm on ernesto
     '((post-setup-fn (lambda ()
-                       (setq x-super-keysym 'meta)
-                       (setenv "PATH" 
-                               (concat
-                                (concat (getenv "HOME") "/local/bin:")
-                                "/usr/local/bin:" 
-                                (getenv "PATH")))
-                       (push (concat (getenv "HOME") "/local/bin") exec-path)))))
+                       (setq x-super-keysym 'meta)))))
 
-      
    ((string-match "^ernesto" system-name) ; Macbook Air i5
     '((default-font "-apple-Inconsolata-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
       (machine-os "osx")
@@ -94,7 +76,6 @@
     '((default-font "-apple-andale mono-medium-r-normal--0-0-0-0-m-0-mac-roman")
       (machine-os "osx")
       (save-folder "~/.emacs.d/saves")
-
       (frame-r ((top . 20) (left . 320) (width . 80) (height . 71)))
       (frame-l ((top . 20) (left . 902) (width . 80) (height . 71)))))
    
