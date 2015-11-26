@@ -37,15 +37,11 @@
 (isg-time-section "machine-settings")
 ;; ----------------------------------------------------------------------------
 
-
 (require 'package)
-
-(add-to-list 'package-archives
-             '("marmalade" . "https://marmalade-repo.org/packages/") t)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives
-             '("melpa-stable" . "https://melpa-stable.milkbox.net/packages/") t)
+(setcdr (last package-archives)
+        '(("marmalade" . "https://marmalade-repo.org/packages/")
+          ("melpa" . "https://melpa.milkbox.net/packages/")
+          ("melpa-stable" . "https://melpa-stable.milkbox.net/packages/")))
 
 (package-initialize) ; most of this section's time is spent here
 
