@@ -13,12 +13,6 @@
 (defun isg-val (property)
   (get 'isg-local property))
 
-(defun isg-other-frame ()
-  (interactive)
-  (new-frame)
-  (set-frame-position (selected-frame) 195 0)
-  (set-frame-size (selected-frame) 80 55))
-
 (defun isg-start-shell (shell-name)
   "start a new shell"
   (interactive "sShell name: ")
