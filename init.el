@@ -239,15 +239,6 @@
 (isg-time-section "expand-region")
 ;; ----------------------------------------------------------------------------
 
-
-(use-package find-file-in-git-repo
-  :bind ("\C-x\C-g" . find-file-in-git-repo)
-  :defer t)
-
-(isg-time-section "find-file-in-git-repo")
-;; ----------------------------------------------------------------------------
-
-
 (use-package glsl-mode
   :mode (("\\.glsl\\'" . glsl-mode)
          ("\\.vert\\'" . glsl-mode)
@@ -296,6 +287,14 @@
   (setq helm-autoresize-min-height 30))
 
 (isg-time-section "helm-config")
+;; ----------------------------------------------------------------------------
+
+
+(use-package helm-ls-git
+  :bind ("\C-x\C-g" . helm-browse-project)
+  :defer t)
+
+(isg-time-section "helm-ls-git")
 ;; ----------------------------------------------------------------------------
 
 
