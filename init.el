@@ -69,7 +69,7 @@
 
 ;; after use-package-always-ensure is set, all subsequent use-package
 ;; statements will download packages if needed
-;; (setq use-package-always-ensure t)
+(setq use-package-always-ensure t)
 (setq use-package-verbose t)
 (isg-time-section "loading use-package")
 ;; ----------------------------------------------------------------------------
@@ -259,20 +259,28 @@
 (isg-time-section "go-mode")
 ;; ----------------------------------------------------------------------------
 
-(use-package helm-config
-  :demand t
+
+(use-package helm
+  :ensure t
+  :diminish helm-mode
+  :init
+  (progn
+    (require 'helm-config)
+    (setq helm-candidate-number-limit 100)
+    ;; From https://gist.github.com/antifuchs/9238468
+    (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
+          helm-input-idle-delay 0.01  ; this actually updates things
+                                        ; reeeelatively quickly.
+          helm-yas-display-key-on-candidate t
+          helm-quick-update t
+          helm-M-x-requires-pattern nil
+          helm-ff-skip-boring-files t
+          helm-boring-file-regexp-list '("\\.\\.$" "\\.$" "\\.git$" "\\.hg$" "\\.svn$" "\\.CVS$"  "\\.la$" "\\.o$" "~$" "\\.so$" "\\.a$" "\\.elc$" "\\.fas$" "\\.fasl$" "\\.pyc$" "\\.pyo$")
+          helm-display-header-line nil
+          helm-autoresize-max-height 30
+          helm-autoresize-min-height 30)
+    (helm-mode))
   :config
-  (use-package helm-mode
-    :diminish helm-mode
-    :init
-    (helm-mode 1))
-
-;;  (add-to-list 'helm-completing-read-handlers-alist
-;;               (cons 'find-file-read-only 'ido))
-
-  (setq helm-ff-skip-boring-files t)
-  (setq helm-boring-file-regexp-list '("\\.\\.$" "\\.$" "\\.git$" "\\.hg$" "\\.svn$" "\\.CVS$"  "\\.la$" "\\.o$" "~$" "\\.so$" "\\.a$" "\\.elc$" "\\.fas$" "\\.fasl$" "\\.pyc$" "\\.pyo$"))
-  
   (global-set-key (kbd "M-x") 'helm-M-x)
   (global-set-key (kbd "M-y") 'helm-show-kill-ring)
   (global-set-key (kbd "C-x b") 'helm-mini)
@@ -284,13 +292,10 @@
   (define-key helm-map (kbd "C-z") 'helm-select-action)
   (define-key helm-map (kbd "C-w") 'backward-kill-word)
   ;; helm crap
-  (setq helm-display-header-line nil)
   (set-face-attribute 'helm-source-header nil :height 0.1)
-  (helm-autoresize-mode 1)
-  (setq helm-autoresize-max-height 30)
-  (setq helm-autoresize-min-height 30))
+  (helm-autoresize-mode 1))
 
-(isg-time-section "helm-config")
+(isg-time-section "helm")
 ;; ----------------------------------------------------------------------------
 
 
