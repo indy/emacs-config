@@ -51,3 +51,4 @@
                      (isg-val 'default-font))))
 
 (provide 'helper-functions)
+;;; helper-functions.el ends here

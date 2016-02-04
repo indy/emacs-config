@@ -107,3 +107,4 @@
 ; (setq gnuserv-frame(selected-frame)))))
 
 (provide 'machine-settings)
+;;; machine-settings.el ends here

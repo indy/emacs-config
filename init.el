@@ -1,3 +1,8 @@
+
+;; packages that this config doesn't use anymore:
+;; edit-server-20141231.1358
+
+
 ;; timing code
 (setq isg-section-start-time (float-time))
 (setq isg-section-end-time (float-time))
@@ -238,6 +243,39 @@
 
 (isg-time-section "expand-region")
 ;; ----------------------------------------------------------------------------
+
+
+;; setting up flycheck for eslint checks using instructions from:
+;; http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
+;;
+;; C-c ! l : see full list of errors
+;; C-c ! n : next error
+;; C-c ! p : previous error
+(use-package flycheck
+  ;;  :defer 5
+  :init
+  (use-package flycheck-rust
+    :demand t)
+  :config
+  ;; disable jshint since we prefer eslint checking
+  (setq-default flycheck-disabled-checkers
+                (append flycheck-disabled-checkers
+                        '(javascript-jshint)))
+
+  ;; use eslint with web-mode for jsx files
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+
+  ;; customize flycheck temp file prefix
+  (setq-default flycheck-temp-prefix ".flycheck")
+
+  ;; disable json-jsonlist checking for json files
+  (setq-default flycheck-disabled-checkers
+                (append flycheck-disabled-checkers
+                        '(json-jsonlist))))
+(isg-time-section "flycheck")
+;; ----------------------------------------------------------------------------
+
 
 (use-package glsl-mode
   :mode (("\\.glsl\\'" . glsl-mode)
@@ -708,6 +746,7 @@ in current buffer."
 (global-set-key (kbd "<M-up>") 'backward-paragraph)
 (global-set-key (kbd "<M-down>") 'forward-paragraph)
 
+(global-set-key "\C-x\C-f" 'helm-find-files)
 
 (global-set-key (kbd "C-<return>") 'electric-newline-and-maybe-indent)
 
@@ -740,3 +779,9 @@ in current buffer."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; turn on flychecking globally
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+(provide 'init)
+;;; init.el ends here
