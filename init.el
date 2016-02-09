@@ -2,6 +2,7 @@
 ;; packages that this config doesn't use anymore:
 ;; edit-server-20141231.1358
 
+;;; Code:
 
 ;; timing code
 (setq isg-section-start-time (float-time))
@@ -94,6 +95,13 @@
 ;; ----------------------------------------------------------------------------
 
 
+(use-package aggressive-indent
+  :commands aggressive-indent-mode)
+
+(isg-time-section "aggressive-indent")
+;; ----------------------------------------------------------------------------
+
+
 (use-package auto-complete-config
   :ensure auto-complete
   :defer t)
@@ -103,9 +111,7 @@
 
 
 (use-package avy
-  :commands avy-goto-word-or-subword-1
-  :init
-  (global-set-key (kbd "C-c SPC") 'avy-goto-word-or-subword-1))
+  :bind ("M-h" . avy-goto-word-or-subword-1))
 
 (isg-time-section "avy")
 ;; ----------------------------------------------------------------------------
@@ -176,11 +182,9 @@
 (use-package css-mode
   :mode (("\\.css\\'" . css-mode)
          ("\\.less\\'" . css-mode))
-  :init
-  (use-package rainbow-mode :defer t)
-  (add-hook 'css-mode-hook 'rainbow-mode)
-  
   :config
+  (use-package rainbow-mode)
+  (add-hook 'css-mode-hook 'rainbow-mode)
   (setq css-indent-offset 2))
 
 (isg-time-section "css-mode")
@@ -237,9 +241,7 @@
 
 
 (use-package expand-region
-  :commands er/expand-region
-  :init
-  (global-set-key (kbd "C-=") 'er/expand-region))
+  :bind ("C-=" . er/expand-region))
 
 (isg-time-section "expand-region")
 ;; ----------------------------------------------------------------------------
@@ -252,10 +254,6 @@
 ;; C-c ! n : next error
 ;; C-c ! p : previous error
 (use-package flycheck
-  ;;  :defer 5
-  :init
-  (use-package flycheck-rust
-    :demand t)
   :config
   ;; disable jshint since we prefer eslint checking
   (setq-default flycheck-disabled-checkers
@@ -264,7 +262,6 @@
 
   ;; use eslint with web-mode for jsx files
   (flycheck-add-mode 'javascript-eslint 'web-mode)
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 
   ;; customize flycheck temp file prefix
   (setq-default flycheck-temp-prefix ".flycheck")
@@ -367,7 +364,8 @@
   (setq js2-basic-offset 2)
   (setq js-indent-level 2)
   (setq js2-global-externs '("require" "expect" "describe" "it" "beforeEach"))
-  (add-hook 'js2-mode-hook 'ws-butler-mode))
+  (add-hook 'js2-mode-hook 'ws-butler-mode)
+  (add-hook 'js2-mode-hook #'aggressive-indent-mode))
 
 (isg-time-section "js2-mode")
 ;; ----------------------------------------------------------------------------
@@ -411,29 +409,24 @@
 ;; ----------------------------------------------------------------------------
 
 
-(use-package racer
-  :defer t
-  :init
-  (add-hook 'racer-mode-hook #'eldoc-mode)
-  (if (string-match "osx" (isg-val 'machine-os))
-    (setq racer-cmd "/Users/indy/code/rust/racer/target/release/racer"
-          racer-rust-src-path "/Users/indy/code/rust/rust/src/")
-  (setq racer-cmd "/home/indy/code/rust/racer/target/release/racer"
-        racer-rust-src-path "/home/indy/code/rust/rust/src/")))
-
-(isg-time-section "racer")
-;; ----------------------------------------------------------------------------
-
-
 (use-package rust-mode
   :mode "\\.rs\\'"
-  :init
+  :config
+  (use-package flycheck-rust)
+  (use-package racer
+    :init
+    (add-hook 'racer-mode-hook #'eldoc-mode)
+    (if (string-match "osx" (isg-val 'machine-os))
+        (setq racer-cmd "/Users/indy/code/rust/racer/target/release/racer"
+              racer-rust-src-path "/Users/indy/code/rust/rust/src/")
+      (setq racer-cmd "/home/indy/code/rust/racer/target/release/racer"
+            racer-rust-src-path "/home/indy/code/rust/rust/src/")))
+
+  (add-hook 'rust-mode-hook #'flycheck-rust-setup)
   (add-hook 'rust-mode-hook
           '(lambda ()
              (company-mode)
              (racer-mode)
-             ;; Use flycheck-rust in rust-mode
-             ; (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
              ;; Key binding to jump to method definition
              (local-set-key (kbd "M-.") #'racer-find-definition))))
 
