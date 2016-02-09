@@ -270,6 +270,7 @@
   (setq-default flycheck-disabled-checkers
                 (append flycheck-disabled-checkers
                         '(json-jsonlist))))
+
 (isg-time-section "flycheck")
 ;; ----------------------------------------------------------------------------
 
@@ -299,22 +300,20 @@
   :ensure t
   :diminish helm-mode
   :init
-  (progn
-    (require 'helm-config)
-    (setq helm-candidate-number-limit 100)
-    ;; From https://gist.github.com/antifuchs/9238468
-    (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
-          helm-input-idle-delay 0.01  ; this actually updates things
+  (require 'helm-config)
+  (setq helm-candidate-number-limit 100)
+  ;; From https://gist.github.com/antifuchs/9238468
+  (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
+        helm-input-idle-delay 0.01  ; this actually updates things
                                         ; reeeelatively quickly.
-          helm-yas-display-key-on-candidate t
-          helm-quick-update t
-          helm-M-x-requires-pattern nil
-          helm-ff-skip-boring-files t
-          helm-boring-file-regexp-list '("\\.\\.$" "\\.$" "\\.git$" "\\.hg$" "\\.svn$" "\\.CVS$"  "\\.la$" "\\.o$" "~$" "\\.so$" "\\.a$" "\\.elc$" "\\.fas$" "\\.fasl$" "\\.pyc$" "\\.pyo$")
-          helm-display-header-line nil
-          helm-autoresize-max-height 30
-          helm-autoresize-min-height 30)
-    (helm-mode))
+        helm-yas-display-key-on-candidate t
+        helm-quick-update t
+        helm-M-x-requires-pattern nil
+        helm-ff-skip-boring-files t
+        helm-boring-file-regexp-list '("\\.\\.$" "\\.$" "\\.git$" "\\.hg$" "\\.svn$" "\\.CVS$"  "\\.la$" "\\.o$" "~$" "\\.so$" "\\.a$" "\\.elc$" "\\.fas$" "\\.fasl$" "\\.pyc$" "\\.pyo$")
+        helm-display-header-line nil
+        helm-autoresize-max-height 30
+        helm-autoresize-min-height 30)
   :config
   (global-set-key (kbd "M-x") 'helm-M-x)
   (global-set-key (kbd "M-y") 'helm-show-kill-ring)
