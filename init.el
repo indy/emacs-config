@@ -1,13 +1,10 @@
-
 ;; packages that this config doesn't use anymore:
 ;; edit-server-20141231.1358
 
-;;; Code:
-
 ;; timing code
-(setq isg-section-start-time (float-time))
-(setq isg-section-end-time (float-time))
-(setq isg-timings '())
+(defvar isg-section-start-time (float-time))
+(defvar isg-section-end-time (float-time))
+(defvar isg-timings '())
 
 (defun isg-time-section (msg)
   (setq isg-section-end-time (float-time))
@@ -207,19 +204,6 @@
         deft-auto-save-interval 5.0))
 
 (isg-time-section "deft")
-;; ----------------------------------------------------------------------------
-
-
-(use-package edit-server
-  :disabled t
-  :if (and window-system
-           (not running-alternate-emacs)
-           (not noninteractive))
-  :init
-  (add-hook 'after-init-hook 'server-start t)
-  (add-hook 'after-init-hook 'edit-server-start t))
-
-(isg-time-section "edit-server")
 ;; ----------------------------------------------------------------------------
 
 
@@ -712,6 +696,8 @@ in current buffer."
 
 (global-set-key "\C-c\C-f" 'flymake-mode)
 
+(global-set-key (kbd "C-M-;") 'comment-region)
+
 (defun isg-start-eshell (shell-name)
   (interactive "sEshell name: ")
   (use-package exec-path-from-shell
@@ -777,6 +763,8 @@ in current buffer."
 
 ;; turn on flychecking globally
 (add-hook 'after-init-hook #'global-flycheck-mode)
+
+(server-start)
 
 (provide 'init)
 ;;; init.el ends here
