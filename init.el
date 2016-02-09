@@ -223,23 +223,6 @@
 ;; ----------------------------------------------------------------------------
 
 
-(use-package exec-path-from-shell
-  :ensure t
-  :demand t
-  :config
-  ;; (exec-path-from-shell-copy-env "TWITTER_CONSUMER_KEY")
-  ;; (exec-path-from-shell-copy-env "TWITTER_CONSUMER_SECRET")
-  ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN")
-  ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN_SECRET")
-  ;; (exec-path-from-shell-copy-env "GOPATH")
-  (exec-path-from-shell-copy-env "RUST_SRC_PATH")
-  (when (memq window-system '(mac ns))
-    (exec-path-from-shell-initialize)))
-
-(isg-time-section "exec-path-from-shell")
-;; ----------------------------------------------------------------------------
-
-
 (use-package expand-region
   :bind ("C-=" . er/expand-region))
 
@@ -728,6 +711,26 @@ in current buffer."
 (global-set-key (kbd "M-z") 'zap-up-to-char)
 
 (global-set-key "\C-c\C-f" 'flymake-mode)
+
+(defun isg-start-eshell (shell-name)
+  (interactive "sEshell name: ")
+  (use-package exec-path-from-shell
+    :ensure t
+    :demand t
+    :config
+    ;; (exec-path-from-shell-copy-env "TWITTER_CONSUMER_KEY")
+    ;; (exec-path-from-shell-copy-env "TWITTER_CONSUMER_SECRET")
+    ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN")
+    ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN_SECRET")
+    ;; (exec-path-from-shell-copy-env "GOPATH")
+    (exec-path-from-shell-copy-env "RUST_SRC_PATH")
+    (when (memq window-system '(mac ns))
+      (exec-path-from-shell-initialize)))
+  (eshell)
+  (if (string= "" shell-name)
+      (rename-uniquely)
+    (rename-buffer shell-name)))
+
 (global-set-key "\M-7" 'isg-start-shell)
 (global-set-key "\M-8" 'isg-start-eshell)
 

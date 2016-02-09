@@ -21,17 +21,6 @@
       (rename-uniquely)
     (rename-buffer shell-name)))
 
-(defun isg-start-eshell (shell-name)
-  "start a new eshell"
-  (interactive "sEshell name: ")
-  (eshell)
-  (if (string= "" shell-name)
-      (rename-uniquely)
-    (rename-buffer shell-name))
-  ; disable yas mode, screws with tab auto-completion
-  ;(yas-minor-mode -1)
-  )
-
 (defun isg-machine-set-keys ()
   "set machine specific key bindings"
   (mapcar (lambda (kons)
