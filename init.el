@@ -279,6 +279,7 @@
         helm-ff-skip-boring-files t
         helm-boring-file-regexp-list '("\\.\\.$" "\\.$" "\\.git$" "\\.hg$" "\\.svn$" "\\.CVS$"  "\\.la$" "\\.o$" "~$" "\\.so$" "\\.a$" "\\.elc$" "\\.fas$" "\\.fasl$" "\\.pyc$" "\\.pyo$")
         helm-display-header-line nil
+        helm-ff-guess-ffap-urls nil
         helm-autoresize-max-height 30
         helm-autoresize-min-height 30)
   :config
