@@ -732,6 +732,9 @@ in current buffer."
 
 (global-set-key (kbd "C-<return>") 'electric-newline-and-maybe-indent)
 
+(global-set-key (kbd "TAB") #'company-indent-or-complete-common)
+(setq company-tooltip-align-annotations t)
+
 (isg-machine-set-keys)                 ; machine specific key bindings
 
 (isg-time-section "keyboard config")
