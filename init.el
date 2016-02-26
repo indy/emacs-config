@@ -748,10 +748,10 @@ in current buffer."
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("4d0c1008debaa663eae9ecd86cdd56ca35e65a225b6fbd90d2e359b6acb2226a" "7c58e016cba9f9d81aaf4fddd335f4979a524ccb3dc4a76095b2e137de09721c" "1f840fe21196d2378f269897ae1e52c2461624745fdf44a438fbabf262a7d8df" "09006fac207613d05a5bda90fabcca91c5debc9ff4bf299edc2b6286e518bcbf" "8d2554cf8b7647937441f0d43145941c778a69545061f97715c826b7030813b7" "b8332409721c8c17b1967113bf0489c4a22a831aa0d05dab9e1352e837f4a0d8" "82f8a8430e56b6fc463020b110ae56234a0be25fb33860fe25dab041af738ca1" "09cf608f7247a53f1caffb909822e2f4cf8205dd9d6c0040c029d84e7d4eb5a1" default)))
+    ("4d0c1008debaa663eae9ecd86cdd56ca35e65a225b6fbd90d2e359b6acb2226a" default)))
  '(package-selected-packages
    (quote
-    (exec-path-from-shell ws-butler web-mode use-package typescript toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode clojure-cheatsheet avy auto-complete ag ace-jump-mode))))
+    (exec-path-from-shell ws-butler web-mode use-package typescript toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode clojure-cheatsheet avy auto-complete ag ace-jump-mode helm-themes helm-ls-git glsl-mode flycheck expand-region aggressive-indent helm-ag))))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'actress)
