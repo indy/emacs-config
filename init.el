@@ -327,12 +327,13 @@
          ("\\.es6\\'" . js2-mode))
   :init
   (use-package js-comint :defer t)
+  (add-hook 'js2-mode-hook 'company-mode)
+  (add-hook 'js2-mode-hook 'ws-butler-mode)
+  (add-hook 'js2-mode-hook #'aggressive-indent-mode)
   :config
   (setq js2-basic-offset 2)
   (setq js-indent-level 2)
-  (setq js2-global-externs '("require" "expect" "describe" "it" "beforeEach"))
-  (add-hook 'js2-mode-hook 'ws-butler-mode)
-  (add-hook 'js2-mode-hook #'aggressive-indent-mode))
+  (setq js2-global-externs '("require" "expect" "describe" "it" "beforeEach")))
 
 (isg-time-section "js2-mode")
 ;; ----------------------------------------------------------------------------
