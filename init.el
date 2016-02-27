@@ -751,7 +751,7 @@ in current buffer."
     ("4d0c1008debaa663eae9ecd86cdd56ca35e65a225b6fbd90d2e359b6acb2226a" default)))
  '(package-selected-packages
    (quote
-    (exec-path-from-shell ws-butler web-mode use-package typescript toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode clojure-cheatsheet avy auto-complete ag ace-jump-mode helm-themes helm-ls-git glsl-mode flycheck expand-region aggressive-indent helm-ag))))
+    (exec-path-from-shell ws-butler web-mode use-package typescript toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode clojure-cheatsheet avy auto-complete ag ace-jump-mode helm-themes helm-ls-git glsl-mode flycheck expand-region aggressive-indent helm-ag flycheck-rust))))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'actress)
