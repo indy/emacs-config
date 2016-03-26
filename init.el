@@ -91,14 +91,6 @@
 (isg-time-section "ag")
 ;; ----------------------------------------------------------------------------
 
-
-(use-package aggressive-indent
-  :commands aggressive-indent-mode)
-
-(isg-time-section "aggressive-indent")
-;; ----------------------------------------------------------------------------
-
-
 (use-package auto-complete-config
   :ensure auto-complete
   :defer t)
@@ -329,11 +321,11 @@
   (use-package js-comint :defer t)
   (add-hook 'js2-mode-hook 'company-mode)
   (add-hook 'js2-mode-hook 'ws-butler-mode)
-  (add-hook 'js2-mode-hook #'aggressive-indent-mode)
   :config
   (setq js2-basic-offset 2)
   (setq js-indent-level 2)
-  (setq js2-global-externs '("require" "expect" "describe" "it" "beforeEach")))
+  (setq js2-global-externs '("require" "expect" "describe" "it" "beforeEach"))
+  (define-key js2-mode-map (kbd "<tab>") #'company-indent-or-complete-common))
 
 (isg-time-section "js2-mode")
 ;; ----------------------------------------------------------------------------
@@ -396,7 +388,8 @@
              (company-mode)
              (racer-mode)
              ;; Key binding to jump to method definition
-             (local-set-key (kbd "M-.") #'racer-find-definition))))
+             (local-set-key (kbd "M-.") #'racer-find-definition)
+             (local-set-key (kbd "<tab>") #'company-indent-or-complete-common))))
 
 (isg-time-section "rust-mode")
 ;; ----------------------------------------------------------------------------
@@ -733,7 +726,7 @@ in current buffer."
 
 (global-set-key (kbd "C-<return>") 'electric-newline-and-maybe-indent)
 
-(global-set-key (kbd "TAB") #'company-indent-or-complete-common)
+;; (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
 (setq company-tooltip-align-annotations t)
 
 (isg-machine-set-keys)                 ; machine specific key bindings
@@ -752,7 +745,7 @@ in current buffer."
     ("4d0c1008debaa663eae9ecd86cdd56ca35e65a225b6fbd90d2e359b6acb2226a" default)))
  '(package-selected-packages
    (quote
-    (exec-path-from-shell ws-butler web-mode use-package typescript toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode clojure-cheatsheet avy auto-complete ag ace-jump-mode helm-themes helm-ls-git glsl-mode flycheck expand-region aggressive-indent helm-ag flycheck-rust))))
+    (exec-path-from-shell ws-butler web-mode use-package typescript toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode clojure-cheatsheet avy auto-complete ag ace-jump-mode helm-themes helm-ls-git glsl-mode flycheck expand-region helm-ag flycheck-rust))))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'actress)
