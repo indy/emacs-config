@@ -206,6 +206,15 @@
 ;; ----------------------------------------------------------------------------
 
 
+(use-package fill-column-indicator
+  :commands fci-mode
+  :config
+  (setq fci-rule-color "#0f2f2f"))
+
+(isg-time-section "fill-column-indicator")
+;; ----------------------------------------------------------------------------
+
+
 ;; setting up flycheck for eslint checks using instructions from:
 ;; http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
 ;;
@@ -485,7 +494,7 @@
 ;; ----------------------------------------------------------------------------
 
 
-(use-package typescript
+(use-package typescript-mode
   :mode "\\.ts\\'")
 
 (isg-time-section "typescript")
@@ -703,7 +712,7 @@ in current buffer."
     ;; (exec-path-from-shell-copy-env "TWITTER_CONSUMER_SECRET")
     ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN")
     ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN_SECRET")
-    ;; (exec-path-from-shell-copy-env "GOPATH")
+    (exec-path-from-shell-copy-env "GOPATH")
     (exec-path-from-shell-copy-env "RUST_SRC_PATH")
     (when (memq window-system '(mac ns))
       (exec-path-from-shell-initialize)))
@@ -745,7 +754,7 @@ in current buffer."
     ("4d0c1008debaa663eae9ecd86cdd56ca35e65a225b6fbd90d2e359b6acb2226a" default)))
  '(package-selected-packages
    (quote
-    (exec-path-from-shell ws-butler web-mode use-package typescript toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode clojure-cheatsheet avy auto-complete ag ace-jump-mode helm-themes helm-ls-git glsl-mode flycheck expand-region helm-ag flycheck-rust))))
+    (exec-path-from-shell ws-butler web-mode use-package typescript toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode clojure-cheatsheet avy auto-complete ag helm-themes helm-ls-git glsl-mode flycheck expand-region helm-ag flycheck-rust))))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'actress)
