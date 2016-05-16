@@ -406,7 +406,6 @@
     (add-hook 'racer-mode-hook #'company-mode))
   (add-hook 'rust-mode-hook
             '(lambda ()
-               ;; (flycheck-rust-setup)
                (racer-mode)
                (cargo-minor-mode)
                ;; Key binding to jump to method definition
