@@ -7,9 +7,9 @@
     (url-opener "chromium-browser")
     (save-folder "/tmp/emacs.d-saves")
     (get-extra-paths (lambda ()
-                            (list (concat (getenv "HOME") "/local/bin") 
-                                  "/usr/local/bin" 
-                                  "/usr/local/go/bin")))))
+                       (list (concat (getenv "HOME") "/local/bin")
+                             "/usr/local/bin" 
+                             "/usr/local/go/bin")))))
 
 (defun isg-machine-settings ()
   "system specific overrides go here"
@@ -39,7 +39,6 @@
       (post-setup-fn (lambda ()
                        (setq inferior-lisp-program "lein repl")))))
 
-   
    ((string-match "^che" system-name)  ; asus ul20a
     '((post-setup-fn (lambda ()
                        (setenv "GOPATH" (concat (getenv "HOME") "/scratch/go"))))

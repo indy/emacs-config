@@ -16,6 +16,9 @@
 ;;; essential package
 (require 'cl)
 
+;(when (memq window-system '(mac ns))
+;  (exec-path-from-shell-initialize))
+
 ;;; location of my customisations
 (push "~/.emacs.d/site-lisp" load-path)
 (push "~/.emacs.d/external" load-path)  ; third party code that hasn't
@@ -76,7 +79,6 @@
 (setq use-package-verbose t)
 (isg-time-section "loading use-package")
 ;; ----------------------------------------------------------------------------
-
 
 (use-package ag
   :commands (ag ag-regexp)
@@ -198,6 +200,22 @@
 (isg-time-section "deft")
 ;; ----------------------------------------------------------------------------
 
+
+;; have to ensure that this is run at startup so that 'cargo' can be
+;; found when in rust mode and also so that the eshell works as expected
+;;
+(use-package exec-path-from-shell
+    :ensure t
+    :demand t
+    :config
+    ;; (exec-path-from-shell-copy-env "TWITTER_CONSUMER_KEY")
+    ;; (exec-path-from-shell-copy-env "TWITTER_CONSUMER_SECRET")
+    ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN")
+    ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN_SECRET")
+    (exec-path-from-shell-copy-env "GOPATH")
+    (exec-path-from-shell-copy-env "RUST_SRC_PATH")
+    (when (memq window-system '(mac ns))
+      (exec-path-from-shell-initialize)))
 
 (use-package expand-region
   :bind ("C-=" . er/expand-region))
@@ -717,18 +735,6 @@ in current buffer."
 
 (defun isg-start-eshell (shell-name)
   (interactive "sEshell name: ")
-  (use-package exec-path-from-shell
-    :ensure t
-    :demand t
-    :config
-    ;; (exec-path-from-shell-copy-env "TWITTER_CONSUMER_KEY")
-    ;; (exec-path-from-shell-copy-env "TWITTER_CONSUMER_SECRET")
-    ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN")
-    ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN_SECRET")
-    (exec-path-from-shell-copy-env "GOPATH")
-    (exec-path-from-shell-copy-env "RUST_SRC_PATH")
-    (when (memq window-system '(mac ns))
-      (exec-path-from-shell-initialize)))
   (eshell)
   (if (string= "" shell-name)
       (rename-uniquely)
