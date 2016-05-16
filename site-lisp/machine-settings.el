@@ -1,5 +1,5 @@
 (defun isg-default-machine-settings ()
-  "settings which apply to most of the machines apart from 1 or 2 stragglers"
+  "settings which apply to most of the machines apart from 1 or 2 stragglers."
   '((foreground-color "grey60")
     (background-color "black")
     (default-font "6x12")
@@ -15,7 +15,13 @@
   "system specific overrides go here"
   (cond
    ((string-match "^localhost" system-name)  ; chromebook
-    '((frame-r ((top . 0) (left . 780) (width . 80) (height . 59)))
+    '((post-setup-fn (lambda ()
+                       (setenv "GOPATH" (concat (getenv "HOME") "/work/go"))))
+      (get-extra-paths (lambda ()
+                         (list (concat (getenv "GOPATH") "/bin")
+                               (concat (getenv "HOME") "/local/bin")
+                               "/usr/local/bin")))
+      (frame-r ((top . 0) (left . 780) (width . 80) (height . 59)))
       (frame-l ((top . 0) (left . 210) (width . 80) (height . 59)))))
 
    ((string-match "^debian" system-name)  ; debian vm on ernesto
