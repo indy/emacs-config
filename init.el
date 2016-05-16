@@ -378,27 +378,41 @@
 ;; ----------------------------------------------------------------------------
 
 
+;; http://julienblanchard.com/2016/fancy-rust-development-with-emacs/
+;;
+;;
+;; cargo.el is a minor mode which allows us to run cargo commands from emacs like:
+;;
+;; C-c C-c C-b to run cargo build
+;; C-c C-c C-r to run cargo run
+;; C-c C-c C-t to run cargo test
+;;
 (use-package rust-mode
   :mode "\\.rs\\'"
   :config
-  (use-package flycheck-rust)
+  (use-package cargo)
+  (use-package flycheck-rust
+    :config
+    (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
   (use-package racer
     :init
-    (add-hook 'racer-mode-hook #'eldoc-mode)
     (if (string-match "osx" (isg-val 'machine-os))
         (setq racer-cmd "/Users/indy/code/rust/racer/target/release/racer"
               racer-rust-src-path "/Users/indy/code/rust/rust/src/")
       (setq racer-cmd "/home/indy/code/rust/racer/target/release/racer"
-            racer-rust-src-path "/home/indy/code/rust/rust/src/")))
-
-  (add-hook 'rust-mode-hook #'flycheck-rust-setup)
+            racer-rust-src-path "/home/indy/code/rust/rust/src/"))
+    :config
+    (add-hook 'racer-mode-hook #'eldoc-mode)
+    (add-hook 'racer-mode-hook #'company-mode))
   (add-hook 'rust-mode-hook
-          '(lambda ()
-             (company-mode)
-             (racer-mode)
-             ;; Key binding to jump to method definition
-             (local-set-key (kbd "M-.") #'racer-find-definition)
-             (local-set-key (kbd "<tab>") #'company-indent-or-complete-common))))
+            '(lambda ()
+               ;; (flycheck-rust-setup)
+               (racer-mode)
+               (cargo-minor-mode)
+               ;; Key binding to jump to method definition
+               (local-set-key (kbd "M-.") #'racer-find-definition)
+               (local-set-key (kbd "<tab>") #'company-indent-or-complete-common)
+               (local-set-key (kbd "C-c <tab>") #'rust-format-buffer))))
 
 (isg-time-section "rust-mode")
 ;; ----------------------------------------------------------------------------
