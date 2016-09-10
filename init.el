@@ -15,6 +15,7 @@
 
 ;;; essential package
 (require 'cl)
+(require 'org)
 
 ;(when (memq window-system '(mac ns))
 ;  (exec-path-from-shell-initialize))
@@ -169,6 +170,15 @@
 (isg-time-section "company-racer")
 ;; ----------------------------------------------------------------------------
 
+(use-package csharp-mode
+  :mode "\\.cs\\'"
+  :init
+  :config
+  (setq default-tab-width 4))
+
+(isg-time-section "csharp-mode")
+
+
 
 (use-package css-mode
   :mode (("\\.css\\'" . css-mode)
@@ -248,6 +258,8 @@
 
   ;; use eslint with web-mode for jsx files
   (flycheck-add-mode 'javascript-eslint 'web-mode)
+
+  ;; (setq flycheck-eslintrc "~/work/seni-web/.eslintrc.json")
 
   ;; customize flycheck temp file prefix
   (setq-default flycheck-temp-prefix ".flycheck")
