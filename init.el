@@ -103,7 +103,7 @@
 
 
 (use-package avy
-  :bind ("M-h" . avy-goto-word-or-subword-1))
+  :bind ("M-h" . avy-goto-char-timer))
 
 (isg-time-section "avy")
 ;; ----------------------------------------------------------------------------
