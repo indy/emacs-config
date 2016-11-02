@@ -804,5 +804,8 @@ in current buffer."
 
 (server-start)
 
+(require 'atomic-chrome)
+(atomic-chrome-start-server)
+
 (provide 'init)
 ;;; init.el ends here
