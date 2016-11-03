@@ -1,19 +1,52 @@
+;;; machine-settings.el --- machine dependent settings
+
+;; Author: Inderjit Gill <email@indy.io>
+
+;; This file is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 3, or (at your option)
+;; any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; For a full copy of the GNU General Public License
+;; see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Simple abstraction for machine dependenet settings
+
+;;; Code:
+
 (defun isg-default-machine-settings ()
-  "settings which apply to most of the machines apart from 1 or 2 stragglers."
+  "Settings which apply to most of the machines apart from 1 or 2 stragglers."
   '((foreground-color "grey60")
     (background-color "black")
     (default-font "6x12")
     (machine-os "linux") ; one of "linux" "osx" "windows"
     (url-opener "chromium-browser")
     (save-folder "/tmp/emacs.d-saves")
+    (deft-directory "~/notes/deft")
     (get-extra-paths (lambda ()
                        (list (concat (getenv "HOME") "/local/bin")
-                             "/usr/local/bin" 
+                             "/usr/local/bin"
                              "/usr/local/go/bin")))))
 
 (defun isg-machine-settings ()
-  "system specific overrides go here"
+  "System specific overrides go here."
   (cond
+   ((string-match "^BERTRAND" system-name)  ; 2016 Windows PC
+    '(
+      (default-font "-outline-Courier New-normal-normal-normal-mono-13-*-*-*-c-*-fontset-startup")
+      (machine-os "windows") ; one of "linux" "osx" "windows"
+      (save-folder "d:/scratch/emacs-saves")
+      (deft-directory "d:/Google Drive/Docs/notes/deft")
+      (frame-r ((top . 0) (left . 870) (width . 80) (height . 87)))
+      (frame-l ((top . 0) (left . 210) (width . 80) (height . 87)))))
+
    ((string-match "^localhost" system-name)  ; chromebook
     '((post-setup-fn (lambda ()
                        (setenv "GOPATH" (concat (getenv "HOME") "/work/go"))))
@@ -45,7 +78,7 @@
       (get-extra-paths (lambda ()
                          (list (concat (getenv "GOPATH") "/bin")
                                (concat (getenv "HOME") "/local/bin")
-                               "/usr/local/bin" 
+                               "/usr/local/bin"
                                "/usr/local/go/bin"
                                "/home/indy/code/rust/racer/target/release")))
       
@@ -59,7 +92,7 @@
     '((hyperspec-root "file:////home/user/docs/cl/HyperSpec/")
       ;; (default-font "-unknown-DejaVu Sans Mono-normal-normal-normal-*-20-*-*-*-m-0-fontset-startup")
       (post-setup-fn (lambda ()
-                       (setenv "PATH" 
+                       (setenv "PATH"
                                (concat
                                 (concat (getenv "HOME") "/local/bin:")
                                 "/usr/local/bin:" 
@@ -83,8 +116,7 @@
       (save-folder "~/.emacs.d/saves")
       (frame-r ((top . 20) (left . 320) (width . 80) (height . 71)))
       (frame-l ((top . 20) (left . 902) (width . 80) (height . 71)))))
-   
-   
+
    ((string-match "^GOSHCC" system-name)  ; GOSH PC
     '(
       (default-font "-outline-Courier New-normal-normal-normal-mono-13-*-*-*-c-*-fontset-startup")
