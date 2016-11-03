@@ -126,7 +126,7 @@
 
 
 (use-package avy
-  :bind ("M-h" . avy-goto-word-or-subword-1))
+  :bind ("M-h" . avy-goto-char-timer))
 
 (isg-time-section "avy")
 ;; ----------------------------------------------------------------------------
@@ -262,7 +262,8 @@
 (use-package fill-column-indicator
   :commands fci-mode
   :config
-  (setq fci-rule-color "#0f2f2f"))
+  (setq fci-rule-color "#0f2f2f"
+        fci-rule-column 80))
 
 (isg-time-section "fill-column-indicator")
 ;; ----------------------------------------------------------------------------
@@ -385,6 +386,7 @@
   (use-package js-comint :defer t)
   (add-hook 'js2-mode-hook 'company-mode)
   (add-hook 'js2-mode-hook 'ws-butler-mode)
+  (add-hook 'js2-mode-hook 'fci-mode)
   :config
   (setq js2-basic-offset 2)
   (setq js-indent-level 2)
@@ -828,6 +830,9 @@
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 (server-start)
+
+(require 'atomic-chrome)
+(atomic-chrome-start-server)
 
 (provide 'init)
 ;;; init.el ends here
