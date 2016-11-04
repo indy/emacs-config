@@ -456,7 +456,9 @@
 
 
 (use-package shader-mode
-  :mode "\\.shader\\'")
+  :mode "\\.shader\\'"
+  :config
+  (setq shader-indent-offset 2))
 (isg-time-section "shader-mode")
 ;; ----------------------------------------------------------------------------
 
