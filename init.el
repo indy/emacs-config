@@ -455,6 +455,11 @@
 ;; ----------------------------------------------------------------------------
 
 
+(use-package shader-mode
+  :mode "\\.shader\\'")
+(isg-time-section "shader-mode")
+;; ----------------------------------------------------------------------------
+
 (use-package smartparens-config
   :ensure smartparens
   :defer t
