@@ -233,10 +233,6 @@
 (isg-time-section "deft")
 ;; ----------------------------------------------------------------------------
 
-
-;; have to ensure that this is run at startup so that 'cargo' can be
-;; found when in rust mode and also so that the eshell works as expected
-;;
 (use-package exec-path-from-shell
     :ensure t
     :demand t
@@ -247,8 +243,7 @@
     ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN_SECRET")
     (if (not (string-equal (isg-val 'machine-os) "windows"))
         (exec-path-from-shell-copy-env "GOPATH"))
-    (if (not (string-equal (isg-val 'machine-os) "windows"))
-        (exec-path-from-shell-copy-env "RUST_SRC_PATH"))
+    (exec-path-from-shell-setenv "RUST_SRC_PATH" (isg-val 'racer-rust-src-path))
     (when (memq window-system '(mac ns))
       (exec-path-from-shell-initialize)))
 
@@ -453,11 +448,8 @@
     (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
   (use-package racer
     :init
-    (if (string-match "osx" (isg-val 'machine-os))
-        (setq racer-cmd "/Users/indy/code/rust/racer/target/release/racer"
-              racer-rust-src-path "/Users/indy/code/rust/rust/src/")
-      (setq racer-cmd "/home/indy/code/rust/racer/target/release/racer"
-            racer-rust-src-path "/home/indy/code/rust/rust/src/"))
+    (setq racer-cmd (isg-val 'racer-cmd)
+          racer-rust-src-path (isg-val 'racer-rust-src-path))
     :config
     (add-hook 'racer-mode-hook #'eldoc-mode)
     (add-hook 'racer-mode-hook #'company-mode))

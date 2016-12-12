@@ -22,7 +22,7 @@
 ;;; Code:
 
 (defun isg-default-machine-settings ()
-  "Settings which apply to most of the machines apart from 1 or 2 stragglers."
+  "Settings which apply to most of the machines."
   '((foreground-color "grey60")
     (background-color "black")
     (default-font "6x12")
@@ -30,6 +30,8 @@
     (url-opener "chromium-browser")
     (save-folder "/tmp/emacs.d-saves")
     (deft-directory "~/notes/deft")
+    (racer-cmd "/home/indy/code/rust/racer/target/release/racer")
+    (racer-rust-src-path "/home/indy/code/rust/rust/src/")
     (get-extra-paths (lambda ()
                        (list (concat (getenv "HOME") "/local/bin")
                              "/usr/local/bin"
@@ -42,6 +44,8 @@
     '(
       (default-font "-outline-Courier New-normal-normal-normal-mono-13-*-*-*-c-*-fontset-startup")
       (machine-os "windows") ; one of "linux" "osx" "windows"
+      (racer-cmd "C:\\Users\\indy\\bin\\racer.exe")
+      (racer-rust-src-path "D:\\code\\rust\\rust\\src\\")
       (save-folder "d:/scratch/emacs-saves")
       (url-opener "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome")
       (deft-directory "d:/Google Drive/Docs/notes/deft")
@@ -65,6 +69,8 @@
    ((string-match "^ernesto" system-name) ; Macbook Air i5
     '((default-font "-apple-Inconsolata-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
       (machine-os "osx")
+      (racer-cmd "/Users/indy/code/rust/racer/target/release/racer")
+      (racer-rust-src-path "/Users/indy/code/rust/rust/src/")
       (url-opener "open")
 
       (frame-r ((top . 0) (left . 864) (width . 80) (height . 55)))
