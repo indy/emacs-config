@@ -480,6 +480,13 @@
 ;; ----------------------------------------------------------------------------
 
 
+(use-package shader-mode
+  :mode "\\.shader\\'"
+  :config
+  (setq shader-indent-offset 2))
+(isg-time-section "shader-mode")
+;; ----------------------------------------------------------------------------
+
 (use-package smartparens-config
   :ensure smartparens
   :defer t
