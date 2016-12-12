@@ -43,9 +43,10 @@
       (default-font "-outline-Courier New-normal-normal-normal-mono-13-*-*-*-c-*-fontset-startup")
       (machine-os "windows") ; one of "linux" "osx" "windows"
       (save-folder "d:/scratch/emacs-saves")
+      (url-opener "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome")
       (deft-directory "d:/Google Drive/Docs/notes/deft")
-      (frame-r ((top . 0) (left . 870) (width . 80) (height . 87)))
-      (frame-l ((top . 0) (left . 210) (width . 80) (height . 87)))))
+      (frame-l ((top . 0) (left . 1300) (width . 80) (height . 87)))
+      (frame-r ((top . 0) (left . 644) (width . 80) (height . 87)))))
 
    ((string-match "^localhost" system-name)  ; chromebook
     '((post-setup-fn (lambda ()

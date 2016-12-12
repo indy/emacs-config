@@ -608,8 +608,8 @@
                              (sql-mode)
                              (sql-highlight-postgres-keywords))))
 
-(autoload 'imbue-mode "imbue" nil t)
-(add-to-list 'auto-mode-alist '("\\.imd$" . imbue-mode))
+;(autoload 'imbue-mode "imbue" nil t)
+;(add-to-list 'auto-mode-alist '("\\.imd$" . imbue-mode))
 
 ;;; org-mode
 (add-hook 'org-mode-hook 'soft-wrap-lines)
@@ -651,7 +651,6 @@
 
 ; reload files that have been changed outside of emacs (e.g. Eclipse autoformat)
 (global-auto-revert-mode t)
-
 
 (show-paren-mode t)
 (global-font-lock-mode t)
@@ -812,7 +811,7 @@
     ("c4591b07241df5543d035284ecdff490f19c20243f996aa09651045a2623a54c" "4d0c1008debaa663eae9ecd86cdd56ca35e65a225b6fbd90d2e359b6acb2226a" default)))
  '(package-selected-packages
    (quote
-    (cargo exec-path-from-shell ws-butler web-mode use-package typescript toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode clojure-cheatsheet avy auto-complete ag helm-themes helm-ls-git glsl-mode flycheck expand-region helm-ag flycheck-rust))))
+    (atomic-chrome cargo exec-path-from-shell ws-butler web-mode use-package typescript toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode clojure-cheatsheet avy auto-complete ag helm-themes helm-ls-git glsl-mode flycheck expand-region helm-ag flycheck-rust))))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'actress)
@@ -829,10 +828,13 @@
 ;; turn on flychecking globally
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
-(server-start)
+; (server-start)
 
-(require 'atomic-chrome)
-(atomic-chrome-start-server)
+;(use-package atomic-chrome
+;  :config
+;  (atomic-chrome-start-server))
+;(require 'atomic-chrome)
+;(atomic-chrome-start-server)
 
 (provide 'init)
 ;;; init.el ends here
