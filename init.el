@@ -1,3 +1,27 @@
+;;; init.el --- emacs initialisation file
+
+;; Author: Inderjit Gill <email@indy.io>
+
+;; This file is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 3, or (at your option)
+;; any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; For a full copy of the GNU General Public License
+;; see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; This is my init file (and all of this preamble is here just to stop
+;; FlyCheck from complaining).
+
+;;; Code:
+
 ;; packages that this config doesn't use anymore:
 ;; edit-server-20141231.1358
 
@@ -26,7 +50,6 @@
                                         ; been packaged yet
 (isg-time-section "initial essential setup")
 ;; ----------------------------------------------------------------------------
-
 
 (require 'helper-functions)
 (isg-time-section "loading helper functions")
@@ -201,7 +224,7 @@
 (use-package deft
   :commands deft
   :config
-  (setq deft-directory "~/notes/deft"
+  (setq deft-directory (isg-val 'deft-directory)
         deft-extension "org"
         deft-text-mode 'org-mode
         deft-use-filename-as-title t
@@ -239,8 +262,10 @@
     ;; (exec-path-from-shell-copy-env "TWITTER_CONSUMER_SECRET")
     ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN")
     ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN_SECRET")
-    (exec-path-from-shell-copy-env "GOPATH")
-    (exec-path-from-shell-copy-env "RUST_SRC_PATH")
+    (if (not (string-equal (isg-val 'machine-os) "windows"))
+        (exec-path-from-shell-copy-env "GOPATH"))
+    (if (not (string-equal (isg-val 'machine-os) "windows"))
+        (exec-path-from-shell-copy-env "RUST_SRC_PATH"))
     (when (memq window-system '(mac ns))
       (exec-path-from-shell-initialize)))
 
@@ -598,23 +623,22 @@
 (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
 
 (add-to-list 'auto-mode-alist '("\\.gradle$" . groovy-mode))
-(add-to-list 'auto-mode-alist 
+(add-to-list 'auto-mode-alist
              '("\\.sql$" . (lambda ()
                              (sql-mode)
                              (sql-highlight-postgres-keywords))))
-(add-to-list 'auto-mode-alist 
+(add-to-list 'auto-mode-alist
              '("\\.psql$" . (lambda ()
                              (sql-mode)
                              (sql-highlight-postgres-keywords))))
 
-(autoload 'imbue-mode "imbue" nil t)
-(add-to-list 'auto-mode-alist '("\\.imd$" . imbue-mode))
+;(autoload 'imbue-mode "imbue" nil t)
+;(add-to-list 'auto-mode-alist '("\\.imd$" . imbue-mode))
 
 ;;; org-mode
 (add-hook 'org-mode-hook 'soft-wrap-lines)
 (defun soft-wrap-lines ()
-  "Make lines wrap at window edge and on word boundary,
-in current buffer."
+  "Make lines wrap at window edge and on word boundary, in current buffer."
   (interactive)
   (setq truncate-lines nil)
   (setq word-wrap t))
@@ -651,7 +675,6 @@ in current buffer."
 
 ; reload files that have been changed outside of emacs (e.g. Eclipse autoformat)
 (global-auto-revert-mode t)
-
 
 (show-paren-mode t)
 (global-font-lock-mode t)
@@ -716,7 +739,7 @@ in current buffer."
       `((".*" ,temporary-file-directory t)))
 
 ;;; os specific settings
-(cond 
+(cond
  ((string-match "osx" (isg-val 'machine-os))
   (setq
    mac-command-modifier 'meta
@@ -772,6 +795,7 @@ in current buffer."
 (global-set-key (kbd "C-M-;") 'comment-region)
 
 (defun isg-start-eshell (shell-name)
+  "SHELL-NAME the name of the shell."
   (interactive "sEshell name: ")
   (eshell)
   (if (string= "" shell-name)
@@ -834,10 +858,10 @@ in current buffer."
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("4d0c1008debaa663eae9ecd86cdd56ca35e65a225b6fbd90d2e359b6acb2226a" default)))
+    ("c4591b07241df5543d035284ecdff490f19c20243f996aa09651045a2623a54c" "4d0c1008debaa663eae9ecd86cdd56ca35e65a225b6fbd90d2e359b6acb2226a" default)))
  '(package-selected-packages
    (quote
-    (cargo exec-path-from-shell ws-butler web-mode use-package typescript toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode clojure-cheatsheet avy auto-complete ag helm-themes helm-ls-git glsl-mode flycheck expand-region helm-ag flycheck-rust))))
+    (atomic-chrome cargo exec-path-from-shell ws-butler web-mode use-package typescript toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode clojure-cheatsheet avy auto-complete ag helm-themes helm-ls-git glsl-mode flycheck expand-region helm-ag flycheck-rust))))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'actress)
@@ -854,10 +878,13 @@ in current buffer."
 ;; turn on flychecking globally
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
-(server-start)
+; (server-start)
 
-(require 'atomic-chrome)
-(atomic-chrome-start-server)
+;(use-package atomic-chrome
+;  :config
+;  (atomic-chrome-start-server))
+;(require 'atomic-chrome)
+;(atomic-chrome-start-server)
 
 (provide 'init)
 ;;; init.el ends here
