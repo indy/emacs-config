@@ -211,6 +211,23 @@
 ;; ----------------------------------------------------------------------------
 
 
+;; Visual commands are commands which require a proper terminal.
+;; eshell will run them in a term buffer when you invoke them.
+(setq eshell-visual-commands
+      '("less" "tmux" "htop" "top" "bash" "zsh" "fish"))
+(setq eshell-visual-subcommands
+      '(("git" "log" "l" "diff" "show")))
+
+(use-package eshell-git-prompt
+  :config
+  (eshell-git-prompt-use-theme 'git-radar))
+
+(setq eshell-cmpl-cycle-completions nil)
+
+(isg-time-section "eshell-git-prompt")
+
+;; ----------------------------------------------------------------------------
+
 ;; have to ensure that this is run at startup so that 'cargo' can be
 ;; found when in rust mode and also so that the eshell works as expected
 ;;
@@ -760,6 +777,8 @@ in current buffer."
   (if (string= "" shell-name)
       (rename-uniquely)
     (rename-buffer shell-name)))
+;;; access server via ssh in eshell with:
+;;; $ cd /ssh:indy.io:
 
 (global-set-key "\M-7" 'isg-start-shell)
 (global-set-key "\M-8" 'isg-start-eshell)
