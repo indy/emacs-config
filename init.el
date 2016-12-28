@@ -233,6 +233,27 @@
 (isg-time-section "deft")
 ;; ----------------------------------------------------------------------------
 
+
+;; Visual commands are commands which require a proper terminal.
+;; eshell will run them in a term buffer when you invoke them.
+(setq eshell-visual-commands
+      '("less" "tmux" "htop" "top" "bash" "zsh" "fish"))
+(setq eshell-visual-subcommands
+      '(("git" "log" "l" "diff" "show")))
+
+(use-package eshell-git-prompt
+  :config
+  (eshell-git-prompt-use-theme 'git-radar))
+
+(setq eshell-cmpl-cycle-completions nil)
+
+(isg-time-section "eshell-git-prompt")
+;; ----------------------------------------------------------------------------
+
+;; have to ensure that this is run at startup so that 'cargo' can be
+;; found when in rust mode and also so that the eshell works as expected
+;;
+
 (use-package exec-path-from-shell
     :ensure t
     :demand t
@@ -246,6 +267,9 @@
     (exec-path-from-shell-setenv "RUST_SRC_PATH" (isg-val 'racer-rust-src-path))
     (when (memq window-system '(mac ns))
       (exec-path-from-shell-initialize)))
+
+(isg-time-section "exec-path-from-shell")
+;; ----------------------------------------------------------------------------
 
 (use-package expand-region
   :bind ("C-=" . er/expand-region))
@@ -776,6 +800,8 @@
   (if (string= "" shell-name)
       (rename-uniquely)
     (rename-buffer shell-name)))
+;;; access server via ssh in eshell with:
+;;; $ cd /ssh:indy.io:
 
 (global-set-key "\M-7" 'isg-start-shell)
 (global-set-key "\M-8" 'isg-start-eshell)
@@ -799,6 +825,30 @@
 (isg-time-section "keyboard config")
 ;; ----------------------------------------------------------------------------
 
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
+
+;; aligns annotation to the right hand side
+(setq company-tooltip-align-annotations t)
+
+;; formats the buffer before saving
+(add-hook 'before-save-hook 'tide-format-before-save)
+
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
+
+;; format options
+(setq tide-format-options '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil))
+
+;; ----------------------------------------------------------------------------
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
