@@ -877,6 +877,11 @@
 ;; turn on flychecking globally
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
+
+(require 'tramp)
+(if (eq system-type 'windows-nt)
+    (setq tramp-default-method "plinkx"))
+
 ; (server-start)
 
 ;(use-package atomic-chrome
