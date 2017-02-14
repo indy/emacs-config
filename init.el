@@ -104,18 +104,34 @@
 (isg-time-section "loading use-package")
 ;; ----------------------------------------------------------------------------
 
-(use-package ag
-  :commands (ag ag-regexp)
-  :init
-  (use-package helm-ag
-    :commands helm-ag)
-  (global-set-key "\C-\M-s"  'ag-project)
+(use-package ivy
+  :demand t
   :config
-  ;; quick fix so that C-M-s ignores the dist folder in seni-web
-  (setq ag-ignore-list (list "dist")))
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t))
+(isg-time-section "ivy")
 
-(isg-time-section "ag")
-;; ----------------------------------------------------------------------------
+(use-package swiper
+  :bind ("C-s" . swiper))
+(isg-time-section "swiper")
+
+(use-package counsel
+  :init
+  (global-set-key (kbd "M-x") 'counsel-M-x)
+  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+  (global-set-key (kbd "C-x C-g") 'counsel-git)
+  (global-set-key (kbd "C-M-s") 'counsel-ag)
+  ;; I don't use these bindings - should learn what they do one day
+  (global-set-key (kbd "<f1> f") 'counsel-describe-function)
+  (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+  (global-set-key (kbd "<f1> l") 'counsel-find-library)
+  (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+  (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+  (global-set-key (kbd "C-c j") 'counsel-git-grep)
+  (global-set-key (kbd "C-x l") 'counsel-locate)
+  (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+  (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
+(isg-time-section "counsel")
 
 (use-package auto-complete-config
   :ensure auto-complete
@@ -145,8 +161,6 @@
 
 (use-package clojure-mode
   :mode "\\.clj\\'"
-  :init
-  (use-package clojure-cheatsheet :defer t)
   :config
   (define-key clojure-mode-map (kbd ")") 'sp-up-sexp)
   (pretty-fn))
@@ -337,59 +351,6 @@
 
 (isg-time-section "go-mode")
 ;; ----------------------------------------------------------------------------
-
-
-(use-package helm
-  :ensure t
-  :diminish helm-mode
-  :init
-  (require 'helm-config)
-  (setq helm-candidate-number-limit 100)
-  ;; From https://gist.github.com/antifuchs/9238468
-  (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
-        helm-input-idle-delay 0.01  ; this actually updates things
-                                        ; reeeelatively quickly.
-        helm-yas-display-key-on-candidate t
-        helm-quick-update t
-        helm-M-x-requires-pattern nil
-        helm-ff-skip-boring-files t
-        helm-boring-file-regexp-list '("\\.\\.$" "\\.$" "\\.git$" "\\.hg$" "\\.svn$" "\\.CVS$"  "\\.la$" "\\.o$" "~$" "\\.so$" "\\.a$" "\\.elc$" "\\.fas$" "\\.fasl$" "\\.pyc$" "\\.pyo$")
-        helm-display-header-line nil
-        helm-ff-guess-ffap-urls nil
-        helm-autoresize-max-height 30
-        helm-autoresize-min-height 30)
-  :config
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "M-y") 'helm-show-kill-ring)
-  (global-set-key (kbd "C-x b") 'helm-mini)
-  (global-set-key (kbd "C-j") 'helm-semantic-or-imenu)
-  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-  ;; make TAB works in terminal
-  (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
-  ;; list actions using C-z
-  (define-key helm-map (kbd "C-z") 'helm-select-action)
-  (define-key helm-map (kbd "C-w") 'backward-kill-word)
-  ;; helm crap
-  (set-face-attribute 'helm-source-header nil :height 0.1)
-  (helm-autoresize-mode 1))
-
-(isg-time-section "helm")
-;; ----------------------------------------------------------------------------
-
-
-(use-package helm-ls-git
-  :bind ("\C-x\C-g" . helm-browse-project)
-  :defer t)
-
-(isg-time-section "helm-ls-git")
-;; ----------------------------------------------------------------------------
-
-
-(use-package helm-themes
-  :ensure t)
-(isg-time-section "helm-themes")
-;; ----------------------------------------------------------------------------
-
 
 (use-package htmlize
   :commands htmlize-buffer)
@@ -813,8 +774,6 @@
 (global-set-key (kbd "<M-up>") 'backward-paragraph)
 (global-set-key (kbd "<M-down>") 'forward-paragraph)
 
-(global-set-key "\C-x\C-f" 'helm-find-files)
-
 (global-set-key (kbd "C-<return>") 'electric-newline-and-maybe-indent)
 
 ;; (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
@@ -823,30 +782,6 @@
 (isg-machine-set-keys)                 ; machine specific key bindings
 
 (isg-time-section "keyboard config")
-;; ----------------------------------------------------------------------------
-
-(defun setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
-  (company-mode +1))
-
-;; aligns annotation to the right hand side
-(setq company-tooltip-align-annotations t)
-
-;; formats the buffer before saving
-(add-hook 'before-save-hook 'tide-format-before-save)
-
-(add-hook 'typescript-mode-hook #'setup-tide-mode)
-
-;; format options
-(setq tide-format-options '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil))
 
 ;; ----------------------------------------------------------------------------
 
@@ -857,10 +792,10 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("c4591b07241df5543d035284ecdff490f19c20243f996aa09651045a2623a54c" "4d0c1008debaa663eae9ecd86cdd56ca35e65a225b6fbd90d2e359b6acb2226a" default)))
+    ("8f641ea77b4638dbb4967e093a63312641ee692c9494c809dceab967f859d03e" "ca88d0093e6e96d97ba5d8e5654ae7d9c3cee2fdad15bab04cde750d63ee32a8" "c4591b07241df5543d035284ecdff490f19c20243f996aa09651045a2623a54c" "4d0c1008debaa663eae9ecd86cdd56ca35e65a225b6fbd90d2e359b6acb2226a" default)))
  '(package-selected-packages
    (quote
-    (atomic-chrome cargo exec-path-from-shell ws-butler web-mode use-package typescript toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode clojure-cheatsheet avy auto-complete ag helm-themes helm-ls-git glsl-mode flycheck expand-region helm-ag flycheck-rust))))
+    (atomic-chrome cargo exec-path-from-shell ws-butler web-mode use-package typescript toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode avy auto-complete ag glsl-mode flycheck expand-region flycheck-rust))))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'actress)
