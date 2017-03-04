@@ -49,13 +49,12 @@
 (push "~/.emacs.d/external" load-path)  ; third party code that hasn't
                                         ; been packaged yet
 (isg-time-section "initial essential setup")
-;; ----------------------------------------------------------------------------
 
+;; ----------------------------------------------------------------------------
 (require 'helper-functions)
 (isg-time-section "loading helper functions")
+
 ;; ----------------------------------------------------------------------------
-
-
 (require 'machine-settings)
 
 (cl-labels ((load-settings (which)
@@ -65,8 +64,8 @@
   (load-settings (isg-default-machine-settings))
   (load-settings (isg-machine-settings)))
 (isg-time-section "machine-settings")
-;; ----------------------------------------------------------------------------
 
+;; ----------------------------------------------------------------------------
 (require 'package)
 (setcdr (last package-archives)
         '(("marmalade" . "https://marmalade-repo.org/packages/")
@@ -102,8 +101,8 @@
 (setq use-package-always-ensure t)
 (setq use-package-verbose t)
 (isg-time-section "loading use-package")
-;; ----------------------------------------------------------------------------
 
+;; ----------------------------------------------------------------------------
 (use-package ivy
   :demand t
   :config
@@ -111,10 +110,12 @@
   (setq ivy-use-virtual-buffers t))
 (isg-time-section "ivy")
 
+;; ----------------------------------------------------------------------------
 (use-package swiper
   :bind ("C-s" . swiper))
 (isg-time-section "swiper")
 
+;; ----------------------------------------------------------------------------
 (use-package counsel
   :init
   (global-set-key (kbd "M-x") 'counsel-M-x)
@@ -128,60 +129,47 @@
   (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
   (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
   (global-set-key (kbd "C-c j") 'counsel-git-grep)
-  (global-set-key (kbd "C-x l") 'counsel-locate)
-  (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
   (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
 (isg-time-section "counsel")
 
+;; ----------------------------------------------------------------------------
 (use-package auto-complete-config
   :ensure auto-complete
   :defer t)
-
 (isg-time-section "auto-complete-config")
+
 ;; ----------------------------------------------------------------------------
-
-
 (use-package avy
   :bind ("M-h" . avy-goto-char-timer))
-
 (isg-time-section "avy")
+
 ;; ----------------------------------------------------------------------------
-
-
 (use-package cider
   :defer t
   :init
   (add-hook 'cider-repl-mode-hook 'company-mode)
   (add-hook 'cider-mode-hook 'company-mode)
   (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode))
-
 (isg-time-section "cider")
+
 ;; ----------------------------------------------------------------------------
-
-
 (use-package clojure-mode
   :mode "\\.clj\\'"
   :config
   (define-key clojure-mode-map (kbd ")") 'sp-up-sexp)
   (pretty-fn))
-
 (isg-time-section "clojure-mode")
+
 ;; ----------------------------------------------------------------------------
-
-
 (use-package clojurescript-mode
   :mode "\\.cljs\\'")
-
 (isg-time-section "clojurescript-mode")
+
 ;; ----------------------------------------------------------------------------
-
-
 (use-package color-theme :defer t)
-
 (isg-time-section "color-theme")
+
 ;; ----------------------------------------------------------------------------
-
-
 (use-package company
   :defer t
   :config
@@ -197,26 +185,21 @@
        
        (define-key company-active-map (kbd "C-n") 'company-select-next)
        (define-key company-active-map (kbd "C-p") 'company-select-previous))))
-
 (isg-time-section "company")
+
 ;; ----------------------------------------------------------------------------
-
-
 (use-package company-racer :defer t)
-
 (isg-time-section "company-racer")
-;; ----------------------------------------------------------------------------
 
+;; ----------------------------------------------------------------------------
 (use-package csharp-mode
   :mode "\\.cs\\'"
   :init
   :config
   (setq default-tab-width 4))
-
 (isg-time-section "csharp-mode")
 
-
-
+;; ----------------------------------------------------------------------------
 (use-package css-mode
   :mode (("\\.css\\'" . css-mode)
          ("\\.less\\'" . css-mode))
@@ -224,17 +207,9 @@
   (use-package rainbow-mode)
   (add-hook 'css-mode-hook 'rainbow-mode)
   (setq css-indent-offset 2))
-
 (isg-time-section "css-mode")
+
 ;; ----------------------------------------------------------------------------
-
-
-(use-package dash :defer t)
-
-(isg-time-section "dash")
-;; ----------------------------------------------------------------------------
-
-
 (use-package deft
   :commands deft
   :config
@@ -243,31 +218,25 @@
         deft-text-mode 'org-mode
         deft-use-filename-as-title t
         deft-auto-save-interval 5.0))
-
 (isg-time-section "deft")
+
 ;; ----------------------------------------------------------------------------
-
-
 ;; Visual commands are commands which require a proper terminal.
 ;; eshell will run them in a term buffer when you invoke them.
 (setq eshell-visual-commands
       '("less" "tmux" "htop" "top" "bash" "zsh" "fish"))
 (setq eshell-visual-subcommands
       '(("git" "log" "l" "diff" "show")))
-
 (use-package eshell-git-prompt
   :config
   (eshell-git-prompt-use-theme 'git-radar))
-
 (setq eshell-cmpl-cycle-completions nil)
-
 (isg-time-section "eshell-git-prompt")
-;; ----------------------------------------------------------------------------
 
+;; ----------------------------------------------------------------------------
 ;; have to ensure that this is run at startup so that 'cargo' can be
 ;; found when in rust mode and also so that the eshell works as expected
 ;;
-
 (use-package exec-path-from-shell
     :ensure t
     :demand t
@@ -281,27 +250,9 @@
     (exec-path-from-shell-setenv "RUST_SRC_PATH" (isg-val 'racer-rust-src-path))
     (when (memq window-system '(mac ns))
       (exec-path-from-shell-initialize)))
-
 (isg-time-section "exec-path-from-shell")
+
 ;; ----------------------------------------------------------------------------
-
-(use-package expand-region
-  :bind ("C-=" . er/expand-region))
-
-(isg-time-section "expand-region")
-;; ----------------------------------------------------------------------------
-
-
-(use-package fill-column-indicator
-  :commands fci-mode
-  :config
-  (setq fci-rule-color "#0f2f2f"
-        fci-rule-column 80))
-
-(isg-time-section "fill-column-indicator")
-;; ----------------------------------------------------------------------------
-
-
 ;; setting up flycheck for eslint checks using instructions from:
 ;; http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
 ;;
@@ -327,11 +278,9 @@
   (setq-default flycheck-disabled-checkers
                 (append flycheck-disabled-checkers
                         '(json-jsonlist))))
-
 (isg-time-section "flycheck")
+
 ;; ----------------------------------------------------------------------------
-
-
 (use-package glsl-mode
   :mode (("\\.glsl\\'" . glsl-mode)
          ("\\.vert\\'" . glsl-mode)
@@ -339,26 +288,21 @@
          ("\\.geom\\'" . glsl-mode))
   :init
   (autoload 'glsl-mode "glsl-mode" nil t))
-
 (isg-time-section "glsl-mode")
+
 ;; ----------------------------------------------------------------------------
-
-
 (use-package go-mode
   :mode "\\.go\\'"
   :config
   (add-hook 'before-save-hook #'gofmt-before-save))
-
 (isg-time-section "go-mode")
-;; ----------------------------------------------------------------------------
 
+;; ----------------------------------------------------------------------------
 (use-package htmlize
   :commands htmlize-buffer)
-
 (isg-time-section "htmlize")
+
 ;; ----------------------------------------------------------------------------
-
-
 (use-package js2-mode
   :mode (("\\.js\\'" . js2-mode)
          ("\\.es6\\'" . js2-mode))
@@ -366,17 +310,14 @@
   (use-package js-comint :defer t)
   (add-hook 'js2-mode-hook 'company-mode)
   (add-hook 'js2-mode-hook 'ws-butler-mode)
-  (add-hook 'js2-mode-hook 'fci-mode)
   :config
   (setq js2-basic-offset 2)
   (setq js-indent-level 2)
   (setq js2-global-externs '("require" "expect" "describe" "it" "beforeEach"))
   (define-key js2-mode-map (kbd "<tab>") #'company-indent-or-complete-common))
-
 (isg-time-section "js2-mode")
+
 ;; ----------------------------------------------------------------------------
-
-
 (use-package magit
   :commands magit-status
   :init
@@ -384,37 +325,27 @@
   (global-set-key "\C-c\C-v" 'magit-status)
   :config
   (setq magit-push-always-verify nil))
-
 (isg-time-section "magit")
+
 ;; ----------------------------------------------------------------------------
-
-
 (use-package markdown-mode
   :mode (("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode)))
-
 (isg-time-section "markdown-mode")
+
 ;; ----------------------------------------------------------------------------
-
-
 (use-package parenface :defer t)
-
 (isg-time-section "parenface")
+
 ;; ----------------------------------------------------------------------------
-
-
 (use-package pkg-info :defer t)
-
 (isg-time-section "pkg-info")
+
 ;; ----------------------------------------------------------------------------
-
-
 (use-package popup :defer t)
-
 (isg-time-section "popup")
+
 ;; ----------------------------------------------------------------------------
-
-
 ;; http://julienblanchard.com/2016/fancy-rust-development-with-emacs/
 ;;
 ;;
@@ -446,24 +377,20 @@
                (local-set-key (kbd "M-.") #'racer-find-definition)
                (local-set-key (kbd "<tab>") #'company-indent-or-complete-common)
                (local-set-key (kbd "C-c <tab>") #'rust-format-buffer))))
-
 (isg-time-section "rust-mode")
+
 ;; ----------------------------------------------------------------------------
-
-
 (use-package simple-httpd :defer t)
-
 (isg-time-section "simple-httpd")
+
 ;; ----------------------------------------------------------------------------
-
-
 (use-package shader-mode
   :mode "\\.shader\\'"
   :config
   (setq shader-indent-offset 2))
 (isg-time-section "shader-mode")
-;; ----------------------------------------------------------------------------
 
+;; ----------------------------------------------------------------------------
 (use-package smartparens-config
   :ensure smartparens
   :defer t
@@ -529,32 +456,25 @@
           ("H-s n" sp-add-to-next-sexp)
           ("H-s j" sp-join-sexp)
           ("H-s s" sp-split-sexp)))
-
   ;; This is from authors config, seems to let you jump to the end of the current
   ;; sexp with paren?
   (define-key emacs-lisp-mode-map (kbd ")") 'sp-up-sexp)
   ;; (define-key scheme-mode-map (kbd ")") 'sp-up-sexp)
   ;; (define-key clojure-mode-map (kbd ")") 'sp-up-sexp)
   )
-
 (isg-time-section "smartparens-config")
+
 ;; ----------------------------------------------------------------------------
-
-
 (use-package toml-mode
   :mode "\\.toml\\'")
-
 (isg-time-section "toml-mode")
+
 ;; ----------------------------------------------------------------------------
-
-
 (use-package typescript-mode
   :mode "\\.ts\\'")
-
 (isg-time-section "typescript")
+
 ;; ----------------------------------------------------------------------------
-
-
 (use-package web-mode
   :mode "\\.jsx\\'"
   :init
@@ -564,16 +484,13 @@
         (let ((web-mode-enable-part-face nil))
           ad-do-it)
       ad-do-it)))
-
 (isg-time-section "web-mode")
+
 ;; ----------------------------------------------------------------------------
-
-
 (use-package ws-butler :defer t)
-
 (isg-time-section "ws-butler")
-;; ----------------------------------------------------------------------------
 
+;; ----------------------------------------------------------------------------
 (autoload 'seni-mode "seni" nil t)
 (add-to-list 'auto-mode-alist '("\\.seni$" . seni-mode))
 (add-hook 'seni-mode-hook 'smartparens-strict-mode)
@@ -616,15 +533,13 @@
 ; hide the *nrepl-connection* and *nrepl-server* buffers
 (setq nrepl-hide-special-buffers t)
 (isg-time-section "misc. mode configs")
+
 ;; ----------------------------------------------------------------------------
-
-
 (isg-frame-setup)
 (run-isg-machine-function 'post-setup-fn)
 (isg-time-section "frame setup")
+
 ;; ----------------------------------------------------------------------------
-
-
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR." t)
 
@@ -715,27 +630,11 @@
 
 (new-frame)
 (isg-time-section "global settings")
+
 ;; ----------------------------------------------------------------------------
-
-
 ;; Font size
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
-
-(global-set-key "\C-x!" 'delete-other-windows)
-
-;;; org mode overrides the default "Shift-cursor keys" navigation
-;;; of windmove and for some reason re-inserting the original keyboard
-;;; commands in the org-load-hook or org-mode-hook doesn't revert back
-;;; the behaviour. So I'm giving up, assigning new keys for windmove
-;;; and setting them as globals:
-(global-set-key "\M-1"  'windmove-left)
-(global-set-key "\M-2"  'windmove-down)
-(global-set-key "\M-3"  'windmove-up)
-(global-set-key "\M-4"  'windmove-right)
-
-(global-set-key "\M-5"  'winner-undo)
-(global-set-key "\M-6"  'winner-redo)
 
 ;;; use winner mode keys for undo/redo operations on window configurations
 ;;; C-c left 
@@ -782,7 +681,6 @@
 (isg-machine-set-keys)                 ; machine specific key bindings
 
 (isg-time-section "keyboard config")
-
 ;; ----------------------------------------------------------------------------
 
 (custom-set-variables
@@ -792,10 +690,10 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("8f641ea77b4638dbb4967e093a63312641ee692c9494c809dceab967f859d03e" "ca88d0093e6e96d97ba5d8e5654ae7d9c3cee2fdad15bab04cde750d63ee32a8" "c4591b07241df5543d035284ecdff490f19c20243f996aa09651045a2623a54c" "4d0c1008debaa663eae9ecd86cdd56ca35e65a225b6fbd90d2e359b6acb2226a" default)))
+    ("c76b446142f54669ef90ff4580dc30353cccaaea8ac18d9222d1cd4f531a0e94" "8f641ea77b4638dbb4967e093a63312641ee692c9494c809dceab967f859d03e" "ca88d0093e6e96d97ba5d8e5654ae7d9c3cee2fdad15bab04cde750d63ee32a8" "c4591b07241df5543d035284ecdff490f19c20243f996aa09651045a2623a54c" "4d0c1008debaa663eae9ecd86cdd56ca35e65a225b6fbd90d2e359b6acb2226a" default)))
  '(package-selected-packages
    (quote
-    (atomic-chrome cargo exec-path-from-shell ws-butler web-mode use-package typescript toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode avy auto-complete ag glsl-mode flycheck expand-region flycheck-rust))))
+    (eshell-git-prompt cider clojure-mode csharp-mode shader-mode counsel ivy swiper atomic-chrome cargo exec-path-from-shell ws-butler web-mode use-package typescript-mode toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode avy auto-complete ag glsl-mode flycheck flycheck-rust))))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'actress)
