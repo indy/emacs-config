@@ -112,13 +112,21 @@
 (isg-time-section "ivy")
 
 (use-package swiper
-  :bind ("C-s" . swiper))
+  :init
+  (global-set-key (kbd "C-s")
+                  (lambda ()
+                    (interactive)
+                    (swiper (format "%s" (thing-at-point 'symbol))))))
 (isg-time-section "swiper")
 
 (use-package counsel
   :init
   (global-set-key (kbd "M-x") 'counsel-M-x)
-  (global-set-key (kbd "C-M-s") 'counsel-git-grep)
+  (global-set-key (kbd "C-M-s")
+                  (lambda ()
+                    (interactive)
+                    (counsel-git-grep nil
+                                      (format "%s" (thing-at-point 'symbol)))))
   (global-set-key (kbd "C-x C-f") 'counsel-find-file)
   (global-set-key (kbd "C-x C-g") 'counsel-git)
   (global-set-key (kbd "C-x C-h") 'counsel-ag)
