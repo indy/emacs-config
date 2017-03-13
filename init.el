@@ -116,9 +116,8 @@
   (global-set-key (kbd "C-s")
                   (lambda ()
                     (interactive)
-                    (swiper (format "%s" (thing-at-point 'symbol))))))
+                    (swiper (format "%s" (or (thing-at-point 'symbol) ""))))))
 (isg-time-section "swiper")
-
 (use-package counsel
   :init
   (global-set-key (kbd "M-x") 'counsel-M-x)
@@ -126,7 +125,7 @@
                   (lambda ()
                     (interactive)
                     (counsel-git-grep nil
-                                      (format "%s" (thing-at-point 'symbol)))))
+                                      (format "%s" (or (thing-at-point 'symbol) "")))))
   (global-set-key (kbd "C-x C-f") 'counsel-find-file)
   (global-set-key (kbd "C-x C-g") 'counsel-git)
   (global-set-key (kbd "C-x C-h") 'counsel-ag)
