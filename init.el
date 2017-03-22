@@ -691,12 +691,10 @@
 (global-set-key "\M-7" 'isg-start-shell)
 (global-set-key "\M-8" 'isg-start-eshell)
 
-(global-set-key "\M-n" 'scroll-up-line)
-(global-set-key "\M-p" 'scroll-down-line)
-(global-set-key "\M-[" 'backward-paragraph)
-(global-set-key "\M-]" 'forward-paragraph)
-(global-set-key (kbd "<M-up>") 'backward-paragraph)
-(global-set-key (kbd "<M-down>") 'forward-paragraph)
+(global-set-key "\M-[" 'scroll-down-line)
+(global-set-key "\M-]" 'scroll-up-line)
+(global-set-key "\M-n" 'forward-paragraph)
+(global-set-key "\M-p" 'backward-paragraph)
 
 (global-set-key (kbd "C-<return>") 'electric-newline-and-maybe-indent)
 
