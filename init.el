@@ -51,6 +51,21 @@
 (isg-time-section "initial essential setup")
 
 ;; ----------------------------------------------------------------------------
+(require 'pomidor)
+(setq pomidor-sound-tick nil
+      pomidor-sound-tack nil
+      pomidor-sound-overwork nil)
+(global-set-key (kbd "<f12>") #'pomidor)
+; | key   | command              |
+; |-------+----------------------|
+; | Enter | Start new pomodoro.  |
+; | Space | Start a break.       |
+; | R     | Resets the timer.    |
+; | q     | Quit pomidor buffer. |
+; | Q     | Turns off pomidor.   |
+
+
+;; ----------------------------------------------------------------------------
 (require 'helper-functions)
 (isg-time-section "loading helper functions")
 
@@ -102,7 +117,7 @@
 (setq use-package-verbose t)
 (isg-time-section "loading use-package")
 
-;; ----------------------------------------------------------------------------
+; ----------------------------------------------------------------------------
 (use-package ivy
   :demand t
   :config
@@ -110,7 +125,7 @@
   (setq ivy-use-virtual-buffers t))
 (isg-time-section "ivy")
 
-;; ----------------------------------------------------------------------------
+; ----------------------------------------------------------------------------
 (use-package swiper
   :init
   (global-set-key (kbd "C-s")
@@ -119,7 +134,7 @@
                     (swiper (format "%s" (or (thing-at-point 'symbol) ""))))))
 (isg-time-section "swiper")
 
-;; ----------------------------------------------------------------------------
+; ----------------------------------------------------------------------------
 (use-package counsel
   :init
   (global-set-key (kbd "M-x") 'counsel-M-x)
@@ -506,7 +521,6 @@
 (add-to-list 'auto-mode-alist '("\\.seni$" . seni-mode))
 (add-hook 'seni-mode-hook 'smartparens-strict-mode)
 
-
 (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
 
@@ -704,7 +718,7 @@
     ("c76b446142f54669ef90ff4580dc30353cccaaea8ac18d9222d1cd4f531a0e94" "8f641ea77b4638dbb4967e093a63312641ee692c9494c809dceab967f859d03e" "ca88d0093e6e96d97ba5d8e5654ae7d9c3cee2fdad15bab04cde750d63ee32a8" "c4591b07241df5543d035284ecdff490f19c20243f996aa09651045a2623a54c" "4d0c1008debaa663eae9ecd86cdd56ca35e65a225b6fbd90d2e359b6acb2226a" default)))
  '(package-selected-packages
    (quote
-    (eshell-git-prompt cider clojure-mode csharp-mode shader-mode counsel ivy swiper atomic-chrome cargo exec-path-from-shell ws-butler web-mode use-package typescript-mode toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode avy auto-complete ag glsl-mode flycheck flycheck-rust))))
+    (counsel swiper ivy eshell-git-prompt cider clojure-mode csharp-mode shader-mode atomic-chrome cargo exec-path-from-shell ws-butler web-mode use-package typescript-mode toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode avy auto-complete ag glsl-mode flycheck flycheck-rust))))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'actress)
