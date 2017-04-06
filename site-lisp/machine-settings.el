@@ -49,8 +49,8 @@
       (save-folder "d:/scratch/emacs-saves")
       (url-opener "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome")
       (deft-directory "d:/Google Drive/Docs/notes/deft")
-      (frame-l ((top . 0) (left . 975) (width . 120) (height . 87)))
-      (frame-r ((top . 0) (left . 0) (width . 120) (height . 87)))))
+      (frame-l ((top . 0) (left . 600) (width . 120) (height . 87)))
+      (frame-r ((top . 0) (left . 1575) (width . 120) (height . 87)))))
 
    ((string-match "^localhost" system-name)  ; chromebook
     '((post-setup-fn (lambda ()

@@ -540,6 +540,11 @@
 ;(autoload 'imbue-mode "imbue" nil t)
 ;(add-to-list 'auto-mode-alist '("\\.imd$" . imbue-mode))
 
+;;; c-mode
+(add-hook 'c-mode-hook (lambda () (setq comment-start "// "
+                                        comment-end   "")))
+
+
 ;;; org-mode
 (add-hook 'org-mode-hook 'soft-wrap-lines)
 (defun soft-wrap-lines ()
