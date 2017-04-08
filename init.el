@@ -123,6 +123,7 @@
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t))
+
 (isg/time-section "ivy")
 
 ; ----------------------------------------------------------------------------
@@ -193,8 +194,19 @@
 (isg/time-section "clojure-mode")
 
 ;; ----------------------------------------------------------------------------
-(use-package color-theme :defer t)
+(use-package color-theme
+  :defer t)
 (isg/time-section "color-theme")
+
+;; ----------------------------------------------------------------------------
+(use-package color-theme-sanityinc-solarized
+  :pin melpa-stable
+  :defer t)
+
+;; ----------------------------------------------------------------------------
+(use-package material-theme
+  :pin melpa-stable
+  :defer t)
 
 ;; ----------------------------------------------------------------------------
 (use-package company
@@ -338,6 +350,13 @@
   :pin melpa-stable
   :commands htmlize-buffer)
 (isg/time-section "htmlize")
+
+;; ----------------------------------------------------------------------------
+(use-package hydra
+  :pin melpa-stable
+  :ensure t
+  :config
+  (setq hydra-lv nil)) ;use echo area
 
 ;; ----------------------------------------------------------------------------
 (use-package js2-mode
@@ -533,6 +552,14 @@
 (isg/time-section "web-mode")
 
 ;; ----------------------------------------------------------------------------
+(use-package which-key
+  :pin melpa-stable
+  :demand t
+  :config
+  (which-key-mode))
+(isg/time-section "which-key")
+
+;; ----------------------------------------------------------------------------
 (use-package ws-butler
   :pin melpa-stable
   :defer t)
@@ -585,6 +612,33 @@
 ; hide the *nrepl-connection* and *nrepl-server* buffers
 (setq nrepl-hide-special-buffers t)
 (isg/time-section "misc. mode configs")
+
+
+;; Use bind-keys (from use-package) to put commands on C-c prefixes,
+;; with an additional prefix key to group related commands. So for
+;; example window-related commands have a C-c w prefix.
+
+;; Use which-key to label prefixes and bindings.
+
+(defhydra isg/themes-hydra (:hint nil :color pink)
+  "
+Themes
+
+----------------------------------------------------
+_A_: Actress _M_: Material       _S_: Solarized
+           _m_: Material Light _s_: Solarized light
+_DEL_: none
+"
+  ("A" (load-theme 'actress t))
+  ("s" (load-theme 'sanityinc-solarized-light t))
+  ("S" (load-theme 'sanityinc-solarized-dark t))
+  ("M" (load-theme 'material t))
+  ("m" (load-theme 'material-light t))
+  ("DEL" (isg/disable-all-themes))
+  ("RET" nil "done" :color blue))
+
+(bind-keys ("C-c w t"  . isg/themes-hydra/body))
+
 
 ;; ----------------------------------------------------------------------------
 (isg/frame-setup)
@@ -738,12 +792,16 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default bold shadow italic underline bold bold-italic bold])
+ '(ansi-color-names-vector
+   (vector "#657b83" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#fdf6e3"))
  '(custom-safe-themes
    (quote
-    ("a885d978ca8f1b965da0ec3d1ae4d361035cd560e8ec23aecf1627f8486ecf84" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "eff2a7b2d194f03512fe33c718e1b3abcfe38050f9d1f7a76568e3f3ebe5eb06" "c76b446142f54669ef90ff4580dc30353cccaaea8ac18d9222d1cd4f531a0e94" "8f641ea77b4638dbb4967e093a63312641ee692c9494c809dceab967f859d03e" "ca88d0093e6e96d97ba5d8e5654ae7d9c3cee2fdad15bab04cde750d63ee32a8" "c4591b07241df5543d035284ecdff490f19c20243f996aa09651045a2623a54c" "4d0c1008debaa663eae9ecd86cdd56ca35e65a225b6fbd90d2e359b6acb2226a" default)))
+    ("a885d978ca8f1b965da0ec3d1ae4d361035cd560e8ec23aecf1627f8486ecf84" default)))
  '(package-selected-packages
    (quote
-    (use-package color-theme-sanityinc-solarized counsel swiper ivy eshell-git-prompt cider clojure-mode csharp-mode shader-mode atomic-chrome cargo exec-path-from-shell ws-butler web-mode typescript-mode toml-mode smartparens simple-httpd rainbow-mode racer rust-mode markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme avy auto-complete ag glsl-mode flycheck flycheck-rust))))
+    (material-theme which-key hydra use-package color-theme-sanityinc-solarized counsel swiper ivy eshell-git-prompt cider clojure-mode csharp-mode shader-mode atomic-chrome cargo exec-path-from-shell ws-butler web-mode typescript-mode toml-mode smartparens simple-httpd rainbow-mode racer rust-mode markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme avy auto-complete ag glsl-mode flycheck flycheck-rust))))
 
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")

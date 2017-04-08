@@ -1,3 +1,31 @@
+;; http://www.greghendershott.com/2017/02/emacs-themes.html
+
+(defun isg/disable-all-themes ()
+  (interactive)
+  (mapc #'disable-theme custom-enabled-themes))
+
+(defvar isg/theme-hooks nil
+  "((theme-id . function) ...)")
+
+(defun isg/add-theme-hook (theme-id hook-func)
+  (add-to-list 'isg/theme-hooks (cons theme-id hook-func)))
+
+(defun isg/load-theme-advice (f theme-id &optional no-confirm no-enable &rest args)
+  "Enhances `load-theme' in two ways:
+1. Disables enabled themes for a clean slate.
+2. Calls functions registered using `isg/add-theme-hook'."
+  (unless no-enable
+    (isg/disable-all-themes))
+  (prog1
+      (apply f theme-id no-confirm no-enable args)
+    (unless no-enable
+      (pcase (assq theme-id isg/theme-hooks)
+        (`(,_ . ,f) (funcall f))))))
+
+(advice-add 'load-theme
+            :around
+            #'isg/load-theme-advice)
+
 ;;; display 'fn' as the lambda symbol
 (defun pretty-fn nil 
   (font-lock-add-keywords
