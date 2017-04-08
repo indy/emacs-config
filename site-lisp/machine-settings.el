@@ -21,7 +21,7 @@
 
 ;;; Code:
 
-(defun isg-default-machine-settings ()
+(defun isg/default-machine-settings ()
   "Settings which apply to most of the machines."
   '((foreground-color "grey60")
     (background-color "black")
@@ -37,7 +37,7 @@
                              "/usr/local/bin"
                              "/usr/local/go/bin")))))
 
-(defun isg-machine-settings ()
+(defun isg/machine-settings ()
   "System specific overrides go here."
   (cond
    ((string-match "^BERTRAND" system-name)  ; 2016 Windows PC
@@ -104,7 +104,7 @@
                                 (concat (getenv "HOME") "/local/bin:")
                                 "/usr/local/bin:" 
                                 (getenv "PATH")))
-;                        (isg-start-shell "default-shell")
+;                        (isg/start-shell "default-shell")
                        (switch-to-buffer "*scratch*")))
 
 
@@ -139,7 +139,7 @@
    
 
    ((equal system-name "green")         ; old laptop thrown out by orange
-    '((hyperspec-root "file:///usr/share/common-lisp/isg-hyperspec/HyperSpec/")))))
+    '((hyperspec-root "file:///usr/share/common-lisp/isg/hyperspec/HyperSpec/")))))
 
 ; Windows
 ; default font: "file:///usr/share/common-lisp/isg-hyperspec/HyperSpec/"

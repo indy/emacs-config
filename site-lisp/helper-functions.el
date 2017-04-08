@@ -10,10 +10,10 @@
                                     402)
                     nil))))))
 
-(defun isg-val (property)
-  (get 'isg-local property))
+(defun isg/val (property)
+  (get 'isg/local property))
 
-(defun isg-start-shell (shell-name)
+(defun isg/start-shell (shell-name)
   "start a new shell"
   (interactive "sShell name: ")
   (shell)
@@ -21,23 +21,23 @@
       (rename-uniquely)
     (rename-buffer shell-name)))
 
-(defun isg-machine-set-keys ()
+(defun isg/machine-set-keys ()
   "set machine specific key bindings"
   (mapcar (lambda (kons)
             (global-set-key (car kons) (cdr kons)))
-          (isg-val 'key-setup)))
+          (isg/val 'key-setup)))
 
-(defun run-isg-machine-function (property)
-  (let ((fn (isg-val property)))
+(defun isg/run-machine-function (property)
+  (let ((fn (isg/val property)))
     (if fn (funcall fn))))
 
-(defun isg-frame-setup ()
-  (when (and (isg-val 'frame-r) (isg-val 'frame-l))
-    (setq initial-frame-alist (isg-val 'frame-r)
-          default-frame-alist (isg-val 'frame-l)))
+(defun isg/frame-setup ()
+  (when (and (isg/val 'frame-r) (isg/val 'frame-l))
+    (setq initial-frame-alist (isg/val 'frame-r)
+          default-frame-alist (isg/val 'frame-l)))
   (add-to-list 'default-frame-alist
                (cons 'font
-                     (isg-val 'default-font))))
+                     (isg/val 'default-font))))
 
 (provide 'helper-functions)
 ;;; helper-functions.el ends here

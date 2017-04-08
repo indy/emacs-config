@@ -30,38 +30,30 @@
 
 (deftheme actress)
 (let ((class '((class color) (min-colors 89)))
-      (bg1 "#181916") ;; isg: bg
-      (bg2 "#282820") ;isg: bg-hi
-      (bg3 "#383830") ;isg: bg-hi2
-      (bg4 "#121310") ;isg: bg-fringe
-      (fg1 "#999999")                   ;; isg: fg
-      (fg2 "#827840")                   ; isg: alpha-triad-1
+      (bg1 "#181916")
+      (bg2 "#282820")
+      (bg3 "#383830")
+      (bg4 "#121310")
+      (fg1 "#999999")
+      (fg2 "#827840")
       (fg3 "#bdb8ac")
-      (isgdebug1 "#ff0000")
-      (isgdebug2 "#00ff00")
       (fg4 "#a9a49a")
       (key2 "#1f1f1f")
       (key3 "#040404")
       (cursor "#686860")
       (correct "#2f4f4f")
-      (incorrect "#794198")
-      (builtin "#6C9B9B")               ;isg: alpha-comp2
-      (keyword "#6C9B9B")               ;isg: alpha-comp2
-      (const   "#6C9B9B")               ;isg: alpha-comp2
-      (comment "#2f4f4f")               ;isg: alpha
-      (func    "#8B372E")               ;isg: beta-comp-2
-      (str     "#2e8b57")               ;isg: beta
-      (type    "#5DD795")               ;isg: beta-comp2
-      (var     "#827840")               ;isg: alpha-triad-1
-      (warning "#794198")               ;isg: beta-triad2
-
-      (directory "#8B372E")
-      (executable "#33aa33")
-      )
-  
+      (incorrect "#8B372E")
+      (builtin "#6C9B9B")
+      (keyword "#6C9B9B")
+      (const   "#6C9B9B")
+      (comment "#2f4f4f")
+      (func    "#8B372E")
+      (str     "#2e8b57")
+      (type    "#5DD795")
+      (var     "#827840")
+      (warning "#794198"))
   (custom-theme-set-faces
    'actress
-
    `(default ((,class (:background ,bg1 :foreground ,fg1))))
 
    `(ac-completion-face ((,class (:underline t :foreground ,keyword))))
@@ -185,7 +177,7 @@
    `(slime-repl-inputed-output-face ((,class (:foreground ,type))))
 
    `(sp-show-pair-match-face ((,class (:background ,correct))))
-   `(sp-show-pair-mismatch-face ((,class (:background ,func))))
+   `(sp-show-pair-mismatch-face ((,class (:background ,incorrect))))
 
    `(term ((,class (:foreground ,fg1 :background ,bg1))))
    `(term-color-black ((,class (:foreground ,bg3 :background ,bg3))))
