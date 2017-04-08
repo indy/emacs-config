@@ -25,6 +25,9 @@
 ;; packages that this config doesn't use anymore:
 ;; edit-server-20141231.1358
 
+;; not-needed?: color-theme
+;; missing from stable: toml-mode shader-mode
+
 ;; timing code
 (defvar isg/section-start-time (float-time))
 (defvar isg/section-end-time (float-time))
@@ -83,8 +86,8 @@
 ;; ----------------------------------------------------------------------------
 (require 'package)
 (setcdr (last package-archives)
-        '(("marmalade" . "https://marmalade-repo.org/packages/")
-          ("melpa" . "https://melpa.milkbox.net/packages/")
+        '(;("marmalade" . "https://marmalade-repo.org/packages/")
+          ;("melpa" . "https://melpa.milkbox.net/packages/")
           ("melpa-stable" . "https://melpa-stable.milkbox.net/packages/")))
 
 (package-initialize) ; most of this section's time is spent here
@@ -721,7 +724,8 @@
     ("a885d978ca8f1b965da0ec3d1ae4d361035cd560e8ec23aecf1627f8486ecf84" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "eff2a7b2d194f03512fe33c718e1b3abcfe38050f9d1f7a76568e3f3ebe5eb06" "c76b446142f54669ef90ff4580dc30353cccaaea8ac18d9222d1cd4f531a0e94" "8f641ea77b4638dbb4967e093a63312641ee692c9494c809dceab967f859d03e" "ca88d0093e6e96d97ba5d8e5654ae7d9c3cee2fdad15bab04cde750d63ee32a8" "c4591b07241df5543d035284ecdff490f19c20243f996aa09651045a2623a54c" "4d0c1008debaa663eae9ecd86cdd56ca35e65a225b6fbd90d2e359b6acb2226a" default)))
  '(package-selected-packages
    (quote
-    (color-theme-sanityinc-solarized counsel swiper ivy eshell-git-prompt cider clojure-mode csharp-mode shader-mode atomic-chrome cargo exec-path-from-shell ws-butler web-mode use-package typescript-mode toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode avy auto-complete ag glsl-mode flycheck flycheck-rust))))
+    (color-theme-sanityinc-solarized counsel swiper ivy eshell-git-prompt cider clojure-mode csharp-mode shader-mode atomic-chrome cargo exec-path-from-shell ws-butler web-mode use-package typescript-mode toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode avy auto-complete ag glsl-mode flycheck))))
+
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'actress)
