@@ -25,9 +25,6 @@
 ;; packages that this config doesn't use anymore:
 ;; edit-server-20141231.1358
 
-;; not-needed?: color-theme
-;; missing from stable: toml-mode shader-mode
-
 ;; timing code
 (defvar isg/section-start-time (float-time))
 (defvar isg/section-end-time (float-time))
@@ -47,10 +44,9 @@
 ;(when (memq window-system '(mac ns))
 ;  (exec-path-from-shell-initialize))
 
-;;; location of my customisations
 (push "~/.emacs.d/site-lisp" load-path)
-(push "~/.emacs.d/external" load-path)  ; third party code that hasn't
-                                        ; been packaged yet
+(push "~/.emacs.d/external" load-path)  ; third party code that isn't in melpa-stable yet
+
 (isg/time-section "initial essential setup")
 
 ;; ----------------------------------------------------------------------------
@@ -86,11 +82,11 @@
 ;; ----------------------------------------------------------------------------
 (require 'package)
 (setcdr (last package-archives)
-        '(;("marmalade" . "https://marmalade-repo.org/packages/")
-          ;("melpa" . "https://melpa.milkbox.net/packages/")
-          ("melpa-stable" . "https://melpa-stable.milkbox.net/packages/")))
+        '(("melpa-stable" . "https://melpa-stable.milkbox.net/packages/")
+          ("melpa" . "https://melpa.milkbox.net/packages/")))
 
 (package-initialize) ; most of this section's time is spent here
+(setq package-check-signature nil)
 
 (defvar prelude-packages
   '(use-package)
@@ -122,6 +118,7 @@
 
 ; ----------------------------------------------------------------------------
 (use-package ivy
+  :pin melpa-stable
   :demand t
   :config
   (ivy-mode 1)
@@ -130,6 +127,7 @@
 
 ; ----------------------------------------------------------------------------
 (use-package swiper
+  :pin melpa-stable
   :init
   (global-set-key (kbd "C-s")
                   (lambda ()
@@ -139,6 +137,7 @@
 
 ; ----------------------------------------------------------------------------
 (use-package counsel
+  :pin melpa-stable
   :init
   (global-set-key (kbd "M-x") 'counsel-M-x)
   (global-set-key (kbd "C-M-s")
@@ -163,17 +162,20 @@
 
 ;; ----------------------------------------------------------------------------
 (use-package auto-complete-config
+  :pin melpa-stable
   :ensure auto-complete
   :defer t)
 (isg/time-section "auto-complete-config")
 
 ;; ----------------------------------------------------------------------------
 (use-package avy
+  :pin melpa-stable
   :bind ("M-h" . avy-goto-char-timer))
 (isg/time-section "avy")
 
 ;; ----------------------------------------------------------------------------
 (use-package cider
+  :pin melpa-stable
   :defer t
   :init
   (add-hook 'cider-repl-mode-hook 'company-mode)
@@ -183,6 +185,7 @@
 
 ;; ----------------------------------------------------------------------------
 (use-package clojure-mode
+  :pin melpa-stable
   :mode "\\.clj\\'"
   :config
   (define-key clojure-mode-map (kbd ")") 'sp-up-sexp)
@@ -190,16 +193,12 @@
 (isg/time-section "clojure-mode")
 
 ;; ----------------------------------------------------------------------------
-(use-package clojurescript-mode
-  :mode "\\.cljs\\'")
-(isg/time-section "clojurescript-mode")
-
-;; ----------------------------------------------------------------------------
 (use-package color-theme :defer t)
 (isg/time-section "color-theme")
 
 ;; ----------------------------------------------------------------------------
 (use-package company
+  :pin melpa-stable
   :defer t
   :config
   (eval-after-load 'company
@@ -217,11 +216,13 @@
 (isg/time-section "company")
 
 ;; ----------------------------------------------------------------------------
-(use-package company-racer :defer t)
+(use-package company-racer
+  :defer t)
 (isg/time-section "company-racer")
 
 ;; ----------------------------------------------------------------------------
 (use-package csharp-mode
+  :pin melpa-stable
   :mode "\\.cs\\'"
   :init
   :config
@@ -230,6 +231,7 @@
 
 ;; ----------------------------------------------------------------------------
 (use-package css-mode
+  :pin melpa-stable
   :mode (("\\.css\\'" . css-mode)
          ("\\.less\\'" . css-mode))
   :config
@@ -240,6 +242,7 @@
 
 ;; ----------------------------------------------------------------------------
 (use-package deft
+  :pin melpa-stable
   :commands deft
   :config
   (setq deft-directory (isg/val 'deft-directory)
@@ -257,6 +260,7 @@
 (setq eshell-visual-subcommands
       '(("git" "log" "l" "diff" "show")))
 (use-package eshell-git-prompt
+  :pin melpa-stable
   :config
   (eshell-git-prompt-use-theme 'git-radar))
 (setq eshell-cmpl-cycle-completions nil)
@@ -267,6 +271,7 @@
 ;; found when in rust mode and also so that the eshell works as expected
 ;;
 (use-package exec-path-from-shell
+  :pin melpa-stable
     :ensure t
     :demand t
     :config
@@ -289,6 +294,7 @@
 ;; C-c ! n : next error
 ;; C-c ! p : previous error
 (use-package flycheck
+  :pin melpa-stable
   :config
   ;; disable jshint since we prefer eslint checking
   (setq-default flycheck-disabled-checkers
@@ -321,6 +327,7 @@
 
 ;; ----------------------------------------------------------------------------
 (use-package go-mode
+  :pin melpa-stable
   :mode "\\.go\\'"
   :config
   (add-hook 'before-save-hook #'gofmt-before-save))
@@ -328,11 +335,13 @@
 
 ;; ----------------------------------------------------------------------------
 (use-package htmlize
+  :pin melpa-stable
   :commands htmlize-buffer)
 (isg/time-section "htmlize")
 
 ;; ----------------------------------------------------------------------------
 (use-package js2-mode
+  :pin melpa-stable
   :mode (("\\.js\\'" . js2-mode)
          ("\\.es6\\'" . js2-mode))
   :init
@@ -348,6 +357,7 @@
 
 ;; ----------------------------------------------------------------------------
 (use-package magit
+  :pin melpa-stable
   :commands magit-status
   :init
   (global-set-key "\C-cv" 'magit-status)
@@ -358,20 +368,21 @@
 
 ;; ----------------------------------------------------------------------------
 (use-package markdown-mode
+  :pin melpa-stable
   :mode (("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode)))
 (isg/time-section "markdown-mode")
 
 ;; ----------------------------------------------------------------------------
-(use-package parenface :defer t)
-(isg/time-section "parenface")
-
-;; ----------------------------------------------------------------------------
-(use-package pkg-info :defer t)
+(use-package pkg-info
+  :pin melpa-stable
+  :defer t)
 (isg/time-section "pkg-info")
 
 ;; ----------------------------------------------------------------------------
-(use-package popup :defer t)
+(use-package popup
+  :pin melpa-stable
+  :defer t)
 (isg/time-section "popup")
 
 ;; ----------------------------------------------------------------------------
@@ -385,6 +396,7 @@
 ;; C-c C-c C-t to run cargo test
 ;;
 (use-package rust-mode
+  :pin melpa-stable
   :mode "\\.rs\\'"
   :config
   (use-package cargo)
@@ -409,7 +421,9 @@
 (isg/time-section "rust-mode")
 
 ;; ----------------------------------------------------------------------------
-(use-package simple-httpd :defer t)
+(use-package simple-httpd
+  :pin melpa-stable
+  :defer t)
 (isg/time-section "simple-httpd")
 
 ;; ----------------------------------------------------------------------------
@@ -421,6 +435,7 @@
 
 ;; ----------------------------------------------------------------------------
 (use-package smartparens-config
+  :pin melpa-stable
   :ensure smartparens
   :defer t
   :init
@@ -500,11 +515,13 @@
 
 ;; ----------------------------------------------------------------------------
 (use-package typescript-mode
+  :pin melpa-stable
   :mode "\\.ts\\'")
 (isg/time-section "typescript")
 
 ;; ----------------------------------------------------------------------------
 (use-package web-mode
+  :pin melpa-stable
   :mode "\\.jsx\\'"
   :init
   (add-hook 'web-mode-hook 'ws-butler-mode)
@@ -516,7 +533,9 @@
 (isg/time-section "web-mode")
 
 ;; ----------------------------------------------------------------------------
-(use-package ws-butler :defer t)
+(use-package ws-butler
+  :pin melpa-stable
+  :defer t)
 (isg/time-section "ws-butler")
 
 ;; ----------------------------------------------------------------------------
@@ -724,7 +743,7 @@
     ("a885d978ca8f1b965da0ec3d1ae4d361035cd560e8ec23aecf1627f8486ecf84" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "eff2a7b2d194f03512fe33c718e1b3abcfe38050f9d1f7a76568e3f3ebe5eb06" "c76b446142f54669ef90ff4580dc30353cccaaea8ac18d9222d1cd4f531a0e94" "8f641ea77b4638dbb4967e093a63312641ee692c9494c809dceab967f859d03e" "ca88d0093e6e96d97ba5d8e5654ae7d9c3cee2fdad15bab04cde750d63ee32a8" "c4591b07241df5543d035284ecdff490f19c20243f996aa09651045a2623a54c" "4d0c1008debaa663eae9ecd86cdd56ca35e65a225b6fbd90d2e359b6acb2226a" default)))
  '(package-selected-packages
    (quote
-    (color-theme-sanityinc-solarized counsel swiper ivy eshell-git-prompt cider clojure-mode csharp-mode shader-mode atomic-chrome cargo exec-path-from-shell ws-butler web-mode use-package typescript-mode toml-mode smartparens simple-httpd rainbow-mode racer parenface markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme clojurescript-mode avy auto-complete ag glsl-mode flycheck))))
+    (use-package color-theme-sanityinc-solarized counsel swiper ivy eshell-git-prompt cider clojure-mode csharp-mode shader-mode atomic-chrome cargo exec-path-from-shell ws-butler web-mode typescript-mode toml-mode smartparens simple-httpd rainbow-mode racer rust-mode markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme avy auto-complete ag glsl-mode flycheck flycheck-rust))))
 
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
