@@ -613,33 +613,6 @@
 (setq nrepl-hide-special-buffers t)
 (isg/time-section "misc. mode configs")
 
-
-;; Use bind-keys (from use-package) to put commands on C-c prefixes,
-;; with an additional prefix key to group related commands. So for
-;; example window-related commands have a C-c w prefix.
-
-;; Use which-key to label prefixes and bindings.
-
-(defhydra isg/themes-hydra (:hint nil :color pink)
-  "
-Themes
-
-----------------------------------------------------
-_A_: Actress _M_: Material       _S_: Solarized
-           _m_: Material Light _s_: Solarized light
-_DEL_: none
-"
-  ("A" (load-theme 'actress t))
-  ("s" (load-theme 'sanityinc-solarized-light t))
-  ("S" (load-theme 'sanityinc-solarized-dark t))
-  ("M" (load-theme 'material t))
-  ("m" (load-theme 'material-light t))
-  ("DEL" (isg/disable-all-themes))
-  ("RET" nil "done" :color blue))
-
-(bind-keys ("C-c w t"  . isg/themes-hydra/body))
-
-
 ;; ----------------------------------------------------------------------------
 (isg/frame-setup)
 (isg/run-machine-function 'post-setup-fn)
@@ -738,12 +711,42 @@ _DEL_: none
 (isg/time-section "global settings")
 
 ;; ----------------------------------------------------------------------------
-;; Font size
-(global-set-key (kbd "C-+") 'text-scale-increase)
-(global-set-key (kbd "C--") 'text-scale-decrease)
+;; C-c   == user defined prefixes
+;; C-c w == window related functions
+
+(defhydra isg/themes (:hint nil :color pink)
+  "
+Themes
+----------------------------------------------------
+_A_: Actress _M_: Material       _S_: Solarized
+           _m_: Material Light _s_: Solarized light
+_DEL_: none
+"
+  ("A" (load-theme 'actress t))
+  ("s" (load-theme 'sanityinc-solarized-light t))
+  ("S" (load-theme 'sanityinc-solarized-dark t))
+  ("M" (load-theme 'material t))
+  ("m" (load-theme 'material-light t))
+  ("DEL" (isg/disable-all-themes))
+  ("RET" nil "done" :color blue))
+
+(bind-keys ("C-c w t"  . isg/themes/body))
+
+(defhydra isg/text-scale (:hint nil :color pink)
+  "
+Text Scale
+----------------------------------------------------
+_+_: increase
+_-_: decrease
+"
+  ("+" text-scale-increase)
+  ("-" text-scale-decrease)
+  ("RET" nil "done" :color blue))
+
+(bind-keys ("C-c w s"  . isg/text-scale/body))
 
 ;;; use winner mode keys for undo/redo operations on window configurations
-;;; C-c left 
+;;; C-c left
 ;;; C-c right
 (global-set-key "\C-w"     'backward-kill-word)
 (global-set-key "\C-x\C-k" 'kill-region)
