@@ -82,8 +82,8 @@
 ;; ----------------------------------------------------------------------------
 (require 'package)
 (setcdr (last package-archives)
-        '(("melpa-stable" . "https://melpa-stable.milkbox.net/packages/")
-          ("melpa" . "https://melpa.milkbox.net/packages/")))
+        '(("melpa-stable" . "https://stable.melpa.org/packages/")
+          ("melpa" . "https://melpa.org/packages/")))
 
 (package-initialize) ; most of this section's time is spent here
 (setq package-check-signature nil)
