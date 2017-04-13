@@ -56,6 +56,9 @@
    'actress
    `(default ((,class (:background ,bg1 :foreground ,fg1))))
 
+   ;; hi-yellow is used by highlight-thing
+   `(hi-yellow ((,class (:background ,bg3))))
+
    `(ac-completion-face ((,class (:underline t :foreground ,keyword))))
    `(cursor ((,class (:background ,cursor))))
    `(default-italic ((,class (:italic t))))

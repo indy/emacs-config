@@ -147,9 +147,12 @@
                     (counsel-git-grep nil
                                       (format "%s" (or (thing-at-point 'symbol) "")))))
   (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-  (global-set-key (kbd "C-x C-g") 'counsel-git)
-  ;; (global-set-key (kbd "C-x C-h") 'counsel-ag)
-  
+
+  ;; use the hydra equivalents instead (C-c f ...)
+  ;;
+  ;; (global-set-key (kbd "C-x C-g") 'counsel-git)
+  ;; (global-set-key (kbd "C-x C-r") 'counsel-rg)
+
   ;; I don't use these bindings - should learn what they do one day
   ;; (global-set-key (kbd "<f1> f") 'counsel-describe-function)
   ;; (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
@@ -344,6 +347,13 @@
   :config
   (add-hook 'before-save-hook #'gofmt-before-save))
 (isg/time-section "go-mode")
+
+;; ----------------------------------------------------------------------------
+(use-package highlight-thing
+  :config
+  (setq highlight-thing-delay-seconds 0.0)
+  (setq highlight-thing-exclude-thing-under-point t))
+(isg/time-section "highlight-thing")
 
 ;; ----------------------------------------------------------------------------
 (use-package htmlize
@@ -587,8 +597,10 @@
 ;(add-to-list 'auto-mode-alist '("\\.imd$" . imbue-mode))
 
 ;;; c-mode
-(add-hook 'c-mode-hook (lambda () (setq comment-start "// "
-                                        comment-end   "")))
+(add-hook 'c-mode-hook (lambda ()
+                         (setq comment-start "// "
+                               comment-end   "")
+                         (highlight-thing-mode)))
 
 
 ;;; org-mode
@@ -653,6 +665,21 @@
 
 (defalias 'list-buffers 'ibuffer)
 
+(setq ibuffer-saved-filter-groups
+      (quote (("default"
+               ("dired" (mode . dired-mode))
+               ("c" (mode . c-mode))
+               ("rust" (mode . rust-mode))
+               ("js" (mode . js2-mode))
+               ("org" (mode . org-mode))
+               ("emacs" (or
+                         (name . "^\\*scratch\\*$")
+                         (name . "^\\*Messages\\*$")))))))
+
+(add-hook 'ibuffer-mode-hook
+          (lambda ()
+            (ibuffer-switch-to-saved-filter-groups "default")))
+
 (setq ring-bell-function (lambda () (message "*beep*"))
 
       browse-url-browser-function 'browse-url-generic
@@ -714,7 +741,7 @@
 ;; C-c   == user defined prefixes
 ;; C-c w == window related functions
 
-(defhydra isg/themes (:hint nil :color pink)
+(defhydra isg/hydra-themes (:hint nil :color pink)
   "
 Themes
 ----------------------------------------------------
@@ -730,20 +757,38 @@ _DEL_: none
   ("DEL" (isg/disable-all-themes))
   ("RET" nil "done" :color blue))
 
-(bind-keys ("C-c w t"  . isg/themes/body))
+(bind-keys ("C-c w t"  . isg/hydra-themes/body))
 
-(defhydra isg/text-scale (:hint nil :color pink)
+(defhydra isg/hydra-text-scale (:hint nil :color pink)
   "
 Text Scale
 ----------------------------------------------------
-_+_: increase
-_-_: decrease
+_g_: greater
+_l_: lesser
 "
-  ("+" text-scale-increase)
-  ("-" text-scale-decrease)
+  ("g" text-scale-increase)
+  ("l" text-scale-decrease)
   ("RET" nil "done" :color blue))
 
-(bind-keys ("C-c w s"  . isg/text-scale/body))
+(bind-keys ("C-c w s"  . isg/hydra-text-scale/body))
+
+
+
+(defhydra isg/hydra-counsel (:hint nil :color pink)
+  "
+Counsel search
+----------------------------------------------------
+_f_: find file
+_g_: git
+_r_: ripgrep
+"
+  ("f" counsel-find-file)
+  ("g" counsel-git)
+  ("r" counsel-rg)
+  ("RET" nil "done" :color blue))
+
+(bind-keys ("C-c f"  . isg/hydra-counsel/body))
+
 
 ;;; use winner mode keys for undo/redo operations on window configurations
 ;;; C-c left
@@ -801,10 +846,33 @@ _-_: decrease
    (vector "#657b83" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#fdf6e3"))
  '(custom-safe-themes
    (quote
-    ("a885d978ca8f1b965da0ec3d1ae4d361035cd560e8ec23aecf1627f8486ecf84" default)))
+    ("b4472648aa15387ab823e17a6d9fcabb6f3479397530eae6518c3e42f79ed445" "ba5f1943ee8356a574acb6baf984b45c7fc52a9035ce7005505348a3e5294387" "bcfa3ac359ad749796895de73a5d2ea45f2d709793a8679b0f02140cb6120fdd" "eaaa577556de665079897c2430e95223fbab5c949741952c0d18a1896f941677" "a885d978ca8f1b965da0ec3d1ae4d361035cd560e8ec23aecf1627f8486ecf84" default)))
+ '(fci-rule-color "#eee8d5")
  '(package-selected-packages
    (quote
-    (material-theme which-key hydra use-package color-theme-sanityinc-solarized counsel swiper ivy eshell-git-prompt cider clojure-mode csharp-mode shader-mode atomic-chrome cargo exec-path-from-shell ws-butler web-mode typescript-mode toml-mode smartparens simple-httpd rainbow-mode racer rust-mode markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme avy auto-complete ag glsl-mode flycheck flycheck-rust))))
+    (highlight-thing material-theme which-key hydra use-package color-theme-sanityinc-solarized counsel swiper ivy eshell-git-prompt cider clojure-mode csharp-mode shader-mode atomic-chrome cargo exec-path-from-shell ws-butler web-mode typescript-mode toml-mode smartparens simple-httpd rainbow-mode racer rust-mode markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme avy auto-complete ag glsl-mode flycheck flycheck-rust)))
+ '(vc-annotate-background nil)
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#dc322f")
+     (40 . "#cb4b16")
+     (60 . "#b58900")
+     (80 . "#859900")
+     (100 . "#2aa198")
+     (120 . "#268bd2")
+     (140 . "#d33682")
+     (160 . "#6c71c4")
+     (180 . "#dc322f")
+     (200 . "#cb4b16")
+     (220 . "#b58900")
+     (240 . "#859900")
+     (260 . "#2aa198")
+     (280 . "#268bd2")
+     (300 . "#d33682")
+     (320 . "#6c71c4")
+     (340 . "#dc322f")
+     (360 . "#cb4b16"))))
+ '(vc-annotate-very-old-color nil))
 
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
@@ -830,6 +898,7 @@ _-_: decrease
 
 (provide 'init)
 ;;; init.el ends here
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
