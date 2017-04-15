@@ -351,7 +351,7 @@
 ;; ----------------------------------------------------------------------------
 (use-package highlight-thing
   :config
-  (setq highlight-thing-delay-seconds 0.0)
+  (setq highlight-thing-delay-seconds 0.5)
   (setq highlight-thing-exclude-thing-under-point t))
 (isg/time-section "highlight-thing")
 
