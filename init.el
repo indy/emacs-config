@@ -154,12 +154,6 @@
   ;; (global-set-key (kbd "C-x C-r") 'counsel-rg)
 
   ;; I don't use these bindings - should learn what they do one day
-  ;; (global-set-key (kbd "<f1> f") 'counsel-describe-function)
-  ;; (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
-  ;; (global-set-key (kbd "<f1> l") 'counsel-find-library)
-  ;; (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
-  ;; (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
-  ;; (global-set-key (kbd "C-x l") 'counsel-locate)
   ;; (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
   (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
 (isg/time-section "counsel")
@@ -773,18 +767,22 @@ _l_: lesser
 (bind-keys ("C-c w s"  . isg/hydra-text-scale/body))
 
 
-
 (defhydra isg/hydra-counsel (:hint nil :color pink)
   "
 Counsel search
 ----------------------------------------------------
-_f_: find file
-_g_: git
-_r_: ripgrep
+_r_: ripgrep  _f_: find file _g_: git
+_u_: function _v_: variable  _l_: library _s_: symbol
 "
   ("f" counsel-find-file)
   ("g" counsel-git)
-  ("r" counsel-rg)
+  ("r" (lambda ()
+         (interactive)
+         (counsel-rg (format "%s" (or (thing-at-point 'symbol) "")))))
+  ("u" counsel-describe-function)
+  ("v" counsel-describe-variable)
+  ("l" counsel-find-library)
+  ("s" counsel-info-lookup-symbol)
   ("RET" nil "done" :color blue))
 
 (bind-keys ("C-c f"  . isg/hydra-counsel/body))
