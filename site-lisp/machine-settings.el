@@ -45,7 +45,7 @@
       (default-font "-outline-Courier New-normal-normal-normal-mono-13-*-*-*-c-*-fontset-startup")
       (machine-os "windows") ; one of "linux" "osx" "windows"
       (racer-cmd "C:\\Users\\indy\\bin\\racer.exe")
-      (racer-rust-src-path "D:\\code\\rust\\rust\\src\\")
+      (racer-rust-src-path "c:\\Users\\indy\\.rustup\\toolchains\\nightly-x86_64-pc-windows-msvc\\lib\\rustlib\\src\\rust\\src\\")
       (save-folder "d:/scratch/emacs-saves")
       (url-opener "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome")
       (deft-directory "d:/Google Drive/Docs/notes/deft")

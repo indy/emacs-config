@@ -193,17 +193,20 @@
 ;; ----------------------------------------------------------------------------
 (use-package color-theme
   :defer t)
-(isg/time-section "color-theme")
 
-;; ----------------------------------------------------------------------------
 (use-package color-theme-sanityinc-solarized
   :pin melpa-stable
   :defer t)
 
-;; ----------------------------------------------------------------------------
 (use-package material-theme
   :pin melpa-stable
   :defer t)
+
+(use-package dracula-theme
+  :pin melpa-stable
+  :defer t)
+
+(isg/time-section "color-theme")
 
 ;; ----------------------------------------------------------------------------
 (use-package company
@@ -260,20 +263,6 @@
         deft-use-filename-as-title t
         deft-auto-save-interval 5.0))
 (isg/time-section "deft")
-
-;; ----------------------------------------------------------------------------
-;; Visual commands are commands which require a proper terminal.
-;; eshell will run them in a term buffer when you invoke them.
-(setq eshell-visual-commands
-      '("less" "tmux" "htop" "top" "bash" "zsh" "fish"))
-(setq eshell-visual-subcommands
-      '(("git" "log" "l" "diff" "show")))
-(use-package eshell-git-prompt
-  :pin melpa-stable
-  :config
-  (eshell-git-prompt-use-theme 'git-radar))
-(setq eshell-cmpl-cycle-completions nil)
-(isg/time-section "eshell-git-prompt")
 
 ;; ----------------------------------------------------------------------------
 ;; have to ensure that this is run at startup so that 'cargo' can be
@@ -740,10 +729,11 @@
 Themes
 ----------------------------------------------------
 _A_: Actress _M_: Material       _S_: Solarized
-           _m_: Material Light _s_: Solarized light
+_D_: Dracula _m_: Material Light _s_: Solarized light
 _DEL_: none
 "
   ("A" (load-theme 'actress t))
+  ("D" (load-theme 'dracula t))
   ("s" (load-theme 'sanityinc-solarized-light t))
   ("S" (load-theme 'sanityinc-solarized-dark t))
   ("M" (load-theme 'material t))
@@ -846,9 +836,10 @@ _u_: function _v_: variable  _l_: library _s_: symbol
    (quote
     ("b4472648aa15387ab823e17a6d9fcabb6f3479397530eae6518c3e42f79ed445" "ba5f1943ee8356a574acb6baf984b45c7fc52a9035ce7005505348a3e5294387" "bcfa3ac359ad749796895de73a5d2ea45f2d709793a8679b0f02140cb6120fdd" "eaaa577556de665079897c2430e95223fbab5c949741952c0d18a1896f941677" "a885d978ca8f1b965da0ec3d1ae4d361035cd560e8ec23aecf1627f8486ecf84" default)))
  '(fci-rule-color "#eee8d5")
+ '(hl-sexp-background-color "#1c1f26")
  '(package-selected-packages
    (quote
-    (highlight-thing material-theme which-key hydra use-package color-theme-sanityinc-solarized counsel swiper ivy eshell-git-prompt cider clojure-mode csharp-mode shader-mode atomic-chrome cargo exec-path-from-shell ws-butler web-mode typescript-mode toml-mode smartparens simple-httpd rainbow-mode racer rust-mode markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme avy auto-complete ag glsl-mode flycheck flycheck-rust)))
+    (highlight-thing material-theme which-key hydra use-package color-theme-sanityinc-solarized counsel swiper ivy cider clojure-mode csharp-mode shader-mode atomic-chrome cargo exec-path-from-shell ws-butler web-mode typescript-mode toml-mode smartparens simple-httpd rainbow-mode racer rust-mode markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme avy auto-complete ag glsl-mode flycheck flycheck-rust)))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
