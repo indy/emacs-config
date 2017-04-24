@@ -433,16 +433,16 @@
  (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
  #+END_SRC
 ** rust
+   http://julienblanchard.com/2016/fancy-rust-development-with-emacs/
+
+   cargo.el is a minor mode which allows us to run cargo commands from emacs like:
+   | key         | command     |
+   |-------------+-------------|
+   | C-c C-c C-b | cargo build |
+   | C-c C-c C-r | cargo run   |
+   | C-c C-c C-t | cargo test  |
+
  #+BEGIN_SRC emacs-lisp
- ;; http://julienblanchard.com/2016/fancy-rust-development-with-emacs/
- ;;
- ;;
- ;; cargo.el is a minor mode which allows us to run cargo commands from emacs like:
- ;;
- ;; C-c C-c C-b to run cargo build
- ;; C-c C-c C-r to run cargo run
- ;; C-c C-c C-t to run cargo test
- ;;
  (use-package rust-mode
    :pin melpa-stable
    :mode "\\.rs\\'"
@@ -582,37 +582,14 @@ _DEL_: none
 #+END_SRC
 
 * misc helper packages
-
-** auto-complete-config
-  #+BEGIN_SRC emacs-lisp
-    (use-package auto-complete
-      :commands auto-complete-mode
-      :config
-      (ac-set-trigger-key "TAB")
-      (ac-config-default)
-
-      (setq ac-delay 0.02)
-      (setq ac-use-menu-map t)
-      (setq ac-menu-height 50)
-      (setq ac-use-quick-help nil) 
-      (setq ac-comphist-file  "~/.emacs.d/ac-comphist.dat")
-      (setq ac-ignore-case nil)
-      (setq ac-dwim  t)
-      (setq ac-fuzzy-enable t)
-  
-      (use-package ac-dabbrev
-        :config
-        (progn
-          (add-to-list 'ac-sources 'ac-source-dabbrev))))
-  #+END_SRC
-** avy
+** avy - moving the cursor by searching
  #+BEGIN_SRC emacs-lisp
  (use-package avy
    :pin melpa-stable
    :bind ("M-h" . avy-goto-char-timer))
  #+END_SRC
 
-** company
+** company - auto completion
  #+BEGIN_SRC emacs-lisp
  (use-package company
    :pin melpa-stable
@@ -673,25 +650,28 @@ _DEL_: none
 
 ** flycheck
  #+BEGIN_SRC emacs-lisp
- ;; setting up flycheck for eslint checks using instructions from:
- ;; http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
- ;;
- ;; C-c ! l : see full list of errors
- ;; C-c ! n : next error
- ;; C-c ! p : previous error
- (use-package flycheck
-   :pin melpa-stable
-   :config
-   (setq-default flycheck-disabled-checkers
-                 (list 'json-jsonlist
-                       'javascript-jshint ;; disable jshint since we prefer eslint checking
-                       'emacs-lisp-checkdoc))
-  
-   ;; use eslint with web-mode for jsx files
-   (flycheck-add-mode 'javascript-eslint 'web-mode)
-   ;; (setq flycheck-eslintrc "~/work/seni-web/.eslintrc.json")
-   ;; customize flycheck temp file prefix
-   (setq-default flycheck-temp-prefix ".flycheck"))
+   ;; setting up flycheck for eslint checks using instructions from:
+   ;; http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
+   ;;
+   ;; C-c ! l : see full list of errors
+   ;; C-c ! n : next error
+   ;; C-c ! p : previous error
+   (use-package flycheck
+     :pin melpa-stable
+     :config
+     (use-package pkg-info
+       :pin melpa-stable
+       :defer t)
+     (setq-default flycheck-disabled-checkers
+                   (list 'json-jsonlist
+                         'javascript-jshint ;; disable jshint since we prefer eslint checking
+                         'emacs-lisp-checkdoc))
+
+     ;; use eslint with web-mode for jsx files
+     (flycheck-add-mode 'javascript-eslint 'web-mode)
+     ;; (setq flycheck-eslintrc "~/work/seni-web/.eslintrc.json")
+     ;; customize flycheck temp file prefix
+     (setq-default flycheck-temp-prefix ".flycheck"))
  #+END_SRC
 
 ** highlight thing
@@ -701,28 +681,6 @@ _DEL_: none
    (setq highlight-thing-delay-seconds 0.5)
    (setq highlight-thing-exclude-thing-under-point t))
  #+END_SRC
-
-** htmlize
- #+BEGIN_SRC emacs-lisp
- (use-package htmlize
-   :pin melpa-stable
-   :commands htmlize-buffer)
- #+END_SRC
-
-** pkg-info
- #+BEGIN_SRC emacs-lisp
- (use-package pkg-info
-   :pin melpa-stable
-   :defer t)
- #+END_SRC
-
-** popup
- #+BEGIN_SRC emacs-lisp
- (use-package popup
-   :pin melpa-stable
-   :defer t)
- #+END_SRC
-
 
 ** smartparens-config
  #+BEGIN_SRC emacs-lisp
@@ -815,7 +773,6 @@ _DEL_: none
    :pin melpa-stable
    :defer t)
  #+END_SRC
-
 
 * global settings
 #+BEGIN_SRC emacs-lisp
@@ -1006,12 +963,11 @@ _l_: lesser
 
 ;; turn on flychecking globally
 (add-hook 'after-init-hook #'global-flycheck-mode)
+(add-hook 'after-init-hook 'global-company-mode)
 
 (require 'tramp)
 (if (eq system-type 'windows-nt)
     (setq tramp-default-method "plinkx"))
-
-(auto-complete-mode)
 
 ; (server-start)
 

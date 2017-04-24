@@ -47,7 +47,7 @@
  '(hl-sexp-background-color "#1c1f26")
  '(package-selected-packages
    (quote
-    (ac-dabbrev dracula-theme org highlight-thing material-theme which-key hydra use-package color-theme-sanityinc-solarized counsel swiper ivy cider clojure-mode csharp-mode shader-mode atomic-chrome cargo exec-path-from-shell ws-butler web-mode typescript-mode toml-mode smartparens rainbow-mode racer rust-mode markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme avy auto-complete ag glsl-mode flycheck flycheck-rust)))
+    (dracula-theme org highlight-thing material-theme which-key hydra use-package color-theme-sanityinc-solarized counsel swiper ivy cider clojure-mode csharp-mode shader-mode atomic-chrome cargo exec-path-from-shell ws-butler web-mode typescript-mode toml-mode smartparens rainbow-mode racer rust-mode markdown-mode magit js2-mode js-comint go-mode find-file-in-git-repo edit-server deft company-racer color-theme avy ag glsl-mode flycheck flycheck-rust)))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote

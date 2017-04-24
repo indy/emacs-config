@@ -490,26 +490,6 @@ _DEL_: none
 
 (bind-keys ("C-c w t"  . isg/hydra-themes/body))
 
-(use-package auto-complete
-  :commands auto-complete-mode
-  :config
-  (ac-set-trigger-key "TAB")
-  (ac-config-default)
-
-  (setq ac-delay 0.02)
-  (setq ac-use-menu-map t)
-  (setq ac-menu-height 50)
-  (setq ac-use-quick-help nil) 
-  (setq ac-comphist-file  "~/.emacs.d/ac-comphist.dat")
-  (setq ac-ignore-case nil)
-  (setq ac-dwim  t)
-  (setq ac-fuzzy-enable t)
-
-  (use-package ac-dabbrev
-    :config
-    (progn
-      (add-to-list 'ac-sources 'ac-source-dabbrev))))
-
 (use-package avy
   :pin melpa-stable
   :bind ("M-h" . avy-goto-char-timer))
@@ -571,6 +551,9 @@ _DEL_: none
 (use-package flycheck
   :pin melpa-stable
   :config
+  (use-package pkg-info
+    :pin melpa-stable
+    :defer t)
   (setq-default flycheck-disabled-checkers
                 (list 'json-jsonlist
                       'javascript-jshint ;; disable jshint since we prefer eslint checking
@@ -587,21 +570,7 @@ _DEL_: none
   (setq highlight-thing-delay-seconds 0.5)
   (setq highlight-thing-exclude-thing-under-point t))
 
-(use-package htmlize
-  :pin melpa-stable
-  :commands htmlize-buffer)
 
-(use-package pkg-info
-  :pin melpa-stable
-  :defer t)
-
-(use-package popup
-  :pin melpa-stable
-  :defer t)
-
-(use-package simple-httpd
-  :pin melpa-stable
-  :defer t)
 
 (use-package smartparens-config
   :pin melpa-stable
@@ -871,12 +840,11 @@ _l_: lesser
 
 ;; turn on flychecking globally
 (add-hook 'after-init-hook #'global-flycheck-mode)
+(add-hook 'after-init-hook 'global-company-mode)
 
 (require 'tramp)
 (if (eq system-type 'windows-nt)
     (setq tramp-default-method "plinkx"))
-
-(auto-complete-mode)
 
 ; (server-start)
 
