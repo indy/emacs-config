@@ -73,8 +73,11 @@
       (racer-rust-src-path "/Users/indy/code/rust/rust/src/")
       (url-opener "open")
 
-      (frame-r ((top . 0) (left . 864) (width . 80) (height . 55)))
-      (frame-l ((top . 0) (left . 362) (width . 80) (height . 55)))
+      (frame-r ((top . 0) (left . 746) (width . 100) (height . 55)))
+      (frame-l ((top . 0) (left . 126) (width . 100) (height . 55)))
+
+      ;;(frame-r ((top . 0) (left . 864) (width . 80) (height . 55)))
+      ;;(frame-l ((top . 0) (left . 362) (width . 80) (height . 55)))
 
       (post-setup-fn (lambda ()
                        (setq inferior-lisp-program "lein repl")))))
