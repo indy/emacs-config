@@ -39,7 +39,7 @@
 
 ;;; essential package
 (require 'cl)
-(require 'org)
+;(require 'org)
 
 ;(when (memq window-system '(mac ns))
 ;  (exec-path-from-shell-initialize))
@@ -81,6 +81,7 @@
 
 ;; ----------------------------------------------------------------------------
 (require 'package)
+(setq package-enable-at-startup nil)
 (setcdr (last package-archives)
         '(("melpa-stable" . "https://stable.melpa.org/packages/")
           ("melpa" . "https://melpa.org/packages/")))
@@ -88,27 +89,15 @@
 (package-initialize) ; most of this section's time is spent here
 (setq package-check-signature nil)
 
-(defvar prelude-packages
-  '(use-package)
-  "A list of packages to ensure are installed at launch.")
-
-(defun prelude-packages-installed-p ()
-  (loop for p in prelude-packages
-        when (not (package-installed-p p)) do (return nil)
-        finally (return t)))
-
-(unless (prelude-packages-installed-p)
+(unless (package-installed-p 'use-package)
   ;; check for new packages (package versions)
   (message "%s" "Emacs Prelude is now refreshing its package database...")
   (package-refresh-contents)
   (message "%s" " done.")
-  ;; install the missing packages
-  (dolist (p prelude-packages)
-    (when (not (package-installed-p p))
-      (package-install p))))
+  (package-install 'use-package))
 
 ;; see: https://github.com/jwiegley/use-package
-(require 'use-package)
+;(require 'use-package)
 
 ;; after use-package-always-ensure is set, all subsequent use-package
 ;; statements will download packages if needed
@@ -116,7 +105,13 @@
 (setq use-package-verbose t)
 (isg/time-section "loading use-package")
 
-; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+(use-package org
+  :pin gnu
+  :demand t)
+(isg/time-section "org")
+
+;----------------------------------------------------------------------------
 (use-package ivy
   :pin melpa-stable
   :demand t
@@ -294,23 +289,16 @@
 (use-package flycheck
   :pin melpa-stable
   :config
-  ;; disable jshint since we prefer eslint checking
   (setq-default flycheck-disabled-checkers
-                (append flycheck-disabled-checkers
-                        '(javascript-jshint)))
-
+                (list 'json-jsonlist
+                      'javascript-jshint ;; disable jshint since we prefer eslint checking
+                      'emacs-lisp-checkdoc))
+  
   ;; use eslint with web-mode for jsx files
   (flycheck-add-mode 'javascript-eslint 'web-mode)
-
   ;; (setq flycheck-eslintrc "~/work/seni-web/.eslintrc.json")
-
   ;; customize flycheck temp file prefix
-  (setq-default flycheck-temp-prefix ".flycheck")
-
-  ;; disable json-jsonlist checking for json files
-  (setq-default flycheck-disabled-checkers
-                (append flycheck-disabled-checkers
-                        '(json-jsonlist))))
+  (setq-default flycheck-temp-prefix ".flycheck"))
 (isg/time-section "flycheck")
 
 ;; ----------------------------------------------------------------------------
@@ -834,12 +822,12 @@ _u_: function _v_: variable  _l_: library _s_: symbol
    (vector "#657b83" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#fdf6e3"))
  '(custom-safe-themes
    (quote
-    ("b4472648aa15387ab823e17a6d9fcabb6f3479397530eae6518c3e42f79ed445" "ba5f1943ee8356a574acb6baf984b45c7fc52a9035ce7005505348a3e5294387" "bcfa3ac359ad749796895de73a5d2ea45f2d709793a8679b0f02140cb6120fdd" "eaaa577556de665079897c2430e95223fbab5c949741952c0d18a1896f941677" "a885d978ca8f1b965da0ec3d1ae4d361035cd560e8ec23aecf1627f8486ecf84" default)))
+    ("0b7febf170c1a84420220d7014923cb4fceff8e276f82cbd5175dbd0b2cf77e5" "b4472648aa15387ab823e17a6d9fcabb6f3479397530eae6518c3e42f79ed445" "ba5f1943ee8356a574acb6baf984b45c7fc52a9035ce7005505348a3e5294387" "bcfa3ac359ad749796895de73a5d2ea45f2d709793a8679b0f02140cb6120fdd" "eaaa577556de665079897c2430e95223fbab5c949741952c0d18a1896f941677" "a885d978ca8f1b965da0ec3d1ae4d361035cd560e8ec23aecf1627f8486ecf84" default)))
  '(fci-rule-color "#eee8d5")
  '(hl-sexp-background-color "#1c1f26")
  '(package-selected-packages
    (quote
-    (highlight-thing material-theme which-key hydra use-package color-theme-sanityinc-solarized counsel swiper ivy cider clojure-mode csharp-mode shader-mode atomic-chrome cargo exec-path-from-shell ws-butler web-mode typescript-mode toml-mode smartparens simple-httpd rainbow-mode racer rust-mode markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme avy auto-complete ag glsl-mode flycheck flycheck-rust)))
+    (dracula-theme org highlight-thing material-theme which-key hydra use-package color-theme-sanityinc-solarized counsel swiper ivy cider clojure-mode csharp-mode shader-mode atomic-chrome cargo exec-path-from-shell ws-butler web-mode typescript-mode toml-mode smartparens simple-httpd rainbow-mode racer rust-mode markdown-mode magit js2-mode js-comint htmlize go-mode find-file-in-git-repo edit-server deft company-racer color-theme avy auto-complete ag glsl-mode flycheck flycheck-rust)))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
@@ -887,10 +875,10 @@ _u_: function _v_: variable  _l_: library _s_: symbol
 
 (provide 'init)
 ;;; init.el ends here
-
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+;(org-babel-load-file (expand-file-name "~/.emacs.d/myinit.org"))
