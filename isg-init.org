@@ -4,6 +4,8 @@
   | C-c '   | Open up a mini-buffer for editing the code block |
 
 * package
+  https://github.com/jwiegley/use-package
+ 
 #+BEGIN_SRC emacs-lisp
   (require 'package)
   (setq package-enable-at-startup nil)
@@ -21,7 +23,6 @@
     (message "%s" " done.")
     (package-install 'use-package))
 
-  ;; see: https://github.com/jwiegley/use-package
   ;(require 'use-package)
 
   ;; after use-package-always-ensure is set, all subsequent use-package
@@ -79,11 +80,6 @@
       (rename-uniquely)
     (rename-buffer shell-name)))
 
-(defun isg/machine-set-keys ()
-  "set machine specific key bindings"
-  (mapcar (lambda (kons)
-            (global-set-key (car kons) (cdr kons)))
-          (isg/val 'key-setup)))
 #+END_SRC
 
 * machine settings
@@ -108,8 +104,7 @@
   "System specific overrides go here."
   (cond
    ((string-match "^BERTRAND" system-name)  ; 2016 Windows PC
-    '(
-      (default-font "-outline-Courier New-normal-normal-normal-mono-13-*-*-*-c-*-fontset-startup")
+    '((default-font "-outline-Courier New-normal-normal-normal-mono-13-*-*-*-c-*-fontset-startup")
       (machine-os "windows") ; one of "linux" "osx" "windows"
       (racer-cmd "C:\\Users\\indy\\bin\\racer.exe")
       (racer-rust-src-path "c:\\Users\\indy\\.rustup\\toolchains\\nightly-x86_64-pc-windows-msvc\\lib\\rustlib\\src\\rust\\src\\")
@@ -228,8 +223,18 @@
   (load-settings (isg/machine-settings)))
 #+END_SRC
 
-
-* super essential foundational packages
+* essential packages
+** magit
+ #+BEGIN_SRC emacs-lisp
+ (use-package magit
+   :pin melpa-stable
+   :commands magit-status
+   :init
+   (global-set-key "\C-cv" 'magit-status)
+   (global-set-key "\C-c\C-v" 'magit-status)
+   :config
+   (setq magit-push-always-verify nil))
+ #+END_SRC
 ** org
  #+BEGIN_SRC emacs-lisp
  (use-package org
@@ -245,46 +250,6 @@
  (add-hook 'org-mode-hook 'soft-wrap-lines)
 
  #+END_SRC
-
-** ivy + swiper + counsel
- #+BEGIN_SRC emacs-lisp
- (use-package ivy
-   :pin melpa-stable
-   :demand t
-   :config
-   (ivy-mode 1)
-   (setq ivy-use-virtual-buffers t))
-
-
- (use-package swiper
-   :pin melpa-stable
-   :init
-   (global-set-key (kbd "C-s")
-                   (lambda ()
-                     (interactive)
-                     (swiper (format "%s" (or (thing-at-point 'symbol) ""))))))
-
- (use-package counsel
-   :pin melpa-stable
-   :init
-   (global-set-key (kbd "M-x") 'counsel-M-x)
-   (global-set-key (kbd "C-M-s")
-                   (lambda ()
-                     (interactive)
-                     (counsel-git-grep nil
-                                       (format "%s" (or (thing-at-point 'symbol) "")))))
-   (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-
-   ;; use the hydra equivalents instead (C-c f ...)
-   ;;
-   ;; (global-set-key (kbd "C-x C-g") 'counsel-git)
-   ;; (global-set-key (kbd "C-x C-r") 'counsel-rg)
-
-   ;; I don't use these bindings - should learn what they do one day
-   ;; (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
-   (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
- #+END_SRC
-
 ** hydra
  #+BEGIN_SRC emacs-lisp
  (use-package hydra
@@ -293,17 +258,66 @@
    :config
    (setq hydra-lv nil)) ;use echo area
  #+END_SRC
-** magit
- #+BEGIN_SRC emacs-lisp
- (use-package magit
-   :pin melpa-stable
-   :commands magit-status
-   :init
-   (global-set-key "\C-cv" 'magit-status)
-   (global-set-key "\C-c\C-v" 'magit-status)
-   :config
-   (setq magit-push-always-verify nil))
- #+END_SRC
+
+** ivy + swiper + counsel
+   #+BEGIN_SRC emacs-lisp
+   (use-package ivy
+     :pin melpa-stable
+     :demand t
+     :config
+     (ivy-mode 1)
+     (setq ivy-use-virtual-buffers t))
+
+
+   (use-package swiper
+     :pin melpa-stable
+     :init
+     (global-set-key (kbd "C-s")
+                     (lambda ()
+                       (interactive)
+                       (swiper (format "%s" (or (thing-at-point 'symbol) ""))))))
+
+   (use-package counsel
+     :pin melpa-stable
+     :init
+     (global-set-key (kbd "M-x") 'counsel-M-x)
+     (global-set-key (kbd "C-M-s")
+                     (lambda ()
+                       (interactive)
+                       (counsel-git-grep nil
+                                         (format "%s" (or (thing-at-point 'symbol) "")))))
+     (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+
+     ;; use the hydra equivalents instead (C-c f ...)
+     ;;
+     ;; (global-set-key (kbd "C-x C-g") 'counsel-git)
+     ;; (global-set-key (kbd "C-x C-r") 'counsel-rg)
+
+     ;; I don't use these bindings - should learn what they do one day
+     ;; (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+     (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
+
+
+   (defhydra isg/hydra-counsel (:hint nil :color pink)
+     "
+   Counsel search
+   ----------------------------------------------------
+   _r_: ripgrep  _f_: find file _g_: git
+   _u_: function _v_: variable  _l_: library _s_: symbol
+   "
+     ("f" counsel-find-file)
+     ("g" counsel-git)
+     ("r" (lambda ()
+            (interactive)
+            (counsel-rg (format "%s" (or (thing-at-point 'symbol) "")))))
+     ("u" counsel-describe-function)
+     ("v" counsel-describe-variable)
+     ("l" counsel-find-library)
+     ("s" counsel-info-lookup-symbol)
+     ("RET" nil "done" :color blue))
+
+   (bind-keys ("C-c f"  . isg/hydra-counsel/body))
+   #+END_SRC
 
 * language modes
 ** c
@@ -568,14 +582,29 @@ _DEL_: none
 #+END_SRC
 
 * misc helper packages
-** auto-complete-config
- #+BEGIN_SRC emacs-lisp
- (use-package auto-complete-config
-   :pin melpa-stable
-   :ensure auto-complete
-   :defer t)
- #+END_SRC
 
+** auto-complete-config
+  #+BEGIN_SRC emacs-lisp
+    (use-package auto-complete
+      :commands auto-complete-mode
+      :config
+      (ac-set-trigger-key "TAB")
+      (ac-config-default)
+
+      (setq ac-delay 0.02)
+      (setq ac-use-menu-map t)
+      (setq ac-menu-height 50)
+      (setq ac-use-quick-help nil) 
+      (setq ac-comphist-file  "~/.emacs.d/ac-comphist.dat")
+      (setq ac-ignore-case nil)
+      (setq ac-dwim  t)
+      (setq ac-fuzzy-enable t)
+  
+      (use-package ac-dabbrev
+        :config
+        (progn
+          (add-to-list 'ac-sources 'ac-source-dabbrev))))
+  #+END_SRC
 ** avy
  #+BEGIN_SRC emacs-lisp
  (use-package avy
@@ -694,12 +723,6 @@ _DEL_: none
    :defer t)
  #+END_SRC
 
-** simple-httpd
- #+BEGIN_SRC emacs-lisp
- (use-package simple-httpd
-   :pin melpa-stable
-   :defer t)
- #+END_SRC
 
 ** smartparens-config
  #+BEGIN_SRC emacs-lisp
@@ -793,7 +816,8 @@ _DEL_: none
    :defer t)
  #+END_SRC
 
-* post setup
+
+* global settings
 #+BEGIN_SRC emacs-lisp
 (defun isg/frame-setup ()
   (when (and (isg/val 'frame-r) (isg/val 'frame-l))
@@ -809,18 +833,13 @@ _DEL_: none
 
 (isg/frame-setup)
 (isg/run-machine-function 'post-setup-fn)
-#+END_SRC
 
-
-* global settings
-#+BEGIN_SRC emacs-lisp
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR." t)
 
 ; give buffers unique names
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
-
 
 ; reload files that have been changed outside of emacs (e.g. Eclipse autoformat)
 (global-auto-revert-mode t)
@@ -937,28 +956,6 @@ _l_: lesser
 
 (bind-keys ("C-c w s"  . isg/hydra-text-scale/body))
 
-
-(defhydra isg/hydra-counsel (:hint nil :color pink)
-  "
-Counsel search
-----------------------------------------------------
-_r_: ripgrep  _f_: find file _g_: git
-_u_: function _v_: variable  _l_: library _s_: symbol
-"
-  ("f" counsel-find-file)
-  ("g" counsel-git)
-  ("r" (lambda ()
-         (interactive)
-         (counsel-rg (format "%s" (or (thing-at-point 'symbol) "")))))
-  ("u" counsel-describe-function)
-  ("v" counsel-describe-variable)
-  ("l" counsel-find-library)
-  ("s" counsel-info-lookup-symbol)
-  ("RET" nil "done" :color blue))
-
-(bind-keys ("C-c f"  . isg/hydra-counsel/body))
-
-
 ;;; use winner mode keys for undo/redo operations on window configurations
 ;;; C-c left
 ;;; C-c right
@@ -999,6 +996,11 @@ _u_: function _v_: variable  _l_: library _s_: symbol
 ;; (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
 (setq company-tooltip-align-annotations t)
 
+(defun isg/machine-set-keys ()
+  "set machine specific key bindings"
+  (mapcar (lambda (kons)
+            (global-set-key (car kons) (cdr kons)))
+          (isg/val 'key-setup)))
 (isg/machine-set-keys)                 ; machine specific key bindings
 
 
@@ -1008,6 +1010,8 @@ _u_: function _v_: variable  _l_: library _s_: symbol
 (require 'tramp)
 (if (eq system-type 'windows-nt)
     (setq tramp-default-method "plinkx"))
+
+(auto-complete-mode)
 
 ; (server-start)
 
