@@ -776,205 +776,182 @@ _DEL_: none
 
 * global settings
 #+BEGIN_SRC emacs-lisp
-(defun isg/frame-setup ()
-  (when (and (isg/val 'frame-r) (isg/val 'frame-l))
-    (setq initial-frame-alist (isg/val 'frame-r)
-          default-frame-alist (isg/val 'frame-l)))
-  (add-to-list 'default-frame-alist
-               (cons 'font
-                     (isg/val 'default-font))))
+  (defun isg/frame-setup ()
+    (when (and (isg/val 'frame-r) (isg/val 'frame-l))
+      (setq initial-frame-alist (isg/val 'frame-r)
+            default-frame-alist (isg/val 'frame-l)))
+    (add-to-list 'default-frame-alist
+                 (cons 'font
+                       (isg/val 'default-font))))
 
-(defun isg/run-machine-function (property)
-  (let ((fn (isg/val property)))
-    (if fn (funcall fn))))
+  (defun isg/run-machine-function (property)
+    (let ((fn (isg/val property)))
+      (if fn (funcall fn))))
 
-(isg/frame-setup)
-(isg/run-machine-function 'post-setup-fn)
+  (isg/frame-setup)
+  (isg/run-machine-function 'post-setup-fn)
 
-(autoload 'zap-up-to-char "misc"
-  "Kill up to, but not including ARGth occurrence of CHAR." t)
+  (autoload 'zap-up-to-char "misc"
+    "Kill up to, but not including ARGth occurrence of CHAR." t)
 
-; give buffers unique names
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'post-forward)
+  ;; give buffers unique names
+  (require 'uniquify)
+  (setq uniquify-buffer-name-style 'post-forward)
 
-; reload files that have been changed outside of emacs (e.g. Eclipse autoformat)
-(global-auto-revert-mode t)
+  (global-auto-revert-mode t) ; reload files that have been changed outside of emacs
+  (show-paren-mode t)
+  (global-font-lock-mode t)
+  (transient-mark-mode t) ; highlight selected text region
 
-(show-paren-mode t)
-(global-font-lock-mode t)
+  (fset 'yes-or-no-p 'y-or-n-p)
+  (setq-default font-lock-maximum-decoration t)
+  (setq-default indent-tabs-mode nil)
+  (blink-cursor-mode 0)
+  (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+  (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+  (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
-(transient-mark-mode t) ;; highlight selected text region
+  (if (not (file-exists-p (isg/val 'save-folder)))
+      (make-directory (isg/val 'save-folder)))
 
-(fset 'yes-or-no-p 'y-or-n-p)
-(setq-default font-lock-maximum-decoration t)
-(setq-default indent-tabs-mode nil)
-(blink-cursor-mode 0)
-(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+  (when (fboundp 'windmove-default-keybindings)
+    (windmove-default-keybindings))
+  (when (fboundp 'winner-mode)
+    (winner-mode 1))
 
-(if (not (file-exists-p (isg/val 'save-folder)))
-    (make-directory (isg/val 'save-folder)))
+  (defalias 'list-buffers 'ibuffer)
 
-(when (fboundp 'windmove-default-keybindings)
-  (windmove-default-keybindings))
-(when (fboundp 'winner-mode)
-  (winner-mode 1))
+  (setq ibuffer-saved-filter-groups
+        (quote (("default"
+                 ("dired" (mode . dired-mode))
+                 ("c" (mode . c-mode))
+                 ("rust" (mode . rust-mode))
+                 ("js" (mode . js2-mode))
+                 ("org" (mode . org-mode))
+                 ("emacs" (or
+                           (name . "^\\*scratch\\*$")
+                           (name . "^\\*Messages\\*$")))))))
 
-(defalias 'list-buffers 'ibuffer)
+  (add-hook 'ibuffer-mode-hook
+            (lambda ()
+              (ibuffer-switch-to-saved-filter-groups "default")))
 
-(setq ibuffer-saved-filter-groups
-      (quote (("default"
-               ("dired" (mode . dired-mode))
-               ("c" (mode . c-mode))
-               ("rust" (mode . rust-mode))
-               ("js" (mode . js2-mode))
-               ("org" (mode . org-mode))
-               ("emacs" (or
-                         (name . "^\\*scratch\\*$")
-                         (name . "^\\*Messages\\*$")))))))
+  (setq ring-bell-function (lambda () (message "*beep*"))
+        browse-url-browser-function 'browse-url-generic
+        browse-url-generic-program (isg/val 'url-opener)
+        standard-indent 2
+        create-lockfiles nil        ; don't create lockfiles
+        x-select-enable-clipboard t
+        x-select-enable-primary t
+        save-interprogram-paste-before-kill t
+        apropos-do-all t
+        mouse-yank-at-point t
+        require-final-newline t
+        visible-bell t
+        ediff-window-setup-function 'ediff-setup-windows-plain
+        line-move-visual nil
+        line-number-mode t
+        european-calendar-style t
+        display-time-24hr-format t
+        default-tab-width 2
+        column-number-mode t
+        enable-local-variables nil  ; ignore local variables defined in files
+        inhibit-startup-message t
+        initial-scratch-message nil
+        backup-by-copying t         ; don't clobber symlinks
+        delete-old-versions t
+        kept-new-versions 6
+        kept-old-versions 2
+        version-control t           ; use versioned backups
+        create-lockfiles nil
+        backup-directory-alist `((".*" . ,temporary-file-directory))
+        auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
+        company-tooltip-align-annotations t)
 
-(add-hook 'ibuffer-mode-hook
-          (lambda ()
-            (ibuffer-switch-to-saved-filter-groups "default")))
+    ;;; os specific settings
+  (cond
+   ((string-match "osx" (isg/val 'machine-os))
+    (setq
+     mac-command-modifier 'meta
+     default-directory "~/"
+     multi-term-program "/bin/bash")
 
-(setq ring-bell-function (lambda () (message "*beep*"))
+    (fset 'insertPound "#")
+    (global-set-key (kbd "C-M-3") 'insertPound))
+   ((string-match "linux" (isg/val 'machine-os))
+    (setq
+     default-directory "~/"
+     multi-term-program "/bin/bash")))
 
-      browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program (isg/val 'url-opener)
+  (new-frame)
 
-      standard-indent 2
+  ;; turn on flychecking globally
+  (add-hook 'after-init-hook #'global-flycheck-mode)
+  (add-hook 'after-init-hook 'global-company-mode)
 
-      create-lockfiles nil        ; don't create lockfiles
+  (require 'tramp)
+  (if (eq system-type 'windows-nt)
+      (setq tramp-default-method "plinkx"))
 
-      x-select-enable-clipboard t
-      x-select-enable-primary t
-      save-interprogram-paste-before-kill t
-      apropos-do-all t
-      mouse-yank-at-point t
-      require-final-newline t
-      visible-bell t
-      ediff-window-setup-function 'ediff-setup-windows-plain
+  ;; C-c   == user defined prefixes
+  ;; C-c w == window related functions
 
-      line-move-visual nil
-      line-number-mode t
-      european-calendar-style t
-      display-time-24hr-format t
-      default-tab-width 2
-      column-number-mode t
-      enable-local-variables nil  ; ignore local variables defined in files
-      inhibit-startup-message t
-      initial-scratch-message nil
-      backup-by-copying t         ; don't clobber symlinks
-      delete-old-versions t
-      kept-new-versions 6
-      kept-old-versions 2
-      version-control t           ; use versioned backups
-      create-lockfiles nil)
+  (defhydra isg/hydra-text-scale (:hint nil :color pink)
+    "
+    Text Scale
+    ----------------------------------------------------
+    _g_: greater
+    _l_: lesser
+    "
+    ("g" text-scale-increase)
+    ("l" text-scale-decrease)
+    ("RET" nil "done" :color blue))
 
-(setq backup-directory-alist
-      `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms
-      `((".*" ,temporary-file-directory t)))
-
-;;; os specific settings
-(cond
- ((string-match "osx" (isg/val 'machine-os))
-  (setq
-   mac-command-modifier 'meta
-   default-directory "~/"
-   multi-term-program "/bin/bash")
-  
-  (fset 'insertPound "#")
-  (global-set-key (kbd "C-M-3") 'insertPound))
- ((string-match "linux" (isg/val 'machine-os))
-  (setq
-   default-directory "~/"
-   multi-term-program "/bin/bash")))
-
-(new-frame)
+  (bind-keys ("C-c w s"  . isg/hydra-text-scale/body))
 #+END_SRC
 
+* global key settings
 #+BEGIN_SRC emacs-lisp
-;; C-c   == user defined prefixes
-;; C-c w == window related functions
+  ;;; use winner mode keys for undo/redo operations on window configurations
+  ;;; C-c left
+  ;;; C-c right
+  (global-set-key "\C-w"     'backward-kill-word)
+  (global-set-key "\C-x\C-k" 'kill-region)
+  (global-set-key "\C-c\C-k" 'kill-region)
+  (global-set-key "\M-0" 'other-frame)
+  (global-set-key "\M-o" 'other-window)
+  (global-set-key "\M-m" 'call-last-kbd-macro)
+  (global-set-key "\M-j" 'eval-print-last-sexp)
 
-(defhydra isg/hydra-text-scale (:hint nil :color pink)
-  "
-Text Scale
-----------------------------------------------------
-_g_: greater
-_l_: lesser
-"
-  ("g" text-scale-increase)
-  ("l" text-scale-decrease)
-  ("RET" nil "done" :color blue))
+  (global-set-key (kbd "M-z") 'zap-up-to-char)
 
-(bind-keys ("C-c w s"  . isg/hydra-text-scale/body))
+  (global-set-key "\C-c\C-f" 'flymake-mode)
 
-;;; use winner mode keys for undo/redo operations on window configurations
-;;; C-c left
-;;; C-c right
-(global-set-key "\C-w"     'backward-kill-word)
-(global-set-key "\C-x\C-k" 'kill-region)
-(global-set-key "\C-c\C-k" 'kill-region)
-(global-set-key "\M-0" 'other-frame)
-(global-set-key "\M-o" 'other-window)
-(global-set-key "\M-m" 'call-last-kbd-macro)
-(global-set-key "\M-j" 'eval-print-last-sexp)
+  (global-set-key (kbd "C-M-;") 'comment-region)
 
-(global-set-key (kbd "M-z") 'zap-up-to-char)
+  (defun isg/start-eshell (shell-name)
+    "SHELL-NAME the name of the shell."
+    (interactive "sEshell name: ")
+    (eshell)
+    (if (string= "" shell-name)
+        (rename-uniquely)
+      (rename-buffer shell-name)))
+  ;;; access server via ssh in eshell with:
+  ;;; $ cd /ssh:indy.io:
 
-(global-set-key "\C-c\C-f" 'flymake-mode)
+  (global-set-key "\M-7" 'isg/start-shell)
+  (global-set-key "\M-8" 'isg/start-eshell)
 
-(global-set-key (kbd "C-M-;") 'comment-region)
+  (global-set-key (kbd "<up>") 'scroll-down-line)
+  (global-set-key (kbd "<down>") 'scroll-up-line)
+  (global-set-key "\M-n" 'forward-paragraph)
+  (global-set-key "\M-p" 'backward-paragraph)
+  (global-set-key (kbd "C-<return>") 'electric-newline-and-maybe-indent)
 
-(defun isg/start-eshell (shell-name)
-  "SHELL-NAME the name of the shell."
-  (interactive "sEshell name: ")
-  (eshell)
-  (if (string= "" shell-name)
-      (rename-uniquely)
-    (rename-buffer shell-name)))
-;;; access server via ssh in eshell with:
-;;; $ cd /ssh:indy.io:
-
-(global-set-key "\M-7" 'isg/start-shell)
-(global-set-key "\M-8" 'isg/start-eshell)
-
-(global-set-key (kbd "<up>") 'scroll-down-line)
-(global-set-key (kbd "<down>") 'scroll-up-line)
-(global-set-key "\M-n" 'forward-paragraph)
-(global-set-key "\M-p" 'backward-paragraph)
-
-(global-set-key (kbd "C-<return>") 'electric-newline-and-maybe-indent)
-
-;; (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
-(setq company-tooltip-align-annotations t)
-
-(defun isg/machine-set-keys ()
-  "set machine specific key bindings"
-  (mapcar (lambda (kons)
-            (global-set-key (car kons) (cdr kons)))
-          (isg/val 'key-setup)))
-(isg/machine-set-keys)                 ; machine specific key bindings
-
-
-;; turn on flychecking globally
-(add-hook 'after-init-hook #'global-flycheck-mode)
-(add-hook 'after-init-hook 'global-company-mode)
-
-(require 'tramp)
-(if (eq system-type 'windows-nt)
-    (setq tramp-default-method "plinkx"))
-
-; (server-start)
-
-;(use-package atomic-chrome
-;  :config
-;  (atomic-chrome-start-server))
-;(require 'atomic-chrome)
-;(atomic-chrome-start-server)
-
+  (defun isg/machine-set-keys ()
+    "set machine specific key bindings"
+    (mapcar (lambda (kons)
+              (global-set-key (car kons) (cdr kons)))
+            (isg/val 'key-setup)))
+  (isg/machine-set-keys)                 ; machine specific key bindings
 #+END_SRC

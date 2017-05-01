@@ -362,15 +362,6 @@ _u_: function _v_: variable  _l_: library _s_: symbol
 
 (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
 
-;; http://julienblanchard.com/2016/fancy-rust-development-with-emacs/
-;;
-;;
-;; cargo.el is a minor mode which allows us to run cargo commands from emacs like:
-;;
-;; C-c C-c C-b to run cargo build
-;; C-c C-c C-r to run cargo run
-;; C-c C-c C-t to run cargo test
-;;
 (use-package rust-mode
   :pin melpa-stable
   :mode "\\.rs\\'"
@@ -570,8 +561,6 @@ _DEL_: none
   (setq highlight-thing-delay-seconds 0.5)
   (setq highlight-thing-exclude-thing-under-point t))
 
-
-
 (use-package smartparens-config
   :pin melpa-stable
   :ensure smartparens
@@ -673,17 +662,14 @@ _DEL_: none
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR." t)
 
-; give buffers unique names
+;; give buffers unique names
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
 
-; reload files that have been changed outside of emacs (e.g. Eclipse autoformat)
-(global-auto-revert-mode t)
-
+(global-auto-revert-mode t) ; reload files that have been changed outside of emacs
 (show-paren-mode t)
 (global-font-lock-mode t)
-
-(transient-mark-mode t) ;; highlight selected text region
+(transient-mark-mode t) ; highlight selected text region
 
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq-default font-lock-maximum-decoration t)
@@ -719,14 +705,10 @@ _DEL_: none
             (ibuffer-switch-to-saved-filter-groups "default")))
 
 (setq ring-bell-function (lambda () (message "*beep*"))
-
       browse-url-browser-function 'browse-url-generic
       browse-url-generic-program (isg/val 'url-opener)
-
       standard-indent 2
-
       create-lockfiles nil        ; don't create lockfiles
-
       x-select-enable-clipboard t
       x-select-enable-primary t
       save-interprogram-paste-before-kill t
@@ -735,7 +717,6 @@ _DEL_: none
       require-final-newline t
       visible-bell t
       ediff-window-setup-function 'ediff-setup-windows-plain
-
       line-move-visual nil
       line-number-mode t
       european-calendar-style t
@@ -750,21 +731,19 @@ _DEL_: none
       kept-new-versions 6
       kept-old-versions 2
       version-control t           ; use versioned backups
-      create-lockfiles nil)
+      create-lockfiles nil
+      backup-directory-alist `((".*" . ,temporary-file-directory))
+      auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
+      company-tooltip-align-annotations t)
 
-(setq backup-directory-alist
-      `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms
-      `((".*" ,temporary-file-directory t)))
-
-;;; os specific settings
+  ;;; os specific settings
 (cond
  ((string-match "osx" (isg/val 'machine-os))
   (setq
    mac-command-modifier 'meta
    default-directory "~/"
    multi-term-program "/bin/bash")
-  
+
   (fset 'insertPound "#")
   (global-set-key (kbd "C-M-3") 'insertPound))
  ((string-match "linux" (isg/val 'machine-os))
@@ -774,16 +753,24 @@ _DEL_: none
 
 (new-frame)
 
+;; turn on flychecking globally
+(add-hook 'after-init-hook #'global-flycheck-mode)
+(add-hook 'after-init-hook 'global-company-mode)
+
+(require 'tramp)
+(if (eq system-type 'windows-nt)
+    (setq tramp-default-method "plinkx"))
+
 ;; C-c   == user defined prefixes
 ;; C-c w == window related functions
 
 (defhydra isg/hydra-text-scale (:hint nil :color pink)
   "
-Text Scale
-----------------------------------------------------
-_g_: greater
-_l_: lesser
-"
+  Text Scale
+  ----------------------------------------------------
+  _g_: greater
+  _l_: lesser
+  "
   ("g" text-scale-increase)
   ("l" text-scale-decrease)
   ("RET" nil "done" :color blue))
@@ -824,11 +811,7 @@ _l_: lesser
 (global-set-key (kbd "<down>") 'scroll-up-line)
 (global-set-key "\M-n" 'forward-paragraph)
 (global-set-key "\M-p" 'backward-paragraph)
-
 (global-set-key (kbd "C-<return>") 'electric-newline-and-maybe-indent)
-
-;; (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
-(setq company-tooltip-align-annotations t)
 
 (defun isg/machine-set-keys ()
   "set machine specific key bindings"
@@ -836,20 +819,3 @@ _l_: lesser
             (global-set-key (car kons) (cdr kons)))
           (isg/val 'key-setup)))
 (isg/machine-set-keys)                 ; machine specific key bindings
-
-
-;; turn on flychecking globally
-(add-hook 'after-init-hook #'global-flycheck-mode)
-(add-hook 'after-init-hook 'global-company-mode)
-
-(require 'tramp)
-(if (eq system-type 'windows-nt)
-    (setq tramp-default-method "plinkx"))
-
-; (server-start)
-
-;(use-package atomic-chrome
-;  :config
-;  (atomic-chrome-start-server))
-;(require 'atomic-chrome)
-;(atomic-chrome-start-server)
