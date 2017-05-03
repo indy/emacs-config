@@ -369,6 +369,54 @@
        (setq css-indent-offset 2))
      (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
    #+END_SRC
+** elm
+  #+BEGIN_SRC emacs-lisp
+  (use-package elm-mode
+    :pin melpa-stable
+    :mode "\\.elm\\'"
+    :config (add-to-list 'company-backends 'company-elm))
+  #+END_SRC
+
+  After installing Elm the following command line tools are available:
+   
+  | elm-repl    | play with Elm expressions   |
+  | elm-reactor | get a project going quickly |
+  | elm-make    | compile Elm code directly   |
+  | elm-package | download packages           |
+
+  _elm-repl_ is a repl
+
+  _elm-reactor_ helps you build Elm projects without messing with the command-line too much. You just run it at the root of your project, like this:
+
+  $ git clone https://github.com/evancz/elm-architecture-tutorial.git
+  $ cd elm-architecture-tutorial
+  % elm-reactor
+
+  _elm-make_ builds Elm projects. It can compile Elm code to HTML or JavaScript. It is the most general way to compile Elm code, so if your project becomes too advanced for elm-reactor, you will want to start using elm-make directly.
+
+  Say you want to compile Main.elm to an HTML file named main.html. You would run this command:
+  $ elm-make Main.elm --output=main.html
+
+  Notable flags:
+  --warn prints warnings to improve code quality
+
+  _elm-package_ downloads and publishes packages from our package catalog. As community members solve problems in a nice way, they share their code in the package catalog for anyone to use!
+
+  Say you want to use elm-lang/http and NoRedInk/elm-decode-pipeline to make HTTP requests to a server and turn the resulting JSON into Elm values. You would say:
+
+  $ elm-package install elm-lang/http
+  $ elm-package install NoRedInk/elm-decode-pipeline
+
+  This will add the dependencies to your elm-package.json file that describes your project. (Or create it if you do not have one yet!) More information about all this here!
+
+  Notable commands:
+
+  install: install the dependencies in elm-package.json
+  publish: publish your library to the Elm Package Catalog
+  bump: bump version numbers based on API changes
+  diff: get the difference between two APIs
+
+
 ** glsl
  #+BEGIN_SRC emacs-lisp
  (use-package glsl-mode
