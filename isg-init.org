@@ -333,8 +333,6 @@
    :pin melpa-stable
    :defer t
    :init
-   (add-hook 'cider-repl-mode-hook 'company-mode)
-   (add-hook 'cider-mode-hook 'company-mode)
    (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode))
    #+END_SRC
 
@@ -447,7 +445,6 @@
           ("\\.es6\\'" . js2-mode))
    :init
    (use-package js-comint :defer t)
-   (add-hook 'js2-mode-hook 'company-mode)
    (add-hook 'js2-mode-hook 'ws-butler-mode)
    :config
    (setq js2-basic-offset 2)
@@ -504,8 +501,7 @@
      (setq racer-cmd (isg/val 'racer-cmd)
            racer-rust-src-path (isg/val 'racer-rust-src-path))
      :config
-     (add-hook 'racer-mode-hook #'eldoc-mode)
-     (add-hook 'racer-mode-hook #'company-mode))
+     (add-hook 'racer-mode-hook #'eldoc-mode))
    (add-hook 'rust-mode-hook
              '(lambda ()
                 (racer-mode)
@@ -924,8 +920,7 @@ _DEL_: none
         version-control t           ; use versioned backups
         create-lockfiles nil
         backup-directory-alist `((".*" . ,temporary-file-directory))
-        auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
-        company-tooltip-align-annotations t)
+        auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
     ;;; os specific settings
   (cond
