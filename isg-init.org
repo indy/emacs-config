@@ -319,6 +319,31 @@
    (bind-keys ("C-c f"  . isg/hydra-counsel/body))
    #+END_SRC
 
+** company - auto completion
+ #+BEGIN_SRC emacs-lisp
+ (use-package company
+   :pin melpa-stable
+   :defer t
+   :config
+   (eval-after-load 'company
+     '(progn
+        (add-to-list 'company-backends 'company-racer)
+
+        ;; Reduce the time after which the company auto completion popup opens
+        ;; Reduce the number of characters before company kicks in
+        (setq company-idle-delay 0.2
+              company-minimum-prefix-length 1
+              company-tooltip-align-annotations t)
+       
+        (define-key company-active-map (kbd "C-n") 'company-select-next)
+        (define-key company-active-map (kbd "C-p") 'company-select-previous))))
+ #+END_SRC
+
+ #+BEGIN_SRC emacs-lisp
+ (use-package company-racer
+   :defer t)
+ #+END_SRC
+
 * language modes
 ** c
  #+BEGIN_SRC emacs-lisp
@@ -368,11 +393,24 @@
      (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
    #+END_SRC
 ** elm
+
   #+BEGIN_SRC emacs-lisp
-  (use-package elm-mode
-    :pin melpa-stable
-    :mode "\\.elm\\'"
-    :config (add-to-list 'company-backends 'company-elm))
+    (use-package elm-mode
+      :pin melpa-stable
+      :mode "\\.elm\\'"
+      :config 
+      (add-hook 'elm-mode-hook
+                (lambda ()
+                  (setq company-backends '(company-elm))))
+      ;(add-to-list 'company-backends 'company-elm)
+
+      (add-hook 'elm-mode-hook #'elm-oracle-setup-completion)
+  
+      ;; this line is a HACK so that auto-completion will work on Windows
+      ;; TODO: find the root cause of this issue
+      ;;
+      ;;(elm-oracle--get-completions-cached "List.a"))
+      )
   #+END_SRC
 
   After installing Elm the following command line tools are available:
@@ -457,9 +495,12 @@
  #+BEGIN_SRC emacs-lisp
  (use-package web-mode
    :pin melpa-stable
-   :mode "\\.jsx\\'"
+   :mode (("\\.jsx\\'" . web-mode)
+          ("\\.tsx\\'" . web-mode))
    :init
    (add-hook 'web-mode-hook 'ws-butler-mode)
+   (when (string-equal "tsx" (file-name-extension buffer-file-name))
+         (setup-tide-mode))
    (defadvice web-mode-highlight-part (around tweak-jsx activate)
      (if (equal web-mode-content-type "jsx")
          (let ((web-mode-enable-part-face nil))
@@ -551,10 +592,47 @@
    :mode "\\.toml\\'")
  #+END_SRC
 ** typescript
+
+|-----+---------------------------------------------------------------|
+| key | description                                                   |
+|-----+---------------------------------------------------------------|
+| M-. | Jump to definition. With prefix arg, Jump to type definition. |
+| M-, | Return to your pre-jump position.                             |
+|-----+---------------------------------------------------------------|
+
+|---------------------------------+--------------------------------------------------------|
+| function                        | description                                            |
+|---------------------------------+--------------------------------------------------------|
+| M-x tide-restart-server         | Restart tsserver. to pickup tsconfig.json changes      |
+| M-x tide-documentation-at-point | Show documentation for the symbol at point.            |
+| M-x tide-references             | List all references to the symbol at point in a buffer |
+| M-x tide-project-errors         | List all errors in the project                         |
+| M-x tide-rename-symbol          | Rename all occurrences of the symbol at point.         |
+| M-x tide-format                 | Format the current region or buffer.                   |
+| M-x tide-fix                    | Apply code fix for the error at point.                 |
+|---------------------------------+--------------------------------------------------------|
+
+
  #+BEGIN_SRC emacs-lisp
  (use-package typescript-mode
    :pin melpa-stable
-   :mode "\\.ts\\'")
+   :mode "\\.ts\\'"
+   :config
+   (use-package tide)
+   (add-hook 'typescript-mode-hook 'setup-tide-mode))
+
+ (defun setup-tide-mode ()
+   (interactive)
+   (tide-setup)
+   (flycheck-mode t)
+   (setq flycheck-check-syntax-automatically '(save mode-enabled))
+   (eldoc-mode t)
+   ;; company is an optional dependency. You have to
+   ;; install it separately via package-install
+   (company-mode t)
+   (setq company-tooltip-align-annotations t)
+   (tide-hl-identifier-mode +1))
+
  #+END_SRC
 
 * theming
@@ -631,31 +709,6 @@ _DEL_: none
  (use-package avy
    :pin melpa-stable
    :bind ("M-h" . avy-goto-char-timer))
- #+END_SRC
-
-** company - auto completion
- #+BEGIN_SRC emacs-lisp
- (use-package company
-   :pin melpa-stable
-   :defer t
-   :config
-   (eval-after-load 'company
-     '(progn
-        (add-to-list 'company-backends 'company-racer)
-
-        ;; Reduce the time after which the company auto completion popup opens
-        ;; Reduce the number of characters before company kicks in
-        (setq company-idle-delay 0.2
-              company-minimum-prefix-length 1
-              company-tooltip-align-annotations t)
-       
-        (define-key company-active-map (kbd "C-n") 'company-select-next)
-        (define-key company-active-map (kbd "C-p") 'company-select-previous))))
- #+END_SRC
-
- #+BEGIN_SRC emacs-lisp
- (use-package company-racer
-   :defer t)
  #+END_SRC
 
 ** deft
