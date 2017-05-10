@@ -327,8 +327,6 @@
    :config
    (eval-after-load 'company
      '(progn
-        (add-to-list 'company-backends 'company-racer)
-
         ;; Reduce the time after which the company auto completion popup opens
         ;; Reduce the number of characters before company kicks in
         (setq company-idle-delay 0.2
@@ -339,18 +337,15 @@
         (define-key company-active-map (kbd "C-p") 'company-select-previous))))
  #+END_SRC
 
- #+BEGIN_SRC emacs-lisp
- (use-package company-racer
-   :defer t)
- #+END_SRC
-
 * language modes
 ** c
  #+BEGIN_SRC emacs-lisp
- (add-hook 'c-mode-hook (lambda ()
-                          (setq comment-start "// "
-                                comment-end   "")
-                          (highlight-thing-mode)))
+   (add-hook 'c-mode-hook (lambda ()
+                            ;;(add-to-list (make-local-variable 'company-backends) 'company-clang)
+                            (setq comment-start "// "
+                                  comment-end   "")
+                            (highlight-thing-mode)))
+   ;; company-racer company-bbdb company-nxml company-css company-eclim company-semantic company-clang company-xcode company-cmake company-capf company-files (company-dabbrev-code company-gtags company-etags company-keywords) company-oddmuse company-dabbrev
  #+END_SRC
 ** clojure
    #+BEGIN_SRC emacs-lisp
@@ -392,6 +387,19 @@
        (setq css-indent-offset 2))
      (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
    #+END_SRC
+** dart
+ #+BEGIN_SRC emacs-lisp
+ (use-package dart-mode
+   :pin melpa-stable
+   :mode "\\.dart\\'"
+   :config
+   (setq dart-enable-analysis-server t))
+
+
+
+
+ #+END_SRC
+
 ** elm
 
   #+BEGIN_SRC emacs-lisp
@@ -401,11 +409,10 @@
       :config 
       (add-hook 'elm-mode-hook
                 (lambda ()
-                  (setq company-backends '(company-elm))))
-      ;(add-to-list 'company-backends 'company-elm)
-
+                  (add-to-list (make-local-variable 'company-backends) 'company-elm)))
+                                        
       (add-hook 'elm-mode-hook #'elm-oracle-setup-completion)
-  
+
       ;; this line is a HACK so that auto-completion will work on Windows
       ;; TODO: find the root cause of this issue
       ;;
@@ -529,6 +536,9 @@
    | C-c C-c C-t | cargo test  |
 
  #+BEGIN_SRC emacs-lisp
+ (use-package company-racer
+   :defer t)
+
  (use-package rust-mode
    :pin melpa-stable
    :mode "\\.rs\\'"
@@ -546,12 +556,14 @@
    (add-hook 'rust-mode-hook
              '(lambda ()
                 (racer-mode)
+                (add-to-list (make-local-variable 'company-backends) 'company-racer)
                 (cargo-minor-mode)
                 ;; Key binding to jump to method definition
                 (local-set-key (kbd "M-.") #'racer-find-definition)
                 (local-set-key (kbd "<tab>") #'company-indent-or-complete-common)
                 (local-set-key (kbd "C-c <tab>") #'rust-format-buffer))))
  #+END_SRC
+
 ** scheme
  #+BEGIN_SRC emacs-lisp
  (add-hook 'scheme-mode-hook
@@ -991,6 +1003,9 @@ _DEL_: none
      multi-term-program "/bin/bash")))
 
   (new-frame)
+
+  ;; the standard set of company backends
+  (setq company-backends '(company-semantic company-dabbrev-code company-dabbrev company-keywords))
 
   ;; turn on flychecking globally
   (add-hook 'after-init-hook #'global-flycheck-mode)
