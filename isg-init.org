@@ -93,6 +93,7 @@
     (url-opener "chromium-browser")
     (save-folder "/tmp/emacs.d-saves")
     (deft-directory "~/notes/deft")
+    (gcal-file "~/notes/gcal.org")
     (racer-cmd "/home/indy/code/rust/racer/target/release/racer")
     (racer-rust-src-path "/home/indy/code/rust/rust/src/")
     (get-extra-paths (lambda ()
@@ -111,6 +112,7 @@
       (save-folder "d:/scratch/emacs-saves")
       (url-opener "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome")
       (deft-directory "d:/Google Drive/Docs/notes/deft")
+      (gcal-file "D:\\Google Drive\\Docs\\notes\\gcal.org")
       (frame-l ((top . 0) (left . 600) (width . 120) (height . 87)))
       (frame-r ((top . 0) (left . 1575) (width . 120) (height . 87)))))
 
@@ -236,7 +238,7 @@
    (setq magit-push-always-verify nil))
  #+END_SRC
 ** org
- #+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp
  (use-package org
    :pin gnu
    :demand t)
@@ -248,8 +250,30 @@
    (setq truncate-lines nil)
    (setq word-wrap t))
  (add-hook 'org-mode-hook 'soft-wrap-lines)
+#+END_SRC
 
- #+END_SRC
+ <2017-05-15 Mon>
+ http://cestlaz.github.io/posts/using-emacs-26-gcal/
+ https://www.youtube.com/watch?v=vO_RF2dK7M0
+ https://github.com/myuhe/org-gcal.el
+
+ test by calling: org-gcal-fetch
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org-gcal
+    :pin melpa-stable
+    :ensure t
+    :config
+    (setq org-gcal-client-id "897993881430-kugvdc95cl65l7ungcfb4c25eoqgu9gm.apps.googleusercontent.com"
+          org-gcal-client-secret "A1Z-3mRQXkbwczp3mnewdKUK"
+          org-gcal-file-alist '())
+    (add-to-list 'org-gcal-file-alist (cons "inderjit.gill@gmail.com" (isg/val 'gcal-file)))
+    (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync)))
+    (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync))))
+#+END_SRC
+
+
+
 ** hydra
  #+BEGIN_SRC emacs-lisp
  (use-package hydra
@@ -866,6 +890,28 @@ _DEL_: none
    ;; (define-key clojure-mode-map (kbd ")") 'sp-up-sexp)
    )
  #+END_SRC
+
+
+
+** undo-tree
+
+   http://www.dr-qubit.org/undo-tree/undo-tree.el
+
+  | key     | description                           |
+  |---------+---------------------------------------|
+  | C-x u   | undo-tree-visualize                   |
+  | C-x r u | Save current buffer state to register |
+  | C-x r U | Restore buffer state from register    |
+
+#+BEGIN_SRC emacs-lisp
+  (use-package undo-tree
+    :ensure t
+    :init
+    (global-undo-tree-mode)
+    :config
+    (global-set-key (kbd "<left>") 'undo-tree-undo)
+    (global-set-key (kbd "<right>") 'undo-tree-redo))
+#+END_SRC
 
 ** which key
  #+BEGIN_SRC emacs-lisp
