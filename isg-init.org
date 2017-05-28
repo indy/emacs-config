@@ -760,6 +760,25 @@ _DEL_: none
          deft-auto-save-interval 5.0))
  #+END_SRC
 
+** eshell
+
+ #+BEGIN_SRC emacs-lisp
+   (defun isg/start-eshell (shell-name)
+     "SHELL-NAME the name of the shell."
+     (interactive "sEshell name: ")
+     (eshell)
+     (if (string= "" shell-name)
+         (rename-uniquely)
+       (rename-buffer shell-name)))
+   ;;; access server via ssh in eshell with:
+   ;;; $ cd /ssh:indy.io:
+
+   (add-hook 'eshell-mode-hook 'my-eshell-hook)
+   (defun my-eshell-hook ()
+     (company-mode -1))
+
+ #+END_SRC
+
 ** exec-path-from-shell
  #+BEGIN_SRC emacs-lisp
  ;; have to ensure that this is run at startup so that 'cargo' can be
@@ -836,53 +855,54 @@ _DEL_: none
          '(("C-)" sp-up-sexp)
            ("M-s" sp-splice-sexp)
 
-           ("C-M-f" sp-forward-sexp)
-           ("C-M-b" sp-backward-sexp)
+           ;; ("C-M-f" sp-forward-sexp)
+           ;; ("C-M-b" sp-backward-sexp)
           
-           ("C-M-d" sp-down-sexp)
-           ("C-M-a" sp-backward-down-sexp)
-           ("C-S-a" sp-beginning-of-sexp)
-           ("C-S-d" sp-end-of-sexp)
+           ;; ("C-M-d" sp-down-sexp)
+           ;; ("C-M-a" sp-backward-down-sexp)
+           ;; ("C-S-a" sp-beginning-of-sexp)
+           ;; ("C-S-d" sp-end-of-sexp)
           
-           ("C-M-e" sp-up-sexp)
+           ;; ("C-M-e" sp-up-sexp)
           
-           ("C-M-u" sp-backward-up-sexp)
-           ("C-M-t" sp-transpose-sexp)
+           ;; ("C-M-u" sp-backward-up-sexp)
+           ;; ("C-M-t" sp-transpose-sexp)
           
-           ("C-M-n" sp-next-sexp)
-           ("C-M-p" sp-previous-sexp)
+           ;; ("C-M-n" sp-next-sexp)
+           ;; ("C-M-p" sp-previous-sexp)
           
-           ("C-M-k" sp-kill-sexp)
-           ("C-M-w" sp-copy-sexp)
+           ;; ("C-M-k" sp-kill-sexp)
+           ;; ("C-M-w" sp-copy-sexp)
           
-           ("M-<delete>" sp-unwrap-sexp)
-           ("M-<backspace>" sp-backward-unwrap-sexp)
+           ;; ("M-<delete>" sp-unwrap-sexp)
+           ;; ("M-<backspace>" sp-backward-unwrap-sexp)
           
-           ("C-<right>" sp-forward-slurp-sexp)
-           ("C-<left>" sp-forward-barf-sexp)
-           ("C-M-<left>" sp-backward-slurp-sexp)
-           ("C-M-<right>" sp-backward-barf-sexp)
+           ;; ("C-<right>" sp-forward-slurp-sexp)
+           ;; ("C-<left>" sp-forward-barf-sexp)
+           ;; ("C-M-<left>" sp-backward-slurp-sexp)
+           ;; ("C-M-<right>" sp-backward-barf-sexp)
           
-           ("C-M-<delete>" sp-splice-sexp-killing-forward)
-           ("C-M-<backspace>" sp-splice-sexp-killing-backward)
-           ("C-S-<backspace>" sp-splice-sexp-killing-around)
+           ;; ("C-M-<delete>" sp-splice-sexp-killing-forward)
+           ;; ("C-M-<backspace>" sp-splice-sexp-killing-backward)
+           ;; ("C-S-<backspace>" sp-splice-sexp-killing-around)
 
-           ("C-]" sp-select-next-thing-exchange)
-           ("C-<left_bracket>" sp-select-previous-thing)
-           ("C-M-]" sp-select-next-thing)
+           ;; ("C-]" sp-select-next-thing-exchange)
+           ;; ("C-<left_bracket>" sp-select-previous-thing)
+           ;; ("C-M-]" sp-select-next-thing)
           
-           ("M-F" sp-forward-symbol)
-           ("M-B" sp-backward-symbol)
+           ;; ("M-F" sp-forward-symbol)
+           ;; ("M-B" sp-backward-symbol)
           
-           ("H-t" sp-prefix-tag-object)
-           ("H-p" sp-prefix-pair-object)
-           ("H-s c" sp-convolute-sexp)
-           ("H-s a" sp-absorb-sexp)
-           ("H-s e" sp-emit-sexp)
-           ("H-s p" sp-add-to-previous-sexp)
-           ("H-s n" sp-add-to-next-sexp)
-           ("H-s j" sp-join-sexp)
-           ("H-s s" sp-split-sexp)))
+           ;; ("H-t" sp-prefix-tag-object)
+           ;; ("H-p" sp-prefix-pair-object)
+           ;; ("H-s c" sp-convolute-sexp)
+           ;; ("H-s a" sp-absorb-sexp)
+           ;; ("H-s e" sp-emit-sexp)
+           ;; ("H-s p" sp-add-to-previous-sexp)
+           ;; ("H-s n" sp-add-to-next-sexp)
+           ;; ("H-s j" sp-join-sexp)
+           ;; ("H-s s" sp-split-sexp)
+           ))
    ;; This is from authors config, seems to let you jump to the end of the current
    ;; sexp with paren?
    (define-key emacs-lisp-mode-map (kbd ")") 'sp-up-sexp)
@@ -890,7 +910,6 @@ _DEL_: none
    ;; (define-key clojure-mode-map (kbd ")") 'sp-up-sexp)
    )
  #+END_SRC
-
 
 
 ** undo-tree
@@ -909,8 +928,9 @@ _DEL_: none
     :init
     (global-undo-tree-mode)
     :config
-    (global-set-key (kbd "<left>") 'undo-tree-undo)
-    (global-set-key (kbd "<right>") 'undo-tree-redo))
+    ;; (global-set-key (kbd "<left>") 'undo-tree-undo)
+    ;; (global-set-key (kbd "<right>") 'undo-tree-redo)
+    )
 #+END_SRC
 
 ** which key
@@ -1097,21 +1117,12 @@ _DEL_: none
 
   (global-set-key (kbd "C-M-;") 'comment-region)
 
-  (defun isg/start-eshell (shell-name)
-    "SHELL-NAME the name of the shell."
-    (interactive "sEshell name: ")
-    (eshell)
-    (if (string= "" shell-name)
-        (rename-uniquely)
-      (rename-buffer shell-name)))
-  ;;; access server via ssh in eshell with:
-  ;;; $ cd /ssh:indy.io:
-
   (global-set-key "\M-7" 'isg/start-shell)
   (global-set-key "\M-8" 'isg/start-eshell)
 
-  (global-set-key (kbd "<up>") 'scroll-down-line)
-  (global-set-key (kbd "<down>") 'scroll-up-line)
+  (global-set-key (kbd "C-M-p") 'scroll-down-line)
+  (global-set-key (kbd "C-M-n") 'scroll-up-line)
+  
   (global-set-key "\M-n" 'forward-paragraph)
   (global-set-key "\M-p" 'backward-paragraph)
   (global-set-key (kbd "C-<return>") 'electric-newline-and-maybe-indent)
