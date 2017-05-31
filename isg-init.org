@@ -1,3 +1,5 @@
+  Editing codeblocks in org mode
+
   | key     | description                                      |
   |---------+--------------------------------------------------|
   | C-c C-c | Eval code within BEGIN_SRC/END_SRC blocks        |
@@ -284,6 +286,13 @@
  #+END_SRC
 
 ** ivy + swiper + counsel
+
+  | key     | description                                             |
+  |---------+---------------------------------------------------------|
+  | C-s     | Swiper search                                           |
+  | C-c C-o | (in swiper search) print search results into new buffer |
+
+
    #+BEGIN_SRC emacs-lisp
    (use-package ivy
      :pin melpa-stable
