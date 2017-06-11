@@ -363,7 +363,7 @@
         ;; Reduce the time after which the company auto completion popup opens
         ;; Reduce the number of characters before company kicks in
         (setq company-idle-delay 0.2
-              company-minimum-prefix-length 1
+              company-minimum-prefix-length 3
               company-tooltip-align-annotations t)
        
         (define-key company-active-map (kbd "C-n") 'company-select-next)
