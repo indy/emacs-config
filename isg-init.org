@@ -354,6 +354,7 @@
 
 ** company - auto completion
  #+BEGIN_SRC emacs-lisp
+
    (use-package company
      :pin melpa-stable
      :defer t
@@ -362,6 +363,7 @@
        ;; Reduce the time after which the company auto completion popup opens
        ;; Reduce the number of characters before company kicks in
        (setq company-idle-delay 0.0
+       company-minimum-prefix-length 3
              company-show-numbers t
              company-require-match nil
              company-tooltip-align-annotations t
@@ -377,6 +379,7 @@
              company-transformers)
        (define-key company-active-map (kbd "C-n") 'company-select-next)
        (define-key company-active-map (kbd "C-p") 'company-select-previous)))
+
  #+END_SRC
 * language modes
 ** c
