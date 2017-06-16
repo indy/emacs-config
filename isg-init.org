@@ -275,7 +275,6 @@
 #+END_SRC
 
 
-
 ** hydra
  #+BEGIN_SRC emacs-lisp
  (use-package hydra
@@ -381,6 +380,33 @@
        (define-key company-active-map (kbd "C-p") 'company-select-previous)))
 
  #+END_SRC
+
+** ibuffer
+#+BEGIN_SRC emacs-lisp
+  (defalias 'list-buffers 'ibuffer)
+
+  (setq ibuffer-saved-filter-groups
+        (quote (("default"
+                 ("dired" (mode . dired-mode))
+                 ("c" (mode . c-mode))
+                 ("rust" (mode . rust-mode))
+                 ("js" (mode . js2-mode))
+                 ("go" (mode . go-mode))
+                 ("glsl" (mode . glsl-mode))
+                 ("org" (mode . org-mode))
+                 ("web" (or 
+                         (mode . html-mode)
+                         (mode . css-mode)))
+                 ("emacs" (or
+                           (name . "^\\*scratch\\*$")
+                           (name . "^\\*Messages\\*$"))))))
+        ibuffer-show-empty-filter-groups nil)
+
+  (add-hook 'ibuffer-mode-hook
+            (lambda ()
+              (ibuffer-switch-to-saved-filter-groups "default")))
+#+END_SRC
+
 * language modes
 ** c
  #+BEGIN_SRC emacs-lisp
@@ -1024,23 +1050,6 @@ _DEL_: none
     (windmove-default-keybindings))
   (when (fboundp 'winner-mode)
     (winner-mode 1))
-
-  (defalias 'list-buffers 'ibuffer)
-
-  (setq ibuffer-saved-filter-groups
-        (quote (("default"
-                 ("dired" (mode . dired-mode))
-                 ("c" (mode . c-mode))
-                 ("rust" (mode . rust-mode))
-                 ("js" (mode . js2-mode))
-                 ("org" (mode . org-mode))
-                 ("emacs" (or
-                           (name . "^\\*scratch\\*$")
-                           (name . "^\\*Messages\\*$")))))))
-
-  (add-hook 'ibuffer-mode-hook
-            (lambda ()
-              (ibuffer-switch-to-saved-filter-groups "default")))
 
   (setq ring-bell-function (lambda () (message "*beep*"))
         browse-url-browser-function 'browse-url-generic
