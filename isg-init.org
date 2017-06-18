@@ -286,22 +286,14 @@
 
 ** ivy + swiper + counsel
 
-  | key     | description                                             |
-  |---------+---------------------------------------------------------|
-  | C-s     | Swiper search                                           |
-  | C-c C-o | (in swiper search) print search results into new buffer |
+  | key     | description                                   |
+  |---------+-----------------------------------------------|
+  | C-s     | Counsel grep (C-y to search for current word) |
+  | C-c C-o | print search results into new buffer          |
+  |         |                                               |
 
 
-   #+BEGIN_SRC emacs-lisp
-   (use-package ivy
-     :pin melpa-stable
-     :demand t
-     :config
-     (ivy-mode 1)
-     (setq ivy-use-virtual-buffers t))
-
-
-   (use-package swiper
+(use-package swiper
      :pin melpa-stable
      :init
      (global-set-key (kbd "C-s")
@@ -309,46 +301,64 @@
                        (interactive)
                        (swiper (format "%s" (or (thing-at-point 'symbol) ""))))))
 
-   (use-package counsel
-     :pin melpa-stable
-     :init
-     (global-set-key (kbd "M-x") 'counsel-M-x)
-     (global-set-key (kbd "C-M-s")
-                     (lambda ()
-                       (interactive)
-                       (counsel-git-grep nil
-                                         (format "%s" (or (thing-at-point 'symbol) "")))))
-     (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+   #+BEGIN_SRC emacs-lisp
+     (use-package ivy
+       :pin melpa-stable
+       :demand t
+       :config
+       (ivy-mode 1)
+       (setq ivy-use-virtual-buffers t))
 
-     ;; use the hydra equivalents instead (C-c f ...)
-     ;;
-     ;; (global-set-key (kbd "C-x C-g") 'counsel-git)
-     ;; (global-set-key (kbd "C-x C-r") 'counsel-rg)
+     (use-package swiper
+       :pin melpa-stable)
 
-     ;; I don't use these bindings - should learn what they do one day
-     ;; (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
-     (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
+     (use-package counsel
+       :pin melpa-stable
+       :init
+       (global-set-key (kbd "M-x") 'counsel-M-x)
+       ;; C-s copies the current symbol into the clipboard before starting counsel-grep
+       (global-set-key (kbd "C-s") 
+                       (lambda ()
+                         (interactive)
+                         (kill-new (format "%s" (or (thing-at-point 'symbol) "")))
+                         (counsel-grep)))
+
+       (global-set-key (kbd "C-x C-g")
+                       (lambda ()
+                         (interactive)
+                         (counsel-git-grep nil
+                                           (format "%s" (or (thing-at-point 'symbol) "")))))
+       (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+
+       ;; use the hydra equivalents instead (C-c f ...)
+       ;;
+       ;; (global-set-key (kbd "C-x C-g") 'counsel-git)
+       ;; (global-set-key (kbd "C-x C-r") 'counsel-rg)
+
+       ;; I don't use these bindings - should learn what they do one day
+       ;; (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+       (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
 
 
-   (defhydra isg/hydra-counsel (:hint nil :color pink)
+     (defhydra isg/hydra-counsel (:hint nil :color pink)
+       "
+     Counsel search
+     ----------------------------------------------------
+     _r_: ripgrep  _f_: find file _g_: git
+     _u_: function _v_: variable  _l_: library _s_: symbol
      "
-   Counsel search
-   ----------------------------------------------------
-   _r_: ripgrep  _f_: find file _g_: git
-   _u_: function _v_: variable  _l_: library _s_: symbol
-   "
-     ("f" counsel-find-file)
-     ("g" counsel-git)
-     ("r" (lambda ()
-            (interactive)
-            (counsel-rg (format "%s" (or (thing-at-point 'symbol) "")))))
-     ("u" counsel-describe-function)
-     ("v" counsel-describe-variable)
-     ("l" counsel-find-library)
-     ("s" counsel-info-lookup-symbol)
-     ("RET" nil "done" :color blue))
+       ("f" counsel-find-file)
+       ("g" counsel-git)
+       ("r" (lambda ()
+              (interactive)
+              (counsel-rg (format "%s" (or (thing-at-point 'symbol) "")))))
+       ("u" counsel-describe-function)
+       ("v" counsel-describe-variable)
+       ("l" counsel-find-library)
+       ("s" counsel-info-lookup-symbol)
+       ("RET" nil "done" :color blue))
 
-   (bind-keys ("C-c f"  . isg/hydra-counsel/body))
+     (bind-keys ("C-c f"  . isg/hydra-counsel/body))
    #+END_SRC
 
 ** company - auto completion
