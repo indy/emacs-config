@@ -384,7 +384,7 @@
              company-transformers '(company-sort-by-occurrence
                                     company-sort-by-backend-importance))
        (push (apply-partially #'cl-remove-if
-                              (lambda (c) (string-match-p "\\`[0-9]+\\'" c)))
+                              (lambda (c) (string-match-p "\\`[0-9]+[f]*\\'" c)))
              company-transformers)
        (define-key company-active-map (kbd "C-n") 'company-select-next)
        (define-key company-active-map (kbd "C-p") 'company-select-previous)))
