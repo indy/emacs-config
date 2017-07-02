@@ -320,8 +320,14 @@
        (global-set-key (kbd "C-s") 
                        (lambda ()
                          (interactive)
-                         (kill-new (format "%s" (or (thing-at-point 'symbol) "")))
-                         (counsel-grep)))
+                         (if (buffer-file-name)
+                             ;; this is a buffer that can be saved to disk and counsel-grep'd
+                             (progn
+                               (save-buffer)
+                               (kill-new (format "%s" (or (thing-at-point 'symbol) "")))
+                               (counsel-grep))
+                           ;; otherwise stick to the normal isearch-forward
+                           (isearch-forward))))
 
        (global-set-key (kbd "C-x C-g")
                        (lambda ()
