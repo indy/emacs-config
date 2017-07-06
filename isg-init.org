@@ -1,9 +1,25 @@
+
+  Searching
+
+  | key     | command                                  | desc             |
+  |---------+------------------------------------------+------------------|
+  | C-s     | Counsel grep (C-y = search current word) | search buffer    |
+  | C-r     | counsel-rg                               | search directory |
+  | C-M-s   | isearch forward                          |                  |
+  | C-M-r   | isearch backward                         |                  |
+  | C-M-g   | counsel-git-grep                         | search git repo  |
+  | C-c C-o | print search results into new buffer     |                  |
+  | C-c f   | hydra show counsel options               |                  |
+
   Editing codeblocks in org mode
 
   | key     | description                                      |
   |---------+--------------------------------------------------|
   | C-c C-c | Eval code within BEGIN_SRC/END_SRC blocks        |
   | C-c '   | Open up a mini-buffer for editing the code block |
+
+
+
 
 * package
   https://github.com/jwiegley/use-package
@@ -286,85 +302,85 @@
 
 ** ivy + swiper + counsel
 
-  | key     | description                                   |
-  |---------+-----------------------------------------------|
-  | C-s     | Counsel grep (C-y to search for current word) |
-  | C-c C-o | print search results into new buffer          |
-  |         |                                               |
+   ivy is a completion framework
+   - It provides an interface to list, search, filter and perform actions on a collection of "things". These "things" can range from strings to buffers, Ivy doesn't really care. It just provides a way for the user to interact with this collection.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ivy
+    :pin melpa-stable
+    :demand t
+    :config
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t
+          ivy-count-format "%d/%d "))
+
+  (use-package swiper
+    :pin melpa-stable)
+
+  (use-package counsel
+    :pin melpa-stable
+    :init
+    (global-set-key (kbd "C-M-s") 'isearch-forward)
+    (global-set-key (kbd "C-M-r") 'isearch-backward)
+
+    (global-set-key (kbd "M-x") 'counsel-M-x)
+
+    (global-set-key (kbd "M-x") 'counsel-M-x)
+    ;; C-s copies the current symbol into the clipboard before starting counsel-grep
+    (global-set-key (kbd "C-s") 
+                    (lambda ()
+                      (interactive)
+                      (if (buffer-file-name)
+                          ;; this is a buffer that can be saved to disk and counsel-grep'd
+                          (progn
+                            (save-buffer)
+                            (kill-new (format "%s" (or (thing-at-point 'symbol) "")))
+                            (counsel-grep))
+                        ;; otherwise stick to the normal isearch-forward
+                        (isearch-forward))))
+
+    (global-set-key (kbd "C-r")
+                    (lambda ()
+                      (interactive)
+                      (counsel-rg (format "%s" (or (thing-at-point 'symbol) "")))))
+
+    (global-set-key (kbd "C-M-g") 
+                    (lambda ()
+                      (interactive)
+                      (counsel-git-grep nil
+                                        (format "%s" (or (thing-at-point 'symbol) "")))))
+
+    (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+
+    ;; use the hydra equivalents instead (C-c f ...)
+    ;;
+    ;; (global-set-key (kbd "C-x C-g") 'counsel-git)
+    ;; (global-set-key (kbd "C-x C-r") 'counsel-rg)
+
+    ;; I don't use these bindings - should learn what they do one day
+    ;; (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+    (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
 
 
-(use-package swiper
-     :pin melpa-stable
-     :init
-     (global-set-key (kbd "C-s")
-                     (lambda ()
-                       (interactive)
-                       (swiper (format "%s" (or (thing-at-point 'symbol) ""))))))
+  (defhydra isg/hydra-counsel (:hint nil :color pink)
+    "
+      Counsel search
+      ----------------------------------------------------
+      _r_: ripgrep  _f_: find file _g_: git
+      _u_: function _v_: variable  _l_: library _s_: symbol
+      "
+    ("f" counsel-find-file)
+    ("g" counsel-git)
+    ("r" (lambda ()
+           (interactive)
+           (counsel-rg (format "%s" (or (thing-at-point 'symbol) "")))))
+    ("u" counsel-describe-function)
+    ("v" counsel-describe-variable)
+    ("l" counsel-find-library)
+    ("s" counsel-info-lookup-symbol)
+    ("RET" nil "done" :color blue))
 
-   #+BEGIN_SRC emacs-lisp
-     (use-package ivy
-       :pin melpa-stable
-       :demand t
-       :config
-       (ivy-mode 1)
-       (setq ivy-use-virtual-buffers t))
-
-     (use-package swiper
-       :pin melpa-stable)
-
-     (use-package counsel
-       :pin melpa-stable
-       :init
-       (global-set-key (kbd "M-x") 'counsel-M-x)
-       ;; C-s copies the current symbol into the clipboard before starting counsel-grep
-       (global-set-key (kbd "C-s") 
-                       (lambda ()
-                         (interactive)
-                         (if (buffer-file-name)
-                             ;; this is a buffer that can be saved to disk and counsel-grep'd
-                             (progn
-                               (save-buffer)
-                               (kill-new (format "%s" (or (thing-at-point 'symbol) "")))
-                               (counsel-grep))
-                           ;; otherwise stick to the normal isearch-forward
-                           (isearch-forward))))
-
-       (global-set-key (kbd "C-x C-g")
-                       (lambda ()
-                         (interactive)
-                         (counsel-git-grep nil
-                                           (format "%s" (or (thing-at-point 'symbol) "")))))
-       (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-
-       ;; use the hydra equivalents instead (C-c f ...)
-       ;;
-       ;; (global-set-key (kbd "C-x C-g") 'counsel-git)
-       ;; (global-set-key (kbd "C-x C-r") 'counsel-rg)
-
-       ;; I don't use these bindings - should learn what they do one day
-       ;; (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
-       (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
-
-
-     (defhydra isg/hydra-counsel (:hint nil :color pink)
-       "
-     Counsel search
-     ----------------------------------------------------
-     _r_: ripgrep  _f_: find file _g_: git
-     _u_: function _v_: variable  _l_: library _s_: symbol
-     "
-       ("f" counsel-find-file)
-       ("g" counsel-git)
-       ("r" (lambda ()
-              (interactive)
-              (counsel-rg (format "%s" (or (thing-at-point 'symbol) "")))))
-       ("u" counsel-describe-function)
-       ("v" counsel-describe-variable)
-       ("l" counsel-find-library)
-       ("s" counsel-info-lookup-symbol)
-       ("RET" nil "done" :color blue))
-
-     (bind-keys ("C-c f"  . isg/hydra-counsel/body))
+  (bind-keys ("C-c f"  . isg/hydra-counsel/body))
    #+END_SRC
 
 ** company - auto completion
