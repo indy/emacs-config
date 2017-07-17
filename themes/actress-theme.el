@@ -38,6 +38,10 @@
       (fg2 "#827840")
       (fg3 "#bdb8ac")
       (fg4 "#a9a49a")
+      (hi1 "#ffff00")
+      (hi2 "#ff0000")
+      (hi3 "#ff00ff")
+      (hi4 "#ffffff")
       (key2 "#1f1f1f")
       (key3 "#040404")
       (cursor "#686860")
@@ -51,7 +55,8 @@
       (str     "#2e8b57")
       (type    "#5DD795")
       (var     "#827840")
-      (warning "#794198"))
+      (warning "#794198")
+      (error1  "#ff0000"))
   (custom-theme-set-faces
    'actress
    `(default ((,class (:background ,bg1 :foreground ,fg1))))
@@ -63,6 +68,52 @@
    `(cursor ((,class (:background ,cursor))))
    `(default-italic ((,class (:italic t))))
    `(ffap ((,class (:foreground ,fg4))))
+
+   `(ivy-current-match ((,class (:foreground ,hi1 :background ,bg2))))
+   `(ivy-minibuffer-match-face-1 ((,class (:foreground ,hi2))))
+   `(ivy-minibuffer-match-face-2 ((,class (:foreground ,hi4))))
+   `(ivy-minibuffer-match-face-3 ((,class (:foreground ,hi2))))
+   `(ivy-minibuffer-match-face-4 ((,class (:foreground ,hi2))))
+
+   ;`(ivy-confirm-face ((,class (:foreground ,hi2))))
+   ;`(ivy-match-required-face ((,class (:foreground ,hi4))))
+   ;`(ivy-virtual ((,class (:foreground ,hi4))))
+   ;`(ivy-action ((,class (:foreground ,hi4))))
+
+   `(company-tooltip ((,class (:background ,bg3 :inherit default))))
+   `(company-scrollbar-bg ((,class (:background  ,bg3))))
+   `(company-scrollbar-fg ((,class (:background  ,fg2))))
+   `(company-tooltip-annotation ((,class (:foreground ,warning)))) ; ???
+   `(company-tooltip-common ((,class (:foreground ,hi4))))
+   `(company-tooltip-selection ((,class (:foreground ,hi1 :background ,bg2))))
+   `(company-preview-common ((,class (:foreground ,fg3 :background ,bg4))))
+
+     ;;    (eshell-ls-archive                            :foreground base08)
+     ;; (eshell-ls-backup                             :foreground base0F)
+     ;; (eshell-ls-clutter                            :foreground base09)
+     ;; (eshell-ls-directory                          :foreground base0D)
+     ;; (eshell-ls-executable                         :foreground base0B)
+     ;; (eshell-ls-missing                            :foreground base08)
+     ;; (eshell-ls-product                            :foreground base0F)
+     ;; (eshell-ls-readonly                           :foreground base06)
+     ;; (eshell-ls-special                            :foreground base0E)
+     ;; (eshell-ls-symlink                            :foreground base0C)
+     ;; (eshell-ls-unreadable                         :foreground base04)
+   ;; (eshell-prompt                                :foreground base05)
+
+     ;;    (undo-tree-visualizer-default-face            :foreground base06)
+     ;; (undo-tree-visualizer-current-face            :foreground base0B :weight bold)
+     ;; (undo-tree-visualizer-active-branch-face      :foreground base08)
+     ;; (undo-tree-visualizer-register-face           :foreground base0A)
+
+   ;; flycheck-mode
+   `(flycheck-error ((,class (:underline (:style wave :color ,error1)))))
+   `(flycheck-info ((,class (:underline (:style wave :color ,keyword)))))
+   `(flycheck-warning ((,class (:underline (:style wave :color ,warning)))))
+
+   ;; flymake-mode   
+   `(flymake-warnline ((,class (:background ,bg3 :underline (:style wave :color ,warning)))))
+   `(flymake-errline ((,class (:background ,bg3 :underline (:style wave :color ,error1)))))
 
    `(font-latex-bold-face ((,class (:foreground ,type))))
    `(font-latex-italic-face ((,class (:foreground ,key3 :italic t))))
