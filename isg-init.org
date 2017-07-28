@@ -11,6 +11,15 @@
   | C-c C-o | print search results into new buffer     |                  |
   | C-c f   | hydra show counsel options               |                  |
 
+  Registers
+
+  | key         | description                           |
+  |-------------+---------------------------------------|
+  | C-x r space | Save current position to register     |
+  | C-x r u     | Save current buffer state to register |
+  | C-x r U     | Restore buffer state from register    |
+
+
   Editing codeblocks in org mode
 
   | key     | description                                      |
@@ -141,8 +150,9 @@
                          (list (concat (getenv "GOPATH") "/bin")
                                (concat (getenv "HOME") "/local/bin")
                                "/usr/local/bin")))
+      (frame-l ((top . 0) (left . 210) (width . 80) (height . 59)))
       (frame-r ((top . 0) (left . 780) (width . 80) (height . 59)))
-      (frame-l ((top . 0) (left . 210) (width . 80) (height . 59)))))
+      ))
 
    ((string-match "^debian" system-name)  ; debian vm on ernesto
     '((post-setup-fn (lambda ()
@@ -384,34 +394,34 @@
    #+END_SRC
 
 ** company - auto completion
- #+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp
 
-   (use-package company
-     :pin melpa-stable
-     :defer t
-     :config
-     (progn
-       ;; Reduce the time after which the company auto completion popup opens
-       ;; Reduce the number of characters before company kicks in
-       (setq company-idle-delay 0.0
-       company-minimum-prefix-length 3
-             company-show-numbers t
-             company-require-match nil
-             company-tooltip-align-annotations t
-             company-tooltip-margin 1
-             company-echo-delay 0
-             company-dabbrev-downcase nil
-             company-minimum-prefix-length 1
-             company-selection-wrap-around t
-             company-transformers '(company-sort-by-occurrence
-                                    company-sort-by-backend-importance))
-       (push (apply-partially #'cl-remove-if
-                              (lambda (c) (string-match-p "\\`[0-9]+[f]*\\'" c)))
-             company-transformers)
-       (define-key company-active-map (kbd "C-n") 'company-select-next)
-       (define-key company-active-map (kbd "C-p") 'company-select-previous)))
+  (use-package company
+    :pin melpa-stable
+    :defer t
+    :config
+    (progn
+      ;; Reduce the time after which the company auto completion popup opens
+      ;; Reduce the number of characters before company kicks in
+      (setq company-idle-delay 0.4
+            company-minimum-prefix-length 3
+            company-show-numbers t
+            company-require-match nil
+            company-tooltip-align-annotations t
+            company-tooltip-margin 1
+            company-echo-delay 0
+            company-dabbrev-downcase nil
+            company-minimum-prefix-length 1
+            company-selection-wrap-around t
+            company-transformers '(company-sort-by-occurrence
+                                   company-sort-by-backend-importance))
+      (push (apply-partially #'cl-remove-if
+                             (lambda (c) (string-match-p "\\`[0-9]+[f]*\\'" c)))
+            company-transformers)
+      (define-key company-active-map (kbd "C-n") 'company-select-next)
+      (define-key company-active-map (kbd "C-p") 'company-select-previous)))
 
- #+END_SRC
+#+END_SRC
 
 ** ibuffer
 #+BEGIN_SRC emacs-lisp
@@ -421,6 +431,7 @@
         (quote (("default"
                  ("dired" (mode . dired-mode))
                  ("c" (mode . c-mode))
+                 ("seni" (mode . seni-mode))
                  ("rust" (mode . rust-mode))
                  ("js" (mode . js2-mode))
                  ("go" (mode . go-mode))
@@ -637,34 +648,51 @@
    | C-c C-c C-r | cargo run   |
    | C-c C-c C-t | cargo test  |
 
- #+BEGIN_SRC emacs-lisp
- (use-package company-racer
-   :defer t)
+#+BEGIN_SRC emacs-lisp
+  ;  ;; from: https://christian.kellner.me/2017/05/31/language-server-protocol-lsp-rust-and-emacs/
+  ;  ;; (use-package rust-mode
+  ;  ;;   :mode "\\.rs\\'"
+  ;  ;;   :init
+  ;  ;;   (setq rust-format-on-save t))
+  ;  ;; (use-package lsp-mode
+  ;  ;;   :init
+  ;  ;;   (add-hook 'prog-mode-hook 'lsp-mode)
+  ;  ;;   :config
+  ;  ;;   (use-package lsp-flycheck
+  ;  ;;     :ensure f ; comes with lsp-mode
+  ;  ;;     :after flycheck))
+  ;  ;; (use-package lsp-rust
+  ;  ;;   :after lsp-mode)
 
- (use-package rust-mode
-   :pin melpa-stable
-   :mode "\\.rs\\'"
-   :config
-   (use-package cargo)
-   (use-package flycheck-rust
-     :config
-     (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
-   (use-package racer
-     :init
-     (setq racer-cmd (isg/val 'racer-cmd)
-           racer-rust-src-path (isg/val 'racer-rust-src-path))
-     :config
-     (add-hook 'racer-mode-hook #'eldoc-mode))
-   (add-hook 'rust-mode-hook
-             '(lambda ()
-                (racer-mode)
-                (add-to-list (make-local-variable 'company-backends) 'company-racer)
-                (cargo-minor-mode)
-                ;; Key binding to jump to method definition
-                (local-set-key (kbd "M-.") #'racer-find-definition)
-                (local-set-key (kbd "<tab>") #'company-indent-or-complete-common)
-                (local-set-key (kbd "C-c <tab>") #'rust-format-buffer))))
- #+END_SRC
+  (use-package company-racer
+    :defer t)
+
+  (use-package rust-mode
+    :mode "\\.rs\\'"
+    :config
+    (use-package cargo)
+    (use-package flycheck-rust
+      :config
+      (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+    (use-package racer
+      :init
+      (setq racer-cmd (isg/val 'racer-cmd)
+            racer-rust-src-path (isg/val 'racer-rust-src-path))
+      :config
+      (add-hook 'racer-mode-hook #'eldoc-mode))
+
+    (add-hook 'rust-mode-hook
+              '(lambda ()
+                 (racer-mode)
+                 (add-to-list (make-local-variable 'company-backends) 'company-racer)
+                 (cargo-minor-mode)
+                 ;; Key binding to jump to method definition
+                 (local-set-key (kbd "M-.") #'racer-find-definition)
+                 (local-set-key (kbd "<tab>") #'company-indent-or-complete-common)
+                 (local-set-key (kbd "C-c <tab>") #'rust-format-buffer)
+                 )))
+
+#+END_SRC
 
 ** scheme
  #+BEGIN_SRC emacs-lisp
@@ -873,7 +901,7 @@ _DEL_: none
      ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN_SECRET")
      (if (not (string-equal (isg/val 'machine-os) "windows"))
          (exec-path-from-shell-copy-env "GOPATH"))
-     (exec-path-from-shell-setenv "RUST_SRC_PATH" (isg/val 'racer-rust-src-path))
+         ;; (exec-path-from-shell-setenv "RUST_SRC_PATH" (isg/val 'racer-rust-src-path))
      (when (memq window-system '(mac ns))
        (exec-path-from-shell-initialize)))
  #+END_SRC
