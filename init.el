@@ -40,6 +40,8 @@
    [default bold shadow italic underline bold bold-italic bold])
  '(ansi-color-names-vector
    (vector "#657b83" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#fdf6e3"))
+ '(ansi-term-color-vector
+   [unspecified "#090300" "#db2d20" "#01a252" "#fded02" "#01a0e4" "#a16a94" "#01a0e4" "#a5a2a2"] t)
  '(custom-safe-themes
    (quote
     ("0b7febf170c1a84420220d7014923cb4fceff8e276f82cbd5175dbd0b2cf77e5" default)))
@@ -47,7 +49,7 @@
  '(hl-sexp-background-color "#1c1f26")
  '(package-selected-packages
    (quote
-    (undo-tree org-gcal org-brain company-racer company dart-mode tide elm-mode dracula-theme org highlight-thing material-theme which-key hydra use-package color-theme-sanityinc-solarized counsel swiper ivy cider clojure-mode csharp-mode shader-mode atomic-chrome cargo exec-path-from-shell ws-butler web-mode toml-mode smartparens rainbow-mode racer rust-mode markdown-mode magit js2-mode js-comint go-mode find-file-in-git-repo edit-server deft color-theme avy ag glsl-mode flycheck flycheck-rust)))
+    (base16-theme undo-tree org-gcal org-brain company-racer company dart-mode tide elm-mode dracula-theme org highlight-thing material-theme which-key hydra use-package color-theme-sanityinc-solarized counsel swiper ivy cider clojure-mode csharp-mode shader-mode atomic-chrome cargo exec-path-from-shell ws-butler web-mode toml-mode smartparens rainbow-mode racer rust-mode markdown-mode magit js2-mode js-comint go-mode find-file-in-git-repo edit-server deft color-theme avy ag glsl-mode flycheck flycheck-rust)))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote

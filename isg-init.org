@@ -151,7 +151,8 @@
    ((string-match "^ernesto" system-name) ; Macbook Air i5
     '((default-font "-apple-Inconsolata-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
       (machine-os "osx")
-      (racer-cmd "/Users/indy/code/rust/racer/target/release/racer")
+      ;(racer-cmd "/Users/indy/code/rust/racer/target/release/racer")
+      (racer-cmd "/Users/indy/.cargo/bin/racer")
       (racer-rust-src-path "/Users/indy/code/rust/rust/src/")
       (url-opener "open")
 
@@ -171,8 +172,8 @@
                          (list (concat (getenv "GOPATH") "/bin")
                                (concat (getenv "HOME") "/local/bin")
                                "/usr/local/bin"
-                               "/usr/local/go/bin"
-                               "/home/indy/code/rust/racer/target/release")))
+                               "/usr/local/go/bin")))
+                               ;; "/home/indy/code/rust/racer/target/release"
       
       (key-setup (([mouse-1] . nil)
                   ([double-mouse-1] . nil)
@@ -637,34 +638,34 @@
    | C-c C-c C-r | cargo run   |
    | C-c C-c C-t | cargo test  |
 
- #+BEGIN_SRC emacs-lisp
- (use-package company-racer
-   :defer t)
+#+BEGIN_SRC emacs-lisp
+   (use-package company-racer
+     :defer t)
 
- (use-package rust-mode
-   :pin melpa-stable
-   :mode "\\.rs\\'"
-   :config
-   (use-package cargo)
-   (use-package flycheck-rust
+   (use-package rust-mode
+     :pin melpa-stable
+     :mode "\\.rs\\'"
      :config
-     (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
-   (use-package racer
-     :init
-     (setq racer-cmd (isg/val 'racer-cmd)
-           racer-rust-src-path (isg/val 'racer-rust-src-path))
-     :config
-     (add-hook 'racer-mode-hook #'eldoc-mode))
-   (add-hook 'rust-mode-hook
-             '(lambda ()
-                (racer-mode)
-                (add-to-list (make-local-variable 'company-backends) 'company-racer)
-                (cargo-minor-mode)
-                ;; Key binding to jump to method definition
-                (local-set-key (kbd "M-.") #'racer-find-definition)
-                (local-set-key (kbd "<tab>") #'company-indent-or-complete-common)
-                (local-set-key (kbd "C-c <tab>") #'rust-format-buffer))))
- #+END_SRC
+     (use-package cargo)
+  ;;   (use-package flycheck-rust
+  ;;     :config
+  ;;     (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+     ;; (use-package racer
+     ;;   :init
+     ;;   (setq racer-cmd (isg/val 'racer-cmd)
+     ;;         racer-rust-src-path (isg/val 'racer-rust-src-path))
+     ;;   :config
+     ;;   (add-hook 'racer-mode-hook #'eldoc-mode))
+       (add-hook 'rust-mode-hook
+               '(lambda ()
+                  ;; (racer-mode)
+                  ;; (add-to-list (make-local-variable 'company-backends) 'company-racer)
+                  (cargo-minor-mode)
+                  ;; Key binding to jump to method definition
+                  (local-set-key (kbd "M-.") #'racer-find-definition)
+                  (local-set-key (kbd "<tab>") #'company-indent-or-complete-common)
+                  (local-set-key (kbd "C-c <tab>") #'rust-format-buffer))))
+#+END_SRC
 
 ** scheme
  #+BEGIN_SRC emacs-lisp
@@ -750,7 +751,11 @@
  #+END_SRC
 
 * theming
+
   [[http://www.greghendershott.com/2017/02/emacs-themes.html]]
+
+
+
 #+BEGIN_SRC emacs-lisp
 (defun isg/disable-all-themes ()
   (interactive)
@@ -792,6 +797,9 @@
 (use-package dracula-theme
   :pin melpa-stable
   :defer t)
+
+(use-package base16-theme
+  :ensure t)
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'actress t)
