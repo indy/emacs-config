@@ -1,15 +1,17 @@
 
   Searching
 
-  | key     | command                                  | desc             |
-  |---------+------------------------------------------+------------------|
-  | C-s     | Counsel grep (C-y = search current word) | search buffer    |
-  | C-r     | counsel-rg                               | search directory |
-  | C-M-s   | isearch forward                          |                  |
-  | C-M-r   | isearch backward                         |                  |
-  | C-M-g   | counsel-git-grep                         | search git repo  |
-  | C-c C-o | print search results into new buffer     |                  |
-  | C-c f   | hydra show counsel options               |                  |
+  | key     | command                                  | desc                          |
+  |---------+------------------------------------------+-------------------------------|
+  | C-s     | Counsel grep (C-y = search current word) | search buffer                 |
+  | C-r     | counsel-rg                               | search directory              |
+  | C-M-s   | isearch forward                          |                               |
+  | C-M-r   | isearch backward                         |                               |
+  | C-M-g   | counsel-git-grep                         | search git repo               |
+  | C-c C-o | print search results into new buffer     |                               |
+  | C-x C-q | ivy-wgrep-change-to-wgrep-mode           | make search results editable! |
+  | C-c C-c | commit changes made in wgrep mode        |                               |
+  | C-c f   | hydra show counsel options               |                               |
 
   Registers
 
@@ -1047,6 +1049,12 @@ _DEL_: none
     ;; (global-set-key (kbd "<right>") 'undo-tree-redo)
     )
 #+END_SRC
+
+** wgrep
+ #+BEGIN_SRC emacs-lisp
+ (use-package wgrep
+   :demand t)
+ #+END_SRC
 
 ** which key
  #+BEGIN_SRC emacs-lisp
