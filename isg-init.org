@@ -635,6 +635,11 @@
    :mode (("\\.md\\'" . markdown-mode)
           ("\\.markdown\\'" . markdown-mode)))
  #+END_SRC
+** nim
+ #+BEGIN_SRC emacs-lisp
+ (use-package nim-mode
+   :mode "\\.nim\\'")
+ #+END_SRC
 ** ruby
  #+BEGIN_SRC emacs-lisp
  (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
