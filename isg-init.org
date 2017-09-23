@@ -604,6 +604,13 @@
    :mode (("\\.md\\'" . markdown-mode)
           ("\\.markdown\\'" . markdown-mode)))
  #+END_SRC
+
+** nim
+ #+BEGIN_SRC emacs-lisp
+ (use-package nim-mode
+   :mode "\\.nim\\'")
+ #+END_SRC
+
 ** purescript
  #+BEGIN_SRC emacs-lisp
    (use-package purescript-mode            ; PureScript mode
@@ -619,6 +626,7 @@
      (flycheck-mode)
      (turn-on-purescript-indentation))
  #+END_SRC
+
 
 ** ruby
  #+BEGIN_SRC emacs-lisp
