@@ -612,6 +612,43 @@
  #+END_SRC
 
 ** purescript
+   purescript syntax:
+   | <>  | string concatenation  |
+   | $   | infix apply           |
+   | <<< | backwards composition |
+   | >>> | forwards composition  |
+   |     |                       |
+
+   emacs psc-ide mode:
+   | C-c C-s | start server |
+   | C-c C-q | quit server  |
+
+   pulp commands:
+   | pulp init                    | sets up a folder            |
+   | pulp repl                    | type :? to see commands     |
+   | pulp build                   |                             |
+   | pulp build -O --to output.js | apply dead code elimination |
+   | pulp run                     |                             |
+   | pulp browserify              | prints code to stdout       |
+
+   repl:
+   | :paste | enter multi-line input mode |
+   | C-d    | exit multi-line input mode  |
+   | :type  | shows type of an expression |
+   | :kind  | shows the kind of a type    |
+
+   $ bower install purescript-math --save
+
+   flare is an easy to use library, easy to make cool interactive graphs
+   pux - similar to the Elm architecture, Interactive React debugger can be wired in
+   halogen - the hardest to understand library
+
+   read purescript by example
+   try out Pux or Flare
+   come on #purescript on freenode
+   video meetup
+   try out Halogen
+
  #+BEGIN_SRC emacs-lisp
    (use-package purescript-mode            ; PureScript mode
      :mode "\\.purs\\'"
@@ -626,8 +663,6 @@
      (flycheck-mode)
      (turn-on-purescript-indentation))
  #+END_SRC
-
-
 ** ruby
  #+BEGIN_SRC emacs-lisp
  (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
