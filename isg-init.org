@@ -612,6 +612,21 @@
  #+END_SRC
 
 ** purescript
+#+BEGIN_SRC emacs-lisp
+  (use-package purescript-mode
+    :mode "\\.purs\\'"
+    :config
+    (use-package psc-ide)
+    (add-hook 'purescript-mode-hook 'setup-purescript-mode))
+
+  (defun setup-purescript-mode ()
+    (interactive)
+    (psc-ide-mode)
+    (company-mode)
+    (flycheck-mode)
+    (turn-on-purescript-indentation))
+#+END_SRC
+
    purescript syntax:
    | <>  | string concatenation  |
    | $   | infix apply           |
@@ -624,21 +639,46 @@
    | C-c C-q | quit server  |
 
    pulp commands:
-   | pulp init                    | sets up a folder            |
-   | pulp repl                    | type :? to see commands     |
-   | pulp build                   |                             |
-   | pulp build -O --to output.js | apply dead code elimination |
-   | pulp run                     |                             |
-   | pulp browserify              | prints code to stdout       |
+   | pulp init                    | sets up a folder                       |
+   | pulp repl                    | type :? to see commands                |
+   | pulp build                   |                                        |
+   | pulp --psc-package build     | use psc-package for package management |
+   | pulp build -O --to output.js | apply dead code elimination            |
+   | pulp run                     |                                        |
+   | pulp browserify              | prints code to stdout                  |
 
    repl:
    | :paste | enter multi-line input mode |
    | C-d    | exit multi-line input mode  |
    | :type  | shows type of an expression |
    | :kind  | shows the kind of a type    |
+   | :r     | reload imported modules     |
 
+   bower:
    $ bower install purescript-math --save
 
+   psc-package:
+   https://github.com/purescript/psc-package
+   can replace the use of bower
+
+   psc-package commands
+   | init      | create psc-package.json file        |
+   | available | lists available packages            |
+   | install   | $ psc-package install console       |
+   | update    | update dependencies                 |
+   | updates   | check all packages for new releases |
+
+   $ mkdir hello_world
+   $ cd hello_world
+   $ psc-package init
+   $ psc-package available
+   $ psc-package install psci-support
+   $ psc-package install lists
+   $ psc-package install console
+
+
+
+   
    flare is an easy to use library, easy to make cool interactive graphs
    pux - similar to the Elm architecture, Interactive React debugger can be wired in
    halogen - the hardest to understand library
@@ -649,20 +689,6 @@
    video meetup
    try out Halogen
 
- #+BEGIN_SRC emacs-lisp
-   (use-package purescript-mode            ; PureScript mode
-     :mode "\\.purs\\'"
-     :config
-     (use-package psc-ide)
-     (add-hook 'purescript-mode-hook 'setup-purescript-mode))
-
-   (defun setup-purescript-mode ()
-     (interactive)
-     (psc-ide-mode)
-     (company-mode)
-     (flycheck-mode)
-     (turn-on-purescript-indentation))
- #+END_SRC
 ** ruby
  #+BEGIN_SRC emacs-lisp
  (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
