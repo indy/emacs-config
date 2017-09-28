@@ -635,8 +635,20 @@
    |     |                       |
 
    emacs psc-ide mode:
-   | C-c C-s | start server |
-   | C-c C-q | quit server  |
+   https://github.com/epost/psc-ide-emacs
+   | C-c C-s | start server                                             |
+   | C-c C-q | quit server                                              |
+   | C-c C-b | rebuild the current module and get quick error reporting |
+   | C-c C-t | show type for identifier under cursor                    |
+   | C-c C-l | load all modules                                         |
+   | M-.     | go to definition                                         |
+   | M-,     | jump back                                                |
+   | C-c C-i | add an import for the identifier under cursor            |
+   | C-c C-c | case split the given type under cursor (really cool)     |
+   | C-c C-a | add a clause for the function definition under cursor    |
+
+   - make sure that the purescript project has been compiled.
+   - after loading up a purescript file for the first time press C-c C-s to start the server
 
    pulp commands:
    | pulp init                    | sets up a folder                       |
@@ -654,12 +666,8 @@
    | :kind  | shows the kind of a type    |
    | :r     | reload imported modules     |
 
-   bower:
-   $ bower install purescript-math --save
-
    psc-package:
    https://github.com/purescript/psc-package
-   can replace the use of bower
 
    psc-package commands
    | init      | create psc-package.json file        |
@@ -676,7 +684,15 @@
    $ psc-package install lists
    $ psc-package install console
 
+   <2017-09-28 Thu>
+   https://github.com/purescript/psc-package/issues/34
+   a lot of the psc-package commands fail on windows
+   but if we're working with a pre-existing project then we can get by with using pulp
+   
 
+   bower:
+   NOT RECOMMENDED - try to use psc-package instead
+   $ bower install purescript-math --save
 
    
    flare is an easy to use library, easy to make cool interactive graphs
