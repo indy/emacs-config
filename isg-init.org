@@ -34,7 +34,7 @@
 
 * package
   https://github.com/jwiegley/use-package
- 
+
 #+BEGIN_SRC emacs-lisp
   (require 'package)
   (setq package-enable-at-startup nil)
@@ -87,10 +87,10 @@
 * helper functions
 #+BEGIN_SRC emacs-lisp
 ;;; display 'fn' as the lambda symbol
-(defun pretty-fn nil 
+(defun pretty-fn nil
   (font-lock-add-keywords
-   nil `(("(\\(fn\\>\\)" 
-          (0 (progn (compose-region (match-beginning 1) (match-end 1) 
+   nil `(("(\\(fn\\>\\)"
+          (0 (progn (compose-region (match-beginning 1) (match-end 1)
                                     ,(make-char 'greek-iso8859-7 107))
                     nil)))
          ("\\(#\\)("
@@ -186,13 +186,13 @@
                                "/usr/local/bin"
                                "/usr/local/go/bin")))
                                ;; "/home/indy/code/rust/racer/target/release"
-      
+
       (key-setup (([mouse-1] . nil)
                   ([double-mouse-1] . nil)
                   ([drag-mouse-1] . nil)
                   ([down-mouse-1] . nil)))))
 
-   
+
    ((string-match "^raul" system-name)  ; eee 1000
     '((hyperspec-root "file:////home/user/docs/cl/HyperSpec/")
       ;; (default-font "-unknown-DejaVu Sans Mono-normal-normal-normal-*-20-*-*-*-m-0-fontset-startup")
@@ -200,7 +200,7 @@
                        (setenv "PATH"
                                (concat
                                 (concat (getenv "HOME") "/local/bin:")
-                                "/usr/local/bin:" 
+                                "/usr/local/bin:"
                                 (getenv "PATH")))
 ;                        (isg/start-shell "default-shell")
                        (switch-to-buffer "*scratch*")))
@@ -214,7 +214,7 @@
                   ([drag-mouse-1] . nil)
                   ([down-mouse-1] . nil)))))
 
-   
+
    ((string-match "^blue" system-name) ; G5 iMac at home
     '((default-font "-apple-andale mono-medium-r-normal--0-0-0-0-m-0-mac-roman")
       (machine-os "osx")
@@ -234,7 +234,7 @@
 
       (frame-r ((top . 0) (left . 0) (width . 80) (height . 60)))
       (frame-l ((top . 20) (left . 510) (width . 80) (height . 60)))))
-   
+
 
    ((equal system-name "green")         ; old laptop thrown out by orange
     '((hyperspec-root "file:///usr/share/common-lisp/isg/hyperspec/HyperSpec/")))))
@@ -340,7 +340,7 @@
 
     (global-set-key (kbd "M-x") 'counsel-M-x)
     ;; C-s copies the current symbol into the clipboard before starting counsel-grep
-    (global-set-key (kbd "C-s") 
+    (global-set-key (kbd "C-s")
                     (lambda ()
                       (interactive)
                       (if (buffer-file-name)
@@ -357,7 +357,7 @@
                       (interactive)
                       (counsel-rg (format "%s" (or (thing-at-point 'symbol) "")))))
 
-    (global-set-key (kbd "C-M-g") 
+    (global-set-key (kbd "C-M-g")
                     (lambda ()
                       (interactive)
                       (counsel-git-grep nil
@@ -440,7 +440,7 @@
                  ("go" (mode . go-mode))
                  ("glsl" (mode . glsl-mode))
                  ("org" (mode . org-mode))
-                 ("web" (or 
+                 ("web" (or
                          (mode . html-mode)
                          (mode . css-mode)))
                  ("emacs" (or
@@ -482,7 +482,7 @@
 
  (setq nrepl-hide-special-buffers t)
    #+END_SRC
-** csharp 
+** csharp
  #+BEGIN_SRC emacs-lisp
  (use-package csharp-mode
    :pin melpa-stable
@@ -518,7 +518,7 @@
 
 ** elm
 
-   
+
   | key     | elm-repl                          |
   |---------+-----------------------------------|
   | C-c C-l | load the current file in a REPL   |
@@ -529,11 +529,11 @@
     (use-package elm-mode
       :pin melpa-stable
       :mode "\\.elm\\'"
-      :config 
+      :config
       (add-hook 'elm-mode-hook
                 (lambda ()
                   (add-to-list (make-local-variable 'company-backends) 'company-elm)))
-                                        
+
       (add-hook 'elm-mode-hook #'elm-oracle-setup-completion)
 
       ;; this line is a HACK so that auto-completion will work on Windows
@@ -619,12 +619,91 @@
     (use-package psc-ide)
     (add-hook 'purescript-mode-hook 'setup-purescript-mode))
 
+  (defun unicode-symbol (name)
+    "Translate a symbolic name for a Unicode character -- e.g., LEFT-ARROW
+       or GREATER-THAN into an actual Unicode character code. "
+    (decode-char 'ucs (case name
+                        (left-arrow 8592)
+                        (up-arrow 8593)
+                        (right-arrow 8594)
+                        (down-arrow 8595)
+                        (double-vertical-bar #X2551)
+                        (equal #X003d)
+                        (not-equal #X2260)
+                        (identical #X2261)
+                        (not-identical #X2262)
+                        (less-than #X003c)
+                        (greater-than #X003e)
+                        (less-than-or-equal-to #X2264)
+                        (greater-than-or-equal-to #X2265)
+                        (logical-and #X2227)
+                        (logical-or #X2228)
+                        (logical-neg #X00AC)
+                        ('nil #X2205)
+                        (horizontal-ellipsis #X2026)
+                        (double-exclamation #X203C)
+                        (prime #X2032)
+                        (double-prime #X2033)
+                        (for-all #X2200)
+                        (there-exists #X2203)
+                        (element-of #X2208)
+                        (square-root #X221A)
+                        (squared #X00B2)
+                        (cubed #X00B3)
+                        (lambda #X03BB)
+                        (alpha #X03B1)
+                        (beta #X03B2)
+                        (gamma #X03B3)
+                        (delta #X03B4))))
+
+  (defun substitute-pattern-with-unicode (pattern symbol)
+    "Add a font lock hook to replace the matched part of PATTERN with the
+       Unicode symbol SYMBOL looked up with UNICODE-SYMBOL."
+    (font-lock-add-keywords
+     nil `((,pattern
+            (0 (progn (compose-region (match-beginning 1) (match-end 1)
+                                      ,(unicode-symbol symbol)
+                                      'decompose-region)
+                      nil))))))
+
+  (defun substitute-patterns-with-unicode (patterns)
+    "Call SUBSTITUTE-PATTERN-WITH-UNICODE repeatedly."
+    (mapcar #'(lambda (x)
+                (substitute-pattern-with-unicode (car x)
+                                                 (cdr x)))
+            patterns))
+
   (defun setup-purescript-mode ()
     (interactive)
     (psc-ide-mode)
     (company-mode)
     (flycheck-mode)
-    (turn-on-purescript-indentation))
+    (turn-on-purescript-indentation)
+    (substitute-patterns-with-unicode
+     (list (cons "\\(<-\\)" 'left-arrow)
+           (cons "\\(->\\)" 'right-arrow)
+           ;; (cons "\\(==\\)" 'identical)
+           (cons "\\(/=\\)" 'not-equal)
+           (cons "\\(()\\)" 'nil)
+           ;; (cons "\\<\\(sqrt\\)\\>" 'square-root)
+           (cons "\\<\\(forall\\)\\>" 'for-all)
+           (cons "\\(&&\\)" 'logical-and)
+           (cons "\\(||\\)" 'logical-or)
+           (cons "\\<\\(not\\)\\>" 'logical-neg)
+           (cons "\\(>\\)\\[^=\\]" 'greater-than)
+           (cons "\\(<\\)\\[^=\\]" 'less-than)
+           ;; (cons "\\(>>=\\)" 'up-arrow) ; bind
+           (cons "[^>]\\(>=\\)" 'greater-than-or-equal-to) ; substitute >= but ignore >>=
+           (cons "\\(<=\\)" 'less-than-or-equal-to)
+           ;; (cons "\\<\\(alpha\\)\\>" 'alpha)
+           ;; (cons "\\<\\(beta\\)\\>" 'beta)
+           ;; (cons "\\<\\(gamma\\)\\>" 'gamma)
+           ;; (cons "\\<\\(delta\\)\\>" 'delta)
+           ;; (cons "\\(''\\)" 'double-prime)
+           ;; (cons "\\('\\)" 'prime)
+           ;; (cons "\\(!!\\)" 'double-exclamation)
+           ;; (cons "\\(\\.\\.\\)" 'horizontal-ellipsis)
+           )))
 #+END_SRC
 
    purescript syntax:
@@ -632,6 +711,8 @@
    | $   | infix apply           |
    | <<< | backwards composition |
    | >>> | forwards composition  |
+   | >>= | bind                  |
+   | =>  | double arrow          |
    |     |                       |
 
    emacs psc-ide mode:
@@ -688,13 +769,13 @@
    https://github.com/purescript/psc-package/issues/34
    a lot of the psc-package commands fail on windows
    but if we're working with a pre-existing project then we can get by with using pulp
-   
+
 
    bower:
    NOT RECOMMENDED - try to use psc-package instead
    $ bower install purescript-math --save
 
-   
+
    flare is an easy to use library, easy to make cool interactive graphs
    pux - similar to the Elm architecture, Interactive React debugger can be wired in
    halogen - the hardest to understand library
@@ -1042,31 +1123,31 @@ _DEL_: none
 
            ;; ("C-M-f" sp-forward-sexp)
            ;; ("C-M-b" sp-backward-sexp)
-          
+
            ;; ("C-M-d" sp-down-sexp)
            ;; ("C-M-a" sp-backward-down-sexp)
            ;; ("C-S-a" sp-beginning-of-sexp)
            ;; ("C-S-d" sp-end-of-sexp)
-          
+
            ;; ("C-M-e" sp-up-sexp)
-          
+
            ;; ("C-M-u" sp-backward-up-sexp)
            ;; ("C-M-t" sp-transpose-sexp)
-          
+
            ;; ("C-M-n" sp-next-sexp)
            ;; ("C-M-p" sp-previous-sexp)
-          
+
            ;; ("C-M-k" sp-kill-sexp)
            ;; ("C-M-w" sp-copy-sexp)
-          
+
            ;; ("M-<delete>" sp-unwrap-sexp)
            ;; ("M-<backspace>" sp-backward-unwrap-sexp)
-          
+
            ;; ("C-<right>" sp-forward-slurp-sexp)
            ;; ("C-<left>" sp-forward-barf-sexp)
            ;; ("C-M-<left>" sp-backward-slurp-sexp)
            ;; ("C-M-<right>" sp-backward-barf-sexp)
-          
+
            ;; ("C-M-<delete>" sp-splice-sexp-killing-forward)
            ;; ("C-M-<backspace>" sp-splice-sexp-killing-backward)
            ;; ("C-S-<backspace>" sp-splice-sexp-killing-around)
@@ -1074,10 +1155,10 @@ _DEL_: none
            ;; ("C-]" sp-select-next-thing-exchange)
            ;; ("C-<left_bracket>" sp-select-previous-thing)
            ;; ("C-M-]" sp-select-next-thing)
-          
+
            ;; ("M-F" sp-forward-symbol)
            ;; ("M-B" sp-backward-symbol)
-          
+
            ;; ("H-t" sp-prefix-tag-object)
            ;; ("H-p" sp-prefix-pair-object)
            ;; ("H-s c" sp-convolute-sexp)
@@ -1296,7 +1377,7 @@ _DEL_: none
 
   (global-set-key (kbd "C-M-p") 'scroll-down-line)
   (global-set-key (kbd "C-M-n") 'scroll-up-line)
-  
+
   (global-set-key "\M-n" 'forward-paragraph)
   (global-set-key "\M-p" 'backward-paragraph)
   (global-set-key (kbd "C-<return>") 'electric-newline-and-maybe-indent)
