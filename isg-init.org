@@ -199,7 +199,8 @@
       (frame-r ((top . 0) (left . 1575) (width . 120) (height . 87)))))
 
    ((string-match "^localhost" system-name)  ; chromebook
-    '((post-setup-fn (lambda ()
+    '((default-font "-unknown-Inconsolata-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
+      (post-setup-fn (lambda ()
                        (setenv "GOPATH" (concat (getenv "HOME") "/work/go"))))
       (get-extra-paths (lambda ()
                          (list (concat (getenv "GOPATH") "/bin")
