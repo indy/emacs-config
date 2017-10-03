@@ -184,7 +184,7 @@
   "System specific overrides go here."
   (cond
    ((string-match "^BERTRAND" system-name)  ; 2016 Windows PC
-    '((default-font "-outline-Courier New-normal-normal-normal-mono-13-*-*-*-c-*-fontset-startup")
+    '((default-font "-outline-Inconsolata-normal-normal-normal-mono-13-*-*-*-m-0-iso10646-1")
       (machine-os "windows") ; one of "linux" "osx" "windows"
       (racer-cmd "C:\\Users\\indy\\bin\\racer.exe")
       (racer-rust-src-path "c:\\Users\\indy\\.rustup\\toolchains\\nightly-x86_64-pc-windows-msvc\\lib\\rustlib\\src\\rust\\src\\")
@@ -192,8 +192,8 @@
       (url-opener "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome")
       (deft-directory "d:/Google Drive/Docs/notes/deft")
       (gcal-file "D:\\Google Drive\\Docs\\notes\\gcal.org")
-      (frame-l ((top . 0) (left . 600) (width . 120) (height . 87)))
-      (frame-r ((top . 0) (left . 1575) (width . 120) (height . 87)))))
+      (frame-l ((top . 0) (left . 843) (width . 120) (height . 83)))
+      (frame-r ((top . 0) (left . 1700) (width . 120) (height . 83)))))
 
    ((string-match "^localhost" system-name)  ; chromebook
     '((default-font "-unknown-Inconsolata-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
