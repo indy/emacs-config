@@ -190,7 +190,7 @@
       (racer-rust-src-path "c:\\Users\\indy\\.rustup\\toolchains\\nightly-x86_64-pc-windows-msvc\\lib\\rustlib\\src\\rust\\src\\")
       (save-folder "d:/scratch/emacs-saves")
       (url-opener "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome")
-      (deft-directory "d:/Google Drive/Docs/notes/deft")
+      (deft-directory "C:\\Users\\indy\\work\\deft")
       (gcal-file "D:\\Google Drive\\Docs\\notes\\gcal.org")
       (frame-l ((top . 0) (left . 843) (width . 120) (height . 83)))
       (frame-r ((top . 0) (left . 1700) (width . 120) (height . 83)))))
@@ -659,6 +659,9 @@
      copyright: 'Copyright: (c) 2017 Inderjit Gill'
      github-username: indy
 
+   <2017-10-03 Tue> installed haskell on Windows
+   The installer added a STACK_ROOT environment variable. 
+   It's the equivalent of ~/.stack on Unix and is set to C:\sr
 
 ** javascript
  #+BEGIN_SRC emacs-lisp
