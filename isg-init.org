@@ -164,28 +164,29 @@
 #+END_SRC
 
 * machine settings
-#+BEGIN_SRC emacs-lisp
-(defun isg/default-machine-settings ()
-  "Settings which apply to most of the machines."
-  '((foreground-color "grey60")
-    (background-color "black")
-    (default-font "6x12")
-    (machine-os "linux") ; one of "linux" "osx" "windows"
-    (url-opener "chromium-browser")
-    (save-folder "/tmp/emacs.d-saves")
-    (deft-directory "~/work/deft")
-    (gcal-file "~/notes/gcal.org")
-    (racer-cmd "/home/indy/code/rust/racer/target/release/racer")
-    (racer-rust-src-path "/home/indy/code/rust/rust/src/")
-    (get-extra-paths (lambda ()
-                       (list (concat (getenv "HOME") "/local/bin")
-                             "/usr/local/bin"
-                             "/usr/local/go/bin")))))
+  split this into multiple source blocks to avoid a lot of git conflicts
 
-(defun isg/machine-settings ()
-  "System specific overrides go here."
-  (cond
-   ((string-match "^BERTRAND" system-name)  ; 2016 Windows PC
+#+BEGIN_SRC emacs-lisp
+  (defun isg/default-machine-settings ()
+    "Settings which apply to most of the machines."
+    '((foreground-color "grey60")
+      (background-color "black")
+      (default-font "6x12")
+      (machine-os "linux") ; one of "linux" "osx" "windows"
+      (url-opener "chromium-browser")
+      (save-folder "/tmp/emacs.d-saves")
+      (deft-directory "~/work/deft")
+      (gcal-file "~/notes/gcal.org")
+      (racer-cmd "/home/indy/code/rust/racer/target/release/racer")
+      (racer-rust-src-path "/home/indy/code/rust/rust/src/")
+      (get-extra-paths (lambda ()
+                         (list (concat (getenv "HOME") "/local/bin")
+                               "/usr/local/bin"
+                               "/usr/local/go/bin")))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (defvar isg/config-windows-home-pc
     '((default-font "-outline-Courier New-normal-normal-normal-mono-13-*-*-*-c-*-fontset-startup")
       (machine-os "windows") ; one of "linux" "osx" "windows"
       (racer-cmd "C:\\Users\\indy\\bin\\racer.exe")
@@ -196,8 +197,10 @@
       (gcal-file "D:\\Google Drive\\Docs\\notes\\gcal.org")
       (frame-l ((top . 0) (left . 600) (width . 120) (height . 87)))
       (frame-r ((top . 0) (left . 1575) (width . 120) (height . 87)))))
+#+END_SRC
 
-   ((string-match "^localhost" system-name)  ; chromebook
+#+BEGIN_SRC emacs-lisp
+  (defvar isg/config-chromebook
     '((default-font "-unknown-Inconsolata-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
       (post-setup-fn (lambda ()
                        (setenv "GOPATH" (concat (getenv "HOME") "/work/go"))))
@@ -207,15 +210,13 @@
                                "/usr/local/bin")))
       (frame-l ((top . 0) (left . 210) (width . 80) (height . 59)))
       (frame-r ((top . 0) (left . 780) (width . 80) (height . 59)))))
+#+END_SRC
 
-   ((string-match "^debian" system-name)  ; debian vm on ernesto
-    '((post-setup-fn (lambda ()
-                       (setq x-super-keysym 'meta)))))
-
-   ((string-match "^ernesto" system-name) ; Macbook Air i5
+#+BEGIN_SRC emacs-lisp
+  (defvar isg/config-macbook-air
     '((default-font "-apple-Inconsolata-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
       (machine-os "osx")
-      ;(racer-cmd "/Users/indy/code/rust/racer/target/release/racer")
+      ;;(racer-cmd "/Users/indy/code/rust/racer/target/release/racer")
       (racer-cmd "/Users/indy/.cargo/bin/racer")
       (racer-rust-src-path "/Users/indy/code/rust/rust/src/")
       (url-opener "open")
@@ -229,16 +230,39 @@
 
       (post-setup-fn (lambda ()
                        (setq inferior-lisp-program "lein repl")))))
+#+END_SRC
 
-   ((string-match "^che" system-name)  ; asus ul20a
-    '((post-setup-fn (lambda ()
-                       (setenv "GOPATH" (concat (getenv "HOME") "/scratch/go"))))
+#+BEGIN_SRC emacs-lisp
+  (defun isg/machine-settings ()
+    "System specific overrides go here."
+    (cond
+     ((string-match "^BERTRAND"  system-name) isg/config-windows-home-pc)
+     ((string-match "^localhost" system-name) isg/config-chromebook)
+     ((string-match "^ernesto"   system-name) isg/config-macbook-air)))
+
+  (cl-labels ((load-settings (which)
+                             (mapcar (lambda (pair)
+                                       (put 'isg/local (car pair) (cadr pair)))
+                                     which)))
+    (load-settings (isg/default-machine-settings))
+    (load-settings (isg/machine-settings)))
+#+END_SRC
+
+
+** obsolete machine settings
+((string-match "^debian" system-name)  ; debian vm on ernesto
+      '((post-setup-fn (lambda ()
+                         (setq x-super-keysym 'meta)))))
+
+     ((string-match "^che" system-name)  ; asus ul20a
+      '((post-setup-fn (lambda ()
+                         (setenv "GOPATH" (concat (getenv "HOME") "/scratch/go"))))
         (get-extra-paths (lambda ()
                            (list (concat (getenv "GOPATH") "/bin")
                                  (concat (getenv "HOME") "/local/bin")
                                  "/usr/local/bin"
                                  "/usr/local/go/bin")))
-                                 ;; "/home/indy/code/rust/racer/target/release"
+        ;; "/home/indy/code/rust/racer/target/release"
 
         (key-setup (([mouse-1] . nil)
                     ([double-mouse-1] . nil)
@@ -255,7 +279,7 @@
                                   (concat (getenv "HOME") "/local/bin:")
                                   "/usr/local/bin:"
                                   (getenv "PATH")))
-  ;                        (isg/start-shell "default-shell")
+                         ;;(isg/start-shell "default-shell")
                          (switch-to-buffer "*scratch*")))
 
 
@@ -290,24 +314,18 @@
 
 
      ((equal system-name "green")         ; old laptop thrown out by orange
-      '((hyperspec-root "file:///usr/share/common-lisp/isg/hyperspec/HyperSpec/")))))
+      '((hyperspec-root "file:///usr/share/common-lisp/isg/hyperspec/HyperSpec/")))
 
-  ; Windows
-  ; default font: "file:///usr/share/common-lisp/isg-hyperspec/HyperSpec/"
-  ; inferior lisp: "C:\\home\\bin\\sbcl\\sbcl.exe"
-  ; (post-setup-fn (lambda ()
-  ; ((setq exec-path (append exec-path '("c:\\home\\bin\\emacs-22.1\\bin")))
-  ; (load-file "~/.emacs.d/site-lisp/external/gnuserv.el")
-  ; (gnuserv-start)
-  ; (setq gnuserv-frame(selected-frame)))))
 
-  (cl-labels ((load-settings (which)
-                             (mapcar (lambda (pair)
-                                       (put 'isg/local (car pair) (cadr pair)))
-                                     which)))
-    (load-settings (isg/default-machine-settings))
-    (load-settings (isg/machine-settings)))
-#+END_SRC
+  ;; Windows
+  ;; default font: "file:///usr/share/common-lisp/isg-hyperspec/HyperSpec/"
+  ;; inferior lisp: "C:\\home\\bin\\sbcl\\sbcl.exe"
+  ;; (post-setup-fn (lambda ()
+  ;; ((setq exec-path (append exec-path '("c:\\home\\bin\\emacs-22.1\\bin")))
+  ;; (load-file "~/.emacs.d/site-lisp/external/gnuserv.el")
+  ;; (gnuserv-start)
+  ;; (setq gnuserv-frame(selected-frame)))))
+
 
 * essential packages
 ** magit
