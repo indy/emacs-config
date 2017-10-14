@@ -1,35 +1,40 @@
 
+  |--------------+-------------+--------------------------------------------------|
+  | Section      | Key         | Command                                          |
+  |--------------+-------------+--------------------------------------------------|
+  | Search       | C-s         | Counsel grep (C-y = search current word)         |
+  |              | C-r         | counsel-rg                                       |
+  |              | C-M-s       | isearch forward                                  |
+  |              | C-M-r       | isearch backward                                 |
+  |              | C-M-g       | counsel-git-grep                                 |
+  |              | C-c C-o     | print search results into new buffer             |
+  |              | C-x C-q     | ivy-wgrep-change-to-wgrep-mode                   |
+  |              | C-c C-c     | commit changes made in wgrep mode                |
+  |              | C-c f       | hydra show counsel options                       |
+  | Registers    | C-x r space | Save current position to register                |
+  |              | C-x r u     | Save current buffer state to register            |
+  |              | C-x r U     | Restore buffer state from register               |
+  | Org Mode     | C-c C-c     | Eval code within BEGIN_SRC/END_SRC blocks        |
+  |              | C-c '       | Open up a mini-buffer for editing the code block |
+  | Highlighting | C-h .       | highlight-symbol-at-point                        |
+  |              | C-h r       | remove highlights                                |
+  |              | C-h h       | highlight-regexp                                 |
+  |              | C-h p       | highlight-phrase and choose colour               |
+  |--------------+-------------+--------------------------------------------------|
+
   Tramp mode and Eshell
   $ cd /indy.io:/home/indy
 
-  Searching
+  End of line conversions
+  M-x set-buffer-file-coding-system utf-8-unix (for LF)
+  M-x set-buffer-file-coding-system utf-8-mac (for CR)
+  M-x set-buffer-file-coding-system utf-8-dos (for CR+LF)
 
-  | key     | command                                  | desc                          |
-  |---------+------------------------------------------+-------------------------------|
-  | C-s     | Counsel grep (C-y = search current word) | search buffer                 |
-  | C-r     | counsel-rg                               | search directory              |
-  | C-M-s   | isearch forward                          |                               |
-  | C-M-r   | isearch backward                         |                               |
-  | C-M-g   | counsel-git-grep                         | search git repo               |
-  | C-c C-o | print search results into new buffer     |                               |
-  | C-x C-q | ivy-wgrep-change-to-wgrep-mode           | make search results editable! |
-  | C-c C-c | commit changes made in wgrep mode        |                               |
-  | C-c f   | hydra show counsel options               |                               |
-
-  Registers
-
-  | key         | description                           |
-  |-------------+---------------------------------------|
-  | C-x r space | Save current position to register     |
-  | C-x r u     | Save current buffer state to register |
-  | C-x r U     | Restore buffer state from register    |
-
-  Editing codeblocks in org mode
-
-  | key     | description                                      |
-  |---------+--------------------------------------------------|
-  | C-c C-c | Eval code within BEGIN_SRC/END_SRC blocks        |
-  | C-c '   | Open up a mini-buffer for editing the code block |
+  Using an Emacs counter in a keyboard macro definition
+  C-(
+  press f3 to insert a 0
+  C-)
+  the 0 in subsequent invocations will be replaced with the next integer
 
 * package
   https://github.com/jwiegley/use-package
