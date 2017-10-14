@@ -1,4 +1,7 @@
 
+  Tramp mode and Eshell
+  $ cd /indy.io:/home/indy
+
   Searching
 
   | key     | command                                  | desc                          |
@@ -20,7 +23,6 @@
   | C-x r space | Save current position to register     |
   | C-x r u     | Save current buffer state to register |
   | C-x r U     | Restore buffer state from register    |
-
 
   Editing codeblocks in org mode
 
@@ -171,7 +173,7 @@
     (machine-os "linux") ; one of "linux" "osx" "windows"
     (url-opener "chromium-browser")
     (save-folder "/tmp/emacs.d-saves")
-    (deft-directory "~/notes/deft")
+    (deft-directory "~/work/deft")
     (gcal-file "~/notes/gcal.org")
     (racer-cmd "/home/indy/code/rust/racer/target/release/racer")
     (racer-rust-src-path "/home/indy/code/rust/rust/src/")
@@ -204,8 +206,7 @@
                                (concat (getenv "HOME") "/local/bin")
                                "/usr/local/bin")))
       (frame-l ((top . 0) (left . 210) (width . 80) (height . 59)))
-      (frame-r ((top . 0) (left . 780) (width . 80) (height . 59)))
-      ))
+      (frame-r ((top . 0) (left . 780) (width . 80) (height . 59)))))
 
    ((string-match "^debian" system-name)  ; debian vm on ernesto
     '((post-setup-fn (lambda ()
@@ -218,6 +219,7 @@
       (racer-cmd "/Users/indy/.cargo/bin/racer")
       (racer-rust-src-path "/Users/indy/code/rust/rust/src/")
       (url-opener "open")
+      (deft-directory "~/work/deft")
 
       (frame-r ((top . 0) (left . 746) (width . 100) (height . 55)))
       (frame-l ((top . 0) (left . 126) (width . 100) (height . 55)))
