@@ -233,80 +233,80 @@
    ((string-match "^che" system-name)  ; asus ul20a
     '((post-setup-fn (lambda ()
                        (setenv "GOPATH" (concat (getenv "HOME") "/scratch/go"))))
-      (get-extra-paths (lambda ()
-                         (list (concat (getenv "GOPATH") "/bin")
-                               (concat (getenv "HOME") "/local/bin")
-                               "/usr/local/bin"
-                               "/usr/local/go/bin")))
-                               ;; "/home/indy/code/rust/racer/target/release"
+        (get-extra-paths (lambda ()
+                           (list (concat (getenv "GOPATH") "/bin")
+                                 (concat (getenv "HOME") "/local/bin")
+                                 "/usr/local/bin"
+                                 "/usr/local/go/bin")))
+                                 ;; "/home/indy/code/rust/racer/target/release"
 
-      (key-setup (([mouse-1] . nil)
-                  ([double-mouse-1] . nil)
-                  ([drag-mouse-1] . nil)
-                  ([down-mouse-1] . nil)))))
-
-
-   ((string-match "^raul" system-name)  ; eee 1000
-    '((hyperspec-root "file:////home/user/docs/cl/HyperSpec/")
-      ;; (default-font "-unknown-DejaVu Sans Mono-normal-normal-normal-*-20-*-*-*-m-0-fontset-startup")
-      (post-setup-fn (lambda ()
-                       (setenv "PATH"
-                               (concat
-                                (concat (getenv "HOME") "/local/bin:")
-                                "/usr/local/bin:"
-                                (getenv "PATH")))
-;                        (isg/start-shell "default-shell")
-                       (switch-to-buffer "*scratch*")))
+        (key-setup (([mouse-1] . nil)
+                    ([double-mouse-1] . nil)
+                    ([drag-mouse-1] . nil)
+                    ([down-mouse-1] . nil)))))
 
 
-      (frame-r ((top . 1) (left . 5) (width . 80) (height . 46)))
-      (frame-l ((top . 0) (left . 509) (width . 80) (height . 46)))
-
-      (key-setup (([mouse-1] . nil) ; accidently touching touchpad won't shift cursor
-                  ([double-mouse-1] . nil)
-                  ([drag-mouse-1] . nil)
-                  ([down-mouse-1] . nil)))))
-
-
-   ((string-match "^blue" system-name) ; G5 iMac at home
-    '((default-font "-apple-andale mono-medium-r-normal--0-0-0-0-m-0-mac-roman")
-      (machine-os "osx")
-      (save-folder "~/.emacs.d/saves")
-      (frame-r ((top . 20) (left . 320) (width . 80) (height . 71)))
-      (frame-l ((top . 20) (left . 902) (width . 80) (height . 71)))))
-
-   ((string-match "^GOSHCC" system-name)  ; GOSH PC
-    '(
-      (default-font "-outline-Courier New-normal-normal-normal-mono-13-*-*-*-c-*-fontset-startup")
-      (machine-os "windows") ; one of "linux" "osx" "windows"
-      (save-folder "~/emacs-saves")
-      (post-setup-fn (lambda ()
-                       (find-file "k:/Direct Marketing/Data Analyst/indy/notes/done.org")
-                       (find-file "k:/Direct Marketing/Data Analyst/indy/notes/notes.org")
-                       (find-file "k:/Direct Marketing/Data Analyst/indy/notes/tasks.org")))
-
-      (frame-r ((top . 0) (left . 0) (width . 80) (height . 60)))
-      (frame-l ((top . 20) (left . 510) (width . 80) (height . 60)))))
+     ((string-match "^raul" system-name)  ; eee 1000
+      '((hyperspec-root "file:////home/user/docs/cl/HyperSpec/")
+        ;; (default-font "-unknown-DejaVu Sans Mono-normal-normal-normal-*-20-*-*-*-m-0-fontset-startup")
+        (post-setup-fn (lambda ()
+                         (setenv "PATH"
+                                 (concat
+                                  (concat (getenv "HOME") "/local/bin:")
+                                  "/usr/local/bin:"
+                                  (getenv "PATH")))
+  ;                        (isg/start-shell "default-shell")
+                         (switch-to-buffer "*scratch*")))
 
 
-   ((equal system-name "green")         ; old laptop thrown out by orange
-    '((hyperspec-root "file:///usr/share/common-lisp/isg/hyperspec/HyperSpec/")))))
+        (frame-r ((top . 1) (left . 5) (width . 80) (height . 46)))
+        (frame-l ((top . 0) (left . 509) (width . 80) (height . 46)))
 
-; Windows
-; default font: "file:///usr/share/common-lisp/isg-hyperspec/HyperSpec/"
-; inferior lisp: "C:\\home\\bin\\sbcl\\sbcl.exe"
-; (post-setup-fn (lambda ()
-; ((setq exec-path (append exec-path '("c:\\home\\bin\\emacs-22.1\\bin")))
-; (load-file "~/.emacs.d/site-lisp/external/gnuserv.el")
-; (gnuserv-start)
-; (setq gnuserv-frame(selected-frame)))))
+        (key-setup (([mouse-1] . nil) ; accidently touching touchpad won't shift cursor
+                    ([double-mouse-1] . nil)
+                    ([drag-mouse-1] . nil)
+                    ([down-mouse-1] . nil)))))
 
-(cl-labels ((load-settings (which)
-                           (mapcar (lambda (pair)
-                                     (put 'isg/local (car pair) (cadr pair)))
-                                   which)))
-  (load-settings (isg/default-machine-settings))
-  (load-settings (isg/machine-settings)))
+
+     ((string-match "^blue" system-name) ; G5 iMac at home
+      '((default-font "-apple-andale mono-medium-r-normal--0-0-0-0-m-0-mac-roman")
+        (machine-os "osx")
+        (save-folder "~/.emacs.d/saves")
+        (frame-r ((top . 20) (left . 320) (width . 80) (height . 71)))
+        (frame-l ((top . 20) (left . 902) (width . 80) (height . 71)))))
+
+     ((string-match "^GOSHCC" system-name)  ; GOSH PC
+      '(
+        (default-font "-outline-Courier New-normal-normal-normal-mono-13-*-*-*-c-*-fontset-startup")
+        (machine-os "windows") ; one of "linux" "osx" "windows"
+        (save-folder "~/emacs-saves")
+        (post-setup-fn (lambda ()
+                         (find-file "k:/Direct Marketing/Data Analyst/indy/notes/done.org")
+                         (find-file "k:/Direct Marketing/Data Analyst/indy/notes/notes.org")
+                         (find-file "k:/Direct Marketing/Data Analyst/indy/notes/tasks.org")))
+
+        (frame-r ((top . 0) (left . 0) (width . 80) (height . 60)))
+        (frame-l ((top . 20) (left . 510) (width . 80) (height . 60)))))
+
+
+     ((equal system-name "green")         ; old laptop thrown out by orange
+      '((hyperspec-root "file:///usr/share/common-lisp/isg/hyperspec/HyperSpec/")))))
+
+  ; Windows
+  ; default font: "file:///usr/share/common-lisp/isg-hyperspec/HyperSpec/"
+  ; inferior lisp: "C:\\home\\bin\\sbcl\\sbcl.exe"
+  ; (post-setup-fn (lambda ()
+  ; ((setq exec-path (append exec-path '("c:\\home\\bin\\emacs-22.1\\bin")))
+  ; (load-file "~/.emacs.d/site-lisp/external/gnuserv.el")
+  ; (gnuserv-start)
+  ; (setq gnuserv-frame(selected-frame)))))
+
+  (cl-labels ((load-settings (which)
+                             (mapcar (lambda (pair)
+                                       (put 'isg/local (car pair) (cadr pair)))
+                                     which)))
+    (load-settings (isg/default-machine-settings))
+    (load-settings (isg/machine-settings)))
 #+END_SRC
 
 * essential packages
@@ -661,6 +661,9 @@
      copyright: 'Copyright: (c) 2017 Inderjit Gill'
      github-username: indy
 
+   <2017-10-03 Tue> installed haskell on Windows
+   The installer added a STACK_ROOT environment variable. 
+   It's the equivalent of ~/.stack on Unix and is set to C:\sr
 
 ** javascript
  #+BEGIN_SRC emacs-lisp
