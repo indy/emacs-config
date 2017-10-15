@@ -649,45 +649,6 @@
     (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
     (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation))
 #+END_SRC
-
-*** installation notes
-    <2017-10-01 Sun> installed haskell on chromebook
-    https://docs.haskellstack.org/en/stable/install_and_upgrade/#linux
-
-    $ curl -sSL https://get.haskellstack.org/ | sh
-    note: this failed with 
-
-    curl: (77) error setting certificate verify locations:
-      CAfile: /etc/pki/tls/certs/ca-bundle.crt
-      CApath: none
-
-    fixed with the following env change:
-    $ export CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
-    $ curl -sSL https://get.haskellstack.org/ | sh
-
-    had a warning that ~/.local/bin wasn't in PATH so added that to ~/.profile
-
-    _the binary 'stack' was installed as /usr/local/bin/stack_
-
-    $ stack new my-project (takes fucking ages)
-    $ cd my-project
-    $ stack setup (installs GHC - takes fucking ages) - RAN OUT OF DISK SPACE - tried again
-    $ stack build
-    $ stack exec my-project-exe
-
-    Note: here's my ~/.stack/config.yaml file:
-
- templates:
-   params:
-     author-name: Inderjit Gill
-     author-email: email@indy.io
-     copyright: 'Copyright: (c) 2017 Inderjit Gill'
-     github-username: indy
-
-   <2017-10-03 Tue> installed haskell on Windows
-   The installer added a STACK_ROOT environment variable. 
-   It's the equivalent of ~/.stack on Unix and is set to C:\sr
-
 ** javascript
  #+BEGIN_SRC emacs-lisp
  (use-package js2-mode
