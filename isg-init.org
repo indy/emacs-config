@@ -6,7 +6,7 @@
   |              | C-r         | counsel-rg                                       |
   |              | C-M-s       | isearch forward                                  |
   |              | C-M-r       | isearch backward                                 |
-  |              | C-M-g       | counsel-git-grep                                 |
+  |              | C-M-g       | counsel-git                                      |
   |              | C-c C-o     | print search results into new buffer             |
   |              | C-x C-q     | ivy-wgrep-change-to-wgrep-mode                   |
   |              | C-c C-c     | commit changes made in wgrep mode                |
@@ -198,7 +198,7 @@
       (racer-rust-src-path "c:\\Users\\indy\\.rustup\\toolchains\\nightly-x86_64-pc-windows-msvc\\lib\\rustlib\\src\\rust\\src\\")
       (save-folder "d:/scratch/emacs-saves")
       (url-opener "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome")
-      (deft-directory "d:/Google Drive/Docs/notes/deft")
+      (deft-directory "C:\\Users\\indy\\work\\deft")
       (gcal-file "D:\\Google Drive\\Docs\\notes\\gcal.org")
       (frame-l ((top . 0) (left . 600) (width . 120) (height . 87)))
       (frame-r ((top . 0) (left . 1575) (width . 120) (height . 87)))))
@@ -433,11 +433,7 @@
                       (interactive)
                       (counsel-rg (format "%s" (or (thing-at-point 'symbol) "")))))
 
-    (global-set-key (kbd "C-M-g")
-                    (lambda ()
-                      (interactive)
-                      (counsel-git-grep nil
-                                        (format "%s" (or (thing-at-point 'symbol) "")))))
+    (global-set-key (kbd "C-M-g") 'counsel-git)
 
     (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 
