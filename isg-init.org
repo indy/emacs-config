@@ -638,13 +638,16 @@
   (add-to-list 'auto-mode-alist '("\\.gradle$" . groovy-mode))
  #+END_SRC
 ** haskell
+   https://commercialhaskell.github.io/intero/
+
 #+BEGIN_SRC emacs-lisp
   (use-package haskell-mode
     :mode "\\.hs\\'"
     :init
-    (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-    (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation))
+    (add-hook 'haskell-mode-hook 'intero-mode))
 #+END_SRC
+
+
 ** javascript
  #+BEGIN_SRC emacs-lisp
  (use-package js2-mode
