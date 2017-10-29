@@ -367,16 +367,16 @@
  test by calling: org-gcal-fetch
 
 #+BEGIN_SRC emacs-lisp
-  (use-package org-gcal
-    :pin melpa-stable
-    :ensure t
-    :config
-    (setq org-gcal-client-id "897993881430-kugvdc95cl65l7ungcfb4c25eoqgu9gm.apps.googleusercontent.com"
-          org-gcal-client-secret "A1Z-3mRQXkbwczp3mnewdKUK"
-          org-gcal-file-alist '())
-    (add-to-list 'org-gcal-file-alist (cons "inderjit.gill@gmail.com" (isg/val 'gcal-file)))
-    (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync)))
-    (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync))))
+  ;; (use-package org-gcal
+  ;;   :pin melpa-stable
+  ;;   :ensure t
+  ;;   :config
+  ;;   (setq org-gcal-client-id "897993881430-kugvdc95cl65l7ungcfb4c25eoqgu9gm.apps.googleusercontent.com"
+  ;;         org-gcal-client-secret "A1Z-3mRQXkbwczp3mnewdKUK"
+  ;;         org-gcal-file-alist '())
+  ;;   (add-to-list 'org-gcal-file-alist (cons "inderjit.gill@gmail.com" (isg/val 'gcal-file)))
+  ;;   (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync)))
+  ;;   (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync))))
 #+END_SRC
 
 
@@ -1069,23 +1069,26 @@ _DEL_: none
 
 ** exec-path-from-shell
  #+BEGIN_SRC emacs-lisp
- ;; have to ensure that this is run at startup so that 'cargo' can be
- ;; found when in rust mode and also so that the eshell works as expected
- ;;
- (use-package exec-path-from-shell
-   :pin melpa-stable
-     :ensure t
-     :demand t
-     :config
-     ;; (exec-path-from-shell-copy-env "TWITTER_CONSUMER_KEY")
-     ;; (exec-path-from-shell-copy-env "TWITTER_CONSUMER_SECRET")
-     ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN")
-     ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN_SECRET")
-     (if (not (string-equal (isg/val 'machine-os) "windows"))
-         (exec-path-from-shell-copy-env "GOPATH"))
-         ;; (exec-path-from-shell-setenv "RUST_SRC_PATH" (isg/val 'racer-rust-src-path))
-     (when (memq window-system '(mac ns))
-       (exec-path-from-shell-initialize)))
+   ;; have to ensure that this is run at startup so that 'cargo' can be
+   ;; found when in rust mode and also so that the eshell works as expected
+   ;;
+
+   ;; (use-package exec-path-from-shell
+   ;;   :pin melpa-stable
+   ;;     :ensure t
+   ;;     :demand t
+   ;;     :config
+   ;;     ;; (exec-path-from-shell-copy-env "TWITTER_CONSUMER_KEY")
+   ;;     ;; (exec-path-from-shell-copy-env "TWITTER_CONSUMER_SECRET")
+   ;;     ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN")
+   ;;     ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN_SECRET")
+   ;;     (if (not (string-equal (isg/val 'machine-os) "windows"))
+   ;;         (exec-path-from-shell-copy-env "GOPATH"))
+   ;;         ;; (exec-path-from-shell-setenv "RUST_SRC_PATH" (isg/val 'racer-rust-src-path))
+   ;;     (when (memq window-system '(mac ns))
+   ;;       (exec-path-from-shell-initialize)))
+
+
  #+END_SRC
 
 ** flycheck
