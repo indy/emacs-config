@@ -11,16 +11,37 @@
   |              | C-x C-q     | ivy-wgrep-change-to-wgrep-mode                   |
   |              | C-c C-c     | commit changes made in wgrep mode                |
   |              | C-c f       | hydra show counsel options                       |
-  | Registers    | C-x r space | Save current position to register                |
-  |              | C-x r u     | Save current buffer state to register            |
-  |              | C-x r U     | Restore buffer state from register               |
   | Org Mode     | C-c C-c     | Eval code within BEGIN_SRC/END_SRC blocks        |
   |              | C-c '       | Open up a mini-buffer for editing the code block |
   | Highlighting | C-h .       | highlight-symbol-at-point                        |
   |              | C-h r       | remove highlights                                |
   |              | C-h h       | highlight-regexp                                 |
   |              | C-h p       | highlight-phrase and choose colour               |
+  | Navigation   | C-spc C-spc | set mark, push onto mark ring                    |
+  |              | C-u C-spc   | restore mark from mark ring                      |
   |--------------+-------------+--------------------------------------------------|
+
+  |-----------+---------+---------------------------------------|
+  | Registers | C-x r   | Prefix all commands with C-x r        |
+  |-----------+---------+---------------------------------------|
+  |           | Key     | Command                               |
+  |-----------+---------+---------------------------------------|
+  |           | b       | jump to a bookmark                    |
+  |           | l       | list bookmarks                        |
+  |           | m       | set a bookmark                        |
+  |           |         |                                       |
+  |           | space X | Save current position to register X   |
+  |           | j X     | Restore position in register X        |
+  |           |         |                                       |
+  |           | r u     | Save current buffer state to register |
+  |           | r U     | Restore buffer state from register    |
+  |           |         |                                       |
+  |           | s a     | Store region as 'a'                   |
+  |           | i a     | Insert region stored in 'a'           |
+  |-----------+---------+---------------------------------------|
+
+
+  
 
   Tramp mode and Eshell
   $ cd /indy.io:/home/indy
