@@ -665,6 +665,25 @@
  #+END_SRC
 ** haskell
    https://commercialhaskell.github.io/intero/
+   https://github.com/commercialhaskell/intero
+
+  | key         | command                                        |
+  |-------------+------------------------------------------------|
+  | M-.         | jump to definition                             |
+  | C-c C-i     | show information of identifier at point        |
+  | C-c C-t     | display type of identifier at point            |
+  | C-c C-r     | automatically apply suggestions                |
+  | C-u C-c C-t | insert a type signature for the thing at point |
+  |             |                                                |
+  | C-c C-l     | load this module in the REPL                   |
+  | C-c C-c     | evaluate the selected region in the REPL       |
+  | C-c C-k     | clear REPL                                     |
+  | C-c C-z     | switch to and from the REPL                    |
+  |             |                                                |
+  | C-c ! l     | see a list of errors                           |
+  | C-c ! n     | jump to next error                             |
+  | C-c ! p     | jump to previous error                         |
+
 
 #+BEGIN_SRC emacs-lisp
   (use-package haskell-mode
