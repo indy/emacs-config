@@ -2,6 +2,11 @@
   |--------------+-------------+--------------------------------------------------|
   | Section      | Key         | Command                                          |
   |--------------+-------------+--------------------------------------------------|
+  | Misc.        | M-/         | dabbrev-expand                                   |
+  |              |             |                                                  |
+  | Undo         | C-/         | undo-tree-undo                                   |
+  |              | C-M-/       | hydra-undo-tree/body                             |
+  |              |             |                                                  |
   | Search       | C-s         | Counsel grep (C-y = search current word)         |
   |              | C-r         | counsel-rg                                       |
   |              | C-M-s       | isearch forward                                  |
@@ -11,12 +16,15 @@
   |              | C-x C-q     | ivy-wgrep-change-to-wgrep-mode                   |
   |              | C-c C-c     | commit changes made in wgrep mode                |
   |              | C-c f       | hydra show counsel options                       |
+  |              |             |                                                  |
   | Org Mode     | C-c C-c     | Eval code within BEGIN_SRC/END_SRC blocks        |
   |              | C-c '       | Open up a mini-buffer for editing the code block |
+  |              |             |                                                  |
   | Highlighting | C-h .       | highlight-symbol-at-point                        |
   |              | C-h r       | remove highlights                                |
   |              | C-h h       | highlight-regexp                                 |
   |              | C-h p       | highlight-phrase and choose colour               |
+  |              |             |                                                  |
   | Navigation   | C-spc C-spc | set mark, push onto mark ring                    |
   |              | C-u C-spc   | restore mark from mark ring                      |
   |--------------+-------------+--------------------------------------------------|
@@ -39,10 +47,7 @@
   |           | s a     | Store region as 'a'                   |
   |           | i a     | Insert region stored in 'a'           |
   |-----------+---------+---------------------------------------|
-
-
   
-
   Tramp mode and Eshell
   $ cd /indy.io:/home/indy
 
@@ -1094,20 +1099,20 @@ _DEL_: none
    ;; found when in rust mode and also so that the eshell works as expected
    ;;
 
-   ;; (use-package exec-path-from-shell
-   ;;   :pin melpa-stable
-   ;;     :ensure t
-   ;;     :demand t
-   ;;     :config
-   ;;     ;; (exec-path-from-shell-copy-env "TWITTER_CONSUMER_KEY")
-   ;;     ;; (exec-path-from-shell-copy-env "TWITTER_CONSUMER_SECRET")
-   ;;     ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN")
-   ;;     ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN_SECRET")
-   ;;     (if (not (string-equal (isg/val 'machine-os) "windows"))
-   ;;         (exec-path-from-shell-copy-env "GOPATH"))
-   ;;         ;; (exec-path-from-shell-setenv "RUST_SRC_PATH" (isg/val 'racer-rust-src-path))
-   ;;     (when (memq window-system '(mac ns))
-   ;;       (exec-path-from-shell-initialize)))
+   (use-package exec-path-from-shell
+     :pin melpa-stable
+     :ensure t
+     :demand t
+     :config
+     ;; (exec-path-from-shell-copy-env "TWITTER_CONSUMER_KEY")
+     ;; (exec-path-from-shell-copy-env "TWITTER_CONSUMER_SECRET")
+     ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN")
+     ;; (exec-path-from-shell-copy-env "TWITTER_ACCESS_TOKEN_SECRET")
+     (if (not (string-equal (isg/val 'machine-os) "windows"))
+         (exec-path-from-shell-copy-env "GOPATH"))
+     ;; (exec-path-from-shell-setenv "RUST_SRC_PATH" (isg/val 'racer-rust-src-path))
+     (when (memq window-system '(mac ns))
+       (exec-path-from-shell-initialize)))
 
 
  #+END_SRC
@@ -1242,7 +1247,16 @@ _DEL_: none
     :config
     ;; (global-set-key (kbd "<left>") 'undo-tree-undo)
     ;; (global-set-key (kbd "<right>") 'undo-tree-redo)
-    )
+    (defhydra hydra-undo-tree (:color yellow :hint nil )
+      "
+    _p_: undo  _n_: redo _s_: save _l_: load   "
+      ("p"   undo-tree-undo)
+      ("n"   undo-tree-redo)
+      ("s"   undo-tree-save-history)
+      ("l"   undo-tree-load-history)
+      ("u"   undo-tree-visualize "visualize" :color blue)
+      ("q"   nil "quit" :color blue))
+    (global-set-key (kbd "C-M-/") 'hydra-undo-tree/body))
 #+END_SRC
 
 ** wgrep
