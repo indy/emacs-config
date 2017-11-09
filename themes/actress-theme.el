@@ -204,7 +204,7 @@
    `(org-level-1 ((,class (:bold t :foreground ,fg2 :height 1.1))))
    `(org-level-2 ((,class (:bold nil :foreground ,fg3))))
    `(org-level-3 ((,class (:bold t :foreground ,fg4))))
-   `(org-level-4 ((,class (:bold nil :foreground ,bg4))))
+   `(org-level-4 ((,class (:bold nil :foreground ,fg1))))
    `(org-link ((,class (:underline t :foreground ,type ))))
    `(org-quote ((,class (:inherit org-block :slant italic))))
    `(org-scheduled ((,class (:foreground ,type))))
