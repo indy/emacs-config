@@ -535,6 +535,8 @@
                  ("seni" (mode . seni-mode))
                  ("rust" (mode . rust-mode))
                  ("js" (mode . js2-mode))
+                 ("purescript" (mode . purescript-mode))
+                 ("haskell" (mode . haskell-mode))
                  ("go" (mode . go-mode))
                  ("glsl" (mode . glsl-mode))
                  ("org" (mode . org-mode))
@@ -1168,6 +1170,13 @@ _DEL_: none
    :config
    (setq highlight-thing-delay-seconds 0.5)
    (setq highlight-thing-exclude-thing-under-point t))
+ #+END_SRC
+
+
+** htmlize
+ #+BEGIN_SRC emacs-lisp
+ (use-package htmlize
+   :commands htmlize-buffer)
  #+END_SRC
 
 ** smartparens-config
