@@ -425,6 +425,11 @@
     :pin melpa-stable
     :demand t
     :config
+    (use-package ivy-rich)
+    (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer)
+    (setq ivy-virtual-abbreviate 'full
+          ivy-rich-switch-buffer-align-virtual-buffer t
+          ivy-rich-path-style 'abbrev)
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t
           ivy-count-format "%d/%d "))
