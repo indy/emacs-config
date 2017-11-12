@@ -30,14 +30,15 @@
 
 (deftheme actress)
 (let ((class '((class color) (min-colors 89)))
-      (bg1 "#060803")
-      (bg2 "#1c2112")
-      (bg3 "#303722")
-      (bg4 "#454e32")
-      (fg1 "#8d8d8d")
-      (fg2 "#a8a8a8")
-      (fg3 "#c3c3c3")
-      (fg4 "#dfdfdf")
+      (cursor "#667e51")
+      (bg1 "#040702")
+      (bg2 "#192111")
+      (bg3 "#2b3820")
+      (bg4 "#3f5030")
+      (fg1 "#909090")
+      (fg2 "#767676")
+      (fg3 "#5e5e5e")
+      (fg4 "#464646")
       (clock12 "#f07e30")
       (clock01 "#c1962f")
       (clock02 "#9ca32f")
@@ -52,13 +53,9 @@
       (clock11 "#f77091")
       (hi1 "#ffff00")
       (hi2 "#d6fff7")
-      (hi3 "#f5f5ff")
-      (hi4 "#fff4f6")
-      (key2 "#1f1f1f")
-      (key3 "#040404")
-      (cursor "#686860")
-      (correct "#2f4f4f")
-      (incorrect "#8B372E")
+      (error "#f7002c")
+      (warning "#c36000")
+      (success "#2f4f4f")
       (builtin "#6C9B9B")
       (keyword "#488080")
       (const "#6C9B9B")
@@ -66,9 +63,7 @@
       (func "#d0454a")
       (str "#458354")
       (type "#4a7e8c")
-      (var "#827840")
-      (warning "#794198")
-      (error1 "#ff0000"))
+      (var "#827840"))
   (custom-theme-set-faces
    'actress
    `(default ((,class (:background ,bg1 :foreground ,fg1))))
@@ -83,7 +78,7 @@
 
    `(ivy-current-match ((,class (:foreground ,hi1 :background ,bg2))))
    `(ivy-minibuffer-match-face-1 ((,class (:foreground ,hi2))))
-   `(ivy-minibuffer-match-face-2 ((,class (:foreground ,hi4))))
+   `(ivy-minibuffer-match-face-2 ((,class (:foreground ,hi2))))
    `(ivy-minibuffer-match-face-3 ((,class (:foreground ,hi2))))
    `(ivy-minibuffer-match-face-4 ((,class (:foreground ,hi2))))
 
@@ -96,7 +91,7 @@
    `(company-scrollbar-bg ((,class (:background  ,bg3))))
    `(company-scrollbar-fg ((,class (:background  ,fg2))))
    `(company-tooltip-annotation ((,class (:foreground ,warning)))) ; ???
-   `(company-tooltip-common ((,class (:foreground ,hi4))))
+   `(company-tooltip-common ((,class (:foreground ,hi2))))
    `(company-tooltip-selection ((,class (:foreground ,hi1 :background ,bg2))))
    `(company-preview-common ((,class (:foreground ,fg3 :background ,bg4))))
 
@@ -119,16 +114,16 @@
    `(undo-tree-visualizer-register-face   ((,class (:foreground ,hi2))))
 
    ;; flycheck-mode
-   `(flycheck-error ((,class (:underline (:style wave :color ,error1)))))
+   `(flycheck-error ((,class (:underline (:style wave :color ,error)))))
    `(flycheck-info ((,class (:underline (:style wave :color ,keyword)))))
    `(flycheck-warning ((,class (:underline (:style wave :color ,warning)))))
 
    ;; flymake-mode   
    `(flymake-warnline ((,class (:background ,bg3 :underline (:style wave :color ,warning)))))
-   `(flymake-errline ((,class (:background ,bg3 :underline (:style wave :color ,error1)))))
+   `(flymake-errline ((,class (:background ,bg3 :underline (:style wave :color ,error)))))
 
    `(font-latex-bold-face ((,class (:foreground ,type))))
-   `(font-latex-italic-face ((,class (:foreground ,key3 :italic t))))
+   `(font-latex-italic-face ((,class (:foreground ,fg3 :italic t))))
    `(font-latex-match-reference-keywords ((,class (:foreground ,const))))
    `(font-latex-match-variable-keywords ((,class (:foreground ,var))))
    `(font-latex-string-face ((,class (:foreground ,str))))
@@ -166,8 +161,18 @@
 
    `(js2-external-variable ((,class (:foreground ,const  ))))
    `(js2-jsdoc-html-tag-delimiter ((,class (:foreground ,str))))
-   `(js2-jsdoc-html-tag-name ((,class (:foreground ,key2))))
+   `(js2-jsdoc-html-tag-name ((,class (:foreground ,fg3))))
    `(js2-private-function-call ((,class (:foreground ,const))))
+
+;; haskell-keyword-face
+;; haskell-type-face
+;; haskell-constructor-face
+;; haskell-definition-face
+;; haskell-operator-face
+;; haskell-pragma-face
+;; haskell-liquid-haskell-annotation-face
+;; haskell-literate-comment-face
+;; haskell-quasi-quote-face
 
    `(lazy-highlight ((,class (:foreground ,fg2 :background ,bg3))))
 
@@ -190,15 +195,10 @@
 
    `(minibuffer-prompt ((,class (:bold t :foreground ,keyword))))
 
-   `(mode-line ((,class (:box (:line-width 1 :color ,bg3 :style none) :bold t :foreground ,fg2 :background ,bg3))))
-   `(mode-line-buffer-id ((,class (:bold t :foreground ,fg2 :background nil))))
+   `(mode-line ((,class (:box (:line-width 1 :color ,bg2 :style none) :bold nil :foreground ,fg2 :background ,bg2))))
+   `(mode-line-buffer-id ((,class (:bold nil :foreground ,fg1 :background nil))))
    `(mode-line-highlight ((,class (:background ,bg4))))
-   `(mode-line-inactive ((,class (:box (:line-width 1 :color ,bg2 :style none) :foreground ,fg2 :background ,bg1))))
-
-   `(mu4e-cited-1-face ((,class (:foreground ,fg2))))
-   `(mu4e-cited-7-face ((,class (:foreground ,fg3))))
-   `(mu4e-header-mark-face ((,class (:foreground ,type))))
-   `(mu4e-view-url-number-face ((,class (:foreground ,type))))
+   `(mode-line-inactive ((,class (:box (:line-width 1 :color ,bg2 :style none) :foreground ,fg4 :background ,bg1))))
 
    `(org-agenda-date ((,class (:foreground ,var :height 1.1 ))))
    `(org-agenda-date-today ((,class (:weight bold :foreground ,keyword :height 1.4))))
@@ -243,8 +243,8 @@
    `(show-paren-match-face ((,class (:background ,warning))))
    `(slime-repl-inputed-output-face ((,class (:foreground ,type))))
 
-   `(sp-show-pair-match-face ((,class (:background ,correct))))
-   `(sp-show-pair-mismatch-face ((,class (:background ,incorrect))))
+   `(sp-show-pair-match-face ((,class (:background ,success))))
+   `(sp-show-pair-mismatch-face ((,class (:background ,error))))
 
    `(term ((,class (:foreground ,fg1 :background ,bg1))))
    `(term-color-black ((,class (:foreground ,bg3 :background ,bg3))))
@@ -257,6 +257,17 @@
    `(term-color-yellow ((,class (:foreground ,var :background ,var))))
 
    `(trailing-whitespace ((,class :foreground nil :background ,warning)))
+   ;; `(whitespace-trailing ((,class (:foreground ,red :inverse-video t :underline nil))))
+   ;; `(whitespace-space-after-tab ((,class (:foreground ,red :inverse-video t :underline nil))))
+   ;; `(whitespace-space-before-tab ((,class (:foreground ,red :inverse-video t :underline nil))))
+   ;; `(whitespace-empty ((,class (:foreground ,red :inverse-video t :underline nil))))
+   ;; `(whitespace-line ((,class (:background nil :foreground ,red))))
+   ;; `(whitespace-indentation ((,class (:background nil :foreground ,aqua))))
+   ;; `(whitespace-space ((,class (:background nil :foreground ,selection))))
+   ;; `(whitespace-newline ((,class (:background nil :foreground ,selection))))
+   ;; `(whitespace-tab ((,class (:background nil :foreground ,selection))))
+   ;; `(whitespace-hspace ((,class (:background nil :foreground ,selection))))
+   
 
    `(undo-tree-visualizer-current-face ((,class :foreground ,builtin)))
    `(undo-tree-visualizer-default-face ((,class :foreground ,fg2)))
