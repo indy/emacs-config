@@ -51,8 +51,8 @@
       (clock09 "#e16df5")
       (clock10 "#f667c7")
       (clock11 "#f77091")
-      (hi1 "#ffff00")
-      (hi2 "#d6fff7")
+      (hi1 "#b0b037")
+      (hi2 "#3bbdac")
       (error "#f7002c")
       (warning "#c36000")
       (success "#2f4f4f")
@@ -87,6 +87,7 @@
    `(underline         ((,class (:underline t))))
    `(vertical-border   ((,class (:foreground ,fg3))))
    `(warning           ((,class (:foreground ,warning))))
+   `(match ((,class (:foreground ,bg1 :background ,hi1))))
 
    `(font-lock-builtin-face       ((,class (:foreground ,builtin))))
    `(font-lock-comment-face       ((,class (:foreground ,comment))))
