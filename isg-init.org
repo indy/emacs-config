@@ -700,24 +700,7 @@
   (use-package haskell-mode
     :mode "\\.hs\\'"
     :init
-    (add-hook 'haskell-mode-hook 'intero-mode)
-    (setq haskell-font-lock-symbols t
-          haskell-font-lock-symbols-alist '(("\\" . "λ")
-                                            ("->" . "→")
-                                            ("<-" . "←")
-                                            ("=>" . "⇒")
-                                            ("()" . "∅")
-                                            ("==" . "≡")
-                                            ("/=" . "≢")
-                                            (">=" . "≥")
-                                            ("<=" . "≤")
-                                            ("&&" . "∧")
-                                            ("||" . "∨")
-                                            ("sqrt" . "√")
-                                            ("undefined" . "⊥")
-                                            ("pi" . "π")
-                                            ("." "∘" haskell-font-lock-dot-is-not-composition)
-                                            ("forall" . "∀"))))
+    (add-hook 'haskell-mode-hook 'intero-mode))
 #+END_SRC
 
 
