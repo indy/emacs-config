@@ -480,16 +480,20 @@
 
   (defhydra isg/hydra-counsel (:hint nil :color pink)
     "
-      Counsel search
-      ----------------------------------------------------
-      _r_: ripgrep  _f_: find file _g_: git
-      _u_: function _v_: variable  _l_: library _s_: symbol
-      "
-    ("f" counsel-find-file)
-    ("g" counsel-git)
+        Counsel search
+        ----------------------------------------------------
+        _r_: ripgrep  _d_: rgrep
+        _g_: git (file) _f_: find file 
+        _u_: function _v_: variable  _l_: library _s_: symbol
+        "
     ("r" (lambda ()
            (interactive)
            (counsel-rg (format "%s" (or (thing-at-point 'symbol) "")))))
+    ("d" rgrep)
+
+    ("f" counsel-find-file)
+    ("g" counsel-git)
+  
     ("u" counsel-describe-function)
     ("v" counsel-describe-variable)
     ("l" counsel-find-library)
@@ -1433,7 +1437,7 @@ _DEL_: none
      default-directory "~/"
      multi-term-program "/bin/bash")))
 
-  (new-frame)
+  (make-frame)
 
   ;; the standard set of company backends
   (setq company-backends '(company-semantic company-dabbrev-code company-dabbrev company-keywords))
