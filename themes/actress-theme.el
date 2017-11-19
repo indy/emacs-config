@@ -80,7 +80,7 @@
    `(hl-line           ((,class (:background  ,bg2))))
    `(italic            ((,class (:slant italic))))
    `(link              ((,class (:foreground ,const :underline t))))
-   `(minibuffer-prompt ((,class (:foreground ,keyword :bold t))))
+   `(minibuffer-prompt ((,class (:foreground ,hi2 :bold t))))
    `(region            ((,class (:foreground ,bg1 :background ,fg1))))
    `(shadow            ((,class (:foreground ,fg3))))
    `(success           ((,class (:foreground ,success))))
@@ -124,7 +124,7 @@
    `(company-tooltip-annotation ((,class (:foreground ,warning)))) ; ???
    `(company-tooltip-common     ((,class (:foreground ,hi2))))
    `(company-tooltip-selection  ((,class (:foreground ,hi1 :background ,bg2))))
-   `(company-preview-common     ((,class (:foreground ,fg3 :background ,bg4))))
+   `(company-preview-common     ((,class (:foreground ,hi1 :background ,bg2))))
 
    `(eshell-ls-archive    ((,class (:foreground ,fg3))))
    `(eshell-ls-backup     ((,class (:foreground ,fg2))))
