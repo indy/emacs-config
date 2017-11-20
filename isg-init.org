@@ -27,6 +27,7 @@
   |              |             |                                                  |
   | Navigation   | C-spc C-spc | set mark, push onto mark ring                    |
   |              | C-u C-spc   | restore mark from mark ring                      |
+  |              | M-h         | avy-goto-char-timer                              |
   |--------------+-------------+--------------------------------------------------|
 
   |-----------+---------+---------------------------------------|
