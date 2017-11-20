@@ -12,9 +12,11 @@
   |              | C-M-s       | isearch forward                                  |
   |              | C-M-r       | isearch backward                                 |
   |              | C-M-g       | counsel-git                                      |
+  |              |             |                                                  |
   |              | C-c C-o     | print search results into new buffer             |
   |              | C-x C-q     | ivy-wgrep-change-to-wgrep-mode                   |
   |              | C-c C-c     | commit changes made in wgrep mode                |
+  |              |             |                                                  |
   |              | C-c f       | hydra show counsel options                       |
   |              |             |                                                  |
   | Org Mode     | C-c C-c     | Eval code within BEGIN_SRC/END_SRC blocks        |
@@ -29,6 +31,29 @@
   |              | C-u C-spc   | restore mark from mark ring                      |
   |              | M-h         | avy-goto-char-timer                              |
   |--------------+-------------+--------------------------------------------------|
+
+
+  |-----------+---------+-----------------|
+  | Magit     |         |                 |
+  |-----------+---------+-----------------|
+  |           | C-c v   | magit-status    |
+  |           | C-c C-c | magit-status    |
+  |           |         |                 |
+  |           | c c     | commit          |
+  |           | C-c C-c | actually commit |
+  |           |         |                 |
+  | Push/Pull | F u     | pull            |
+  |           | P u     | push            |
+  |           |         |                 |
+  | Staging   | s       | stage a file    |
+  |           | S       | stage all files |
+  |           | u       | unstage file    |
+  |           |         |                 |
+  | Branching | b b     | switch branch   |
+  | Stashing  |         |                 |
+  | Merging   |         |                 |
+
+
 
   |-----------+---------+---------------------------------------|
   | Registers | C-x r   | Prefix all commands with C-x r        |
@@ -681,13 +706,14 @@
 
   | key         | command                                        |
   |-------------+------------------------------------------------|
+  | C-c C-l     | load this module in the REPL                   |
+  |             |                                                |
   | M-.         | jump to definition                             |
   | C-c C-i     | show information of identifier at point        |
   | C-c C-t     | display type of identifier at point            |
   | C-c C-r     | automatically apply suggestions                |
   | C-u C-c C-t | insert a type signature for the thing at point |
   |             |                                                |
-  | C-c C-l     | load this module in the REPL                   |
   | C-c C-c     | evaluate the selected region in the REPL       |
   | C-c C-k     | clear REPL                                     |
   | C-c C-z     | switch to and from the REPL                    |
