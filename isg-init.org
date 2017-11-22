@@ -32,7 +32,6 @@
   |              | M-h         | avy-goto-char-timer                              |
   |--------------+-------------+--------------------------------------------------|
 
-
   |-----------+---------+-----------------|
   | Magit     |         |                 |
   |-----------+---------+-----------------|
@@ -73,7 +72,7 @@
   |           | s a     | Store region as 'a'                   |
   |           | i a     | Insert region stored in 'a'           |
   |-----------+---------+---------------------------------------|
-  
+
   Tramp mode and Eshell
   $ cd /indy.io:/home/indy
 
@@ -519,7 +518,7 @@
 
     ("f" counsel-find-file)
     ("g" counsel-git)
-  
+
     ("u" counsel-describe-function)
     ("v" counsel-describe-variable)
     ("l" counsel-find-library)
@@ -1358,6 +1357,9 @@ _DEL_: none
   (defun isg/run-machine-function (property)
     (let ((fn (isg/val property)))
       (if fn (funcall fn))))
+
+  (setq-default show-trailing-whitespace nil)
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
   ;; Make sure it uses UTF-8 across the board
   (prefer-coding-system 'utf-8)
