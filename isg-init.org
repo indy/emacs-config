@@ -238,7 +238,9 @@
       (get-extra-paths (lambda ()
                          (list (concat (getenv "HOME") "/local/bin")
                                "/usr/local/bin"
-                               "/usr/local/go/bin")))))
+                               "/usr/local/go/bin")))
+      (magit-repos (("~/.emacs.d" . 0)
+                    ("~/work" . 1)))))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -251,6 +253,9 @@
       (url-opener "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome")
       (deft-directory "C:\\Users\\indy\\work\\deft")
       (gcal-file "D:\\Google Drive\\Docs\\notes\\gcal.org")
+      (magit-repos (("C:\\Users\\indy\\.emacs.d" . 0)
+                    ("C:\\Users\\indy\\work" . 1)
+                    ("D:\\work" . 1)))
       (frame-l ((top . 0) (left . 600) (width . 120) (height . 87)))
       (frame-r ((top . 0) (left . 1575) (width . 120) (height . 87)))))
 #+END_SRC
@@ -386,14 +391,15 @@
 * essential packages
 ** magit
  #+BEGIN_SRC emacs-lisp
- (use-package magit
-   :pin melpa-stable
-   :commands magit-status
-   :init
-   (global-set-key "\C-cv" 'magit-status)
-   (global-set-key "\C-c\C-v" 'magit-status)
-   :config
-   (setq magit-push-always-verify nil))
+   (use-package magit
+     :pin melpa-stable
+     :commands magit-status
+     :init
+     (global-set-key "\C-cv" 'magit-status)
+     (global-set-key "\C-c\C-v" 'magit-status)
+     (setq magit-repository-directories (isg/val 'magit-repos))
+     :config
+     (setq magit-push-always-verify nil))
  #+END_SRC
 ** org
 #+BEGIN_SRC emacs-lisp
@@ -595,7 +601,10 @@
                             (setq comment-start "// "
                                   comment-end   "")
                             (highlight-thing-mode)))
-   ;; company-racer company-bbdb company-nxml company-css company-eclim company-semantic company-clang company-xcode company-cmake company-capf company-files (company-dabbrev-code company-gtags company-etags company-keywords) company-oddmuse company-dabbrev
+
+   (use-package cmake-mode
+     :mode "CMakeLists\\.txt")
+
  #+END_SRC
 ** clojure
    #+BEGIN_SRC emacs-lisp
@@ -1074,17 +1083,6 @@
   :pin melpa-stable
   :defer t)
 
-(use-package material-theme
-  :pin melpa-stable
-  :defer t)
-
-(use-package dracula-theme
-  :pin melpa-stable
-  :defer t)
-
-(use-package base16-theme
-  :ensure t)
-
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'actress t)
 
@@ -1092,16 +1090,12 @@
   "
 Themes
 ----------------------------------------------------
-_A_: Actress _M_: Material       _S_: Solarized
-_D_: Dracula _m_: Material Light _s_: Solarized light
+_A_: Actress _S_: Solarized _s_: Solarized light
 _DEL_: none
 "
   ("A" (load-theme 'actress t))
-  ("D" (load-theme 'dracula t))
   ("s" (load-theme 'sanityinc-solarized-light t))
   ("S" (load-theme 'sanityinc-solarized-dark t))
-  ("M" (load-theme 'material t))
-  ("m" (load-theme 'material-light t))
   ("DEL" (isg/disable-all-themes))
   ("RET" nil "done" :color blue))
 
