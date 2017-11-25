@@ -1,5 +1,6 @@
 isg-custom.el
 isg-init.el
+org-gcal
 gcal.org
 eshell
 network-security.data
