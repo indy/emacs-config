@@ -514,7 +514,7 @@
         Counsel search
         ----------------------------------------------------
         _r_: ripgrep  _d_: rgrep
-        _g_: git (file) _f_: find file 
+        _g_: git (file) _f_: find file
         _u_: function _v_: variable  _l_: library _s_: symbol
         "
     ("r" (lambda ()
@@ -562,6 +562,8 @@
       (define-key company-active-map (kbd "C-n") 'company-select-next)
       (define-key company-active-map (kbd "C-p") 'company-select-previous)))
 
+  (use-package company-eshell-autosuggest
+    :ensure t)
 #+END_SRC
 
 ** ibuffer
@@ -1126,22 +1128,25 @@ _DEL_: none
 
 ** eshell
 
- #+BEGIN_SRC emacs-lisp
-   (defun isg/start-eshell (shell-name)
-     "SHELL-NAME the name of the shell."
-     (interactive "sEshell name: ")
-     (eshell)
-     (if (string= "" shell-name)
-         (rename-uniquely)
-       (rename-buffer shell-name)))
-   ;;; access server via ssh in eshell with:
-   ;;; $ cd /ssh:indy.io:
+   access server via ssh in eshell with:
+   $ cd /ssh:indy.io:
 
-   (add-hook 'eshell-mode-hook 'my-eshell-hook)
-   (defun my-eshell-hook ()
-     (company-mode -1))
+#+BEGIN_SRC emacs-lisp
+  (defun isg/start-eshell (shell-name)
+    "SHELL-NAME the name of the shell."
+    (interactive "sEshell name: ")
+    (eshell)
+    (if (string= "" shell-name)
+        (rename-uniquely)
+      (rename-buffer shell-name)))
 
- #+END_SRC
+  (defun setup-company-eshell-autosuggest ()
+    (with-eval-after-load 'company
+      (setq-local company-backends '(company-eshell-autosuggest))
+      (setq-local company-frontends '(company-preview-frontend))))
+
+  (add-hook 'eshell-mode-hook 'setup-company-eshell-autosuggest)
+#+END_SRC
 
 ** exec-path-from-shell
  #+BEGIN_SRC emacs-lisp
