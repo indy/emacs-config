@@ -31,10 +31,10 @@
 (deftheme actress)
 (let ((class '((class color) (min-colors 89)))
       (cursor "#50643f")
-      (bg1 "#071213")
-      (bg2 "#14282a")
-      (bg3 "#233f42")
-      (bg4 "#32585b")
+      (bg1 "#0a0602")
+      (bg2 "#261e0f")
+      (bg3 "#3e331d")
+      (bg4 "#59492c")
       (fg1 "#838383")
       (fg2 "#6a6a6a")
       (fg3 "#525252")
@@ -66,8 +66,9 @@
       (var "#8d8455"))
 
   (custom-theme-set-faces
+
    'actress
-   
+
    `(default           ((,class (:foreground ,fg1 :background ,bg1))))
    `(bold              ((,class (:weight bold))))
    `(bold-italic       ((,class (:weight bold :slant italic))))
@@ -87,7 +88,8 @@
    `(underline         ((,class (:underline t))))
    `(vertical-border   ((,class (:foreground ,fg3))))
    `(warning           ((,class (:foreground ,warning))))
-   `(match ((,class (:foreground ,bg1 :background ,hi1))))
+   `(match             ((,class (:foreground ,bg1 :background ,hi1))))
+   `(widget-field      ((,class (:foreground ,hi1 :background ,bg2)))) ; M-x customize
 
    `(font-lock-builtin-face       ((,class (:foreground ,builtin))))
    `(font-lock-comment-face       ((,class (:foreground ,comment))))
@@ -138,7 +140,7 @@
    `(eshell-ls-symlink    ((,class (:foreground ,const))))
    `(eshell-ls-unreadable ((,class (:foreground ,error))))
    `(eshell-prompt        ((,class (:foreground ,var))))      ;; same as eshell-ls-directory
-   
+
    `(undo-tree-visualizer-default-face       ((,class (:foreground ,comment))))
    `(undo-tree-visualizer-current-face       ((,class (:foreground ,hi1))))
    `(undo-tree-visualizer-active-branch-face ((,class (:foreground ,fg3))))
@@ -149,7 +151,7 @@
    `(flycheck-info    ((,class (:underline (:style wave :color ,keyword))))) ;; fix
    `(flycheck-warning ((,class (:underline (:style wave :color ,warning)))))
 
-   ;; flymake-mode   
+   ;; flymake-mode
    `(flymake-warnline ((,class (:background ,bg3 :underline (:style wave :color ,warning)))))
    `(flymake-errline  ((,class (:background ,bg3 :underline (:style wave :color ,error)))))
 
@@ -207,7 +209,7 @@
    `(magit-item-highlight         ((,class (:background ,bg3))))
    `(magit-log-author             ((,class (:foreground ,fg3))))
    `(magit-process-ng             ((,class (:foreground ,warning :weight bold))))
-   `(magit-process-ok             ((,class (:foreground ,func :weight bold))))   
+   `(magit-process-ok             ((,class (:foreground ,func :weight bold))))
    `(magit-section-heading        ((,class (:foreground ,keyword :weight bold))))
    `(magit-section-highlight      ((,class (:background ,bg2))))
 
@@ -282,7 +284,7 @@
    ;; `(whitespace-newline ((,class (:background nil :foreground ,selection))))
    ;; `(whitespace-tab ((,class (:background nil :foreground ,selection))))
    ;; `(whitespace-hspace ((,class (:background nil :foreground ,selection))))
-   
+
 
    `(undo-tree-visualizer-current-face    ((,class :foreground ,builtin)))
    `(undo-tree-visualizer-default-face    ((,class :foreground ,fg2)))
