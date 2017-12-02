@@ -471,6 +471,7 @@
   (use-package counsel
     :pin melpa-stable
     :init
+    (setq counsel-grep-base-command "grep -nEi '%s' %s")
     (global-set-key (kbd "C-M-s") 'isearch-forward)
     (global-set-key (kbd "C-M-r") 'isearch-backward)
 
