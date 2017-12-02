@@ -63,7 +63,7 @@
       (const "#67888b")
       (comment "#2c3d3e")
       (str "#648b6c")
-      (type "#987e63"))
+      (type "#8a8263"))
 
   (custom-theme-set-faces
 
@@ -96,7 +96,7 @@
    `(font-lock-constant-face      ((,class (:foreground ,const))))
    `(font-lock-doc-face           ((,class (:foreground ,comment))))
    `(font-lock-function-name-face ((,class (:foreground ,func))))
-   `(font-lock-keyword-face       ((,class (:foreground ,keyword :bold ,class))))
+   `(font-lock-keyword-face       ((,class (:foreground ,keyword))))
    `(font-lock-negation-char-face ((,class (:foreground ,const))))                 ;; fix
    `(font-lock-reference-face     ((,class (:foreground ,const))))                 ;; fix
    `(font-lock-string-face        ((,class (:foreground ,str))))
