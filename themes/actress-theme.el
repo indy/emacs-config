@@ -63,7 +63,7 @@
       (const "#67888b")
       (comment "#2c3d3e")
       (str "#648b6c")
-      (type "#8a8263"))
+      (type "#987e63"))
 
   (custom-theme-set-faces
 
