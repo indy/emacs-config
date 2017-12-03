@@ -283,7 +283,7 @@ See `run-hooks'."
 		   ;; Any whitespace and declared object.
 		   "[ \t]*(?"
 		   "\\(\\sw+\\)?")
-           
+
 	   '(1 font-lock-keyword-face)
 	   '(6 (cond ((match-beginning 3) font-lock-function-name-face)
 		     ((match-beginning 5) font-lock-variable-name-face)
@@ -305,7 +305,7 @@ See `run-hooks'."
 	       "call-with-input-file" "call-with-output-file" "case" "cond"
 	       "do" "else" "for-each" "if" "lambda" "λ"
 	       "let" "let*" "let-syntax" "letrec" "letrec-syntax"
-         "step" "fence" "on-matrix-stack" "define"
+         "loop" "fence" "on-matrix-stack" "define"
 	       ;; R6RS library subforms.
 	       "export" "import"
 	       ;; SRFI 11 usage comes up often enough.
