@@ -32,27 +32,33 @@
   |              | M-h         | avy-goto-char-timer                              |
   |--------------+-------------+--------------------------------------------------|
 
-  |-----------+---------+-----------------|
-  | Magit     |         |                 |
-  |-----------+---------+-----------------|
-  |           | C-c v   | magit-status    |
-  |           | C-c C-c | magit-status    |
-  |           |         |                 |
-  |           | c c     | commit          |
-  |           | C-c C-c | actually commit |
-  |           |         |                 |
-  | Push/Pull | F u     | pull            |
-  |           | P u     | push            |
-  |           |         |                 |
-  | Staging   | s       | stage a file    |
-  |           | S       | stage all files |
-  |           | u       | unstage file    |
-  |           |         |                 |
-  | Branching | b b     | switch branch   |
-  | Stashing  |         |                 |
-  | Merging   |         |                 |
 
 
+  |---------------+---------+---------------------|
+  | [[magit]]         |         |                     |
+  |---------------+---------+---------------------|
+  |               | C-c v   | magit-status        |
+  |               | C-c C-c | magit-status        |
+  |               |         |                     |
+  |               | c c     | commit              |
+  |               | C-c C-c | actually commit     |
+  |               |         |                     |
+  | Push/Pull     | F u     | pull                |
+  |               | P u     | push                |
+  |               |         |                     |
+  | Staging       | s       | stage a file        |
+  |               | S       | stage all files     |
+  |               | u       | unstage file        |
+  |               |         |                     |
+  | Branching (b) | b b     | switch branch       |
+  |               | b c     | checkout new branch |
+  |               |         |                     |
+  | Reset (X)     | X h     | hard reset          |
+  |               |         |                     |
+  | Stashing (z)  |         |                     |
+  |               |         |                     |
+  | Merging (m)   |         |                     |
+  |               |         |                     |
 
   |-----------+---------+---------------------------------------|
   | Registers | C-x r   | Prefix all commands with C-x r        |
@@ -401,6 +407,47 @@
      :config
      (setq magit-push-always-verify nil))
  #+END_SRC
+
+*** magit rebasing (e.g. squashing commits)
+    move cursor in magit window down to the earliest commit
+    r i <- rebase interactive
+    move past the first commit (leaving 'pick' next to it)
+
+    's' next to any commit that should be squashed
+    'f' for squash but discard this commit's log message
+    'M-p' move the commit at point up
+    'M-n' move the commit at point down
+    'r' reword a commit
+
+    C-c C-c <- commit changes
+
+
+*** magit rebasing a feature branch on top of master
+
+    make the current branch the feature branch
+
+    r e
+    select the master branch
+
+*** magit merging a feature branch back into master
+    (assuming that the current branch is the feature branch)
+
+    b b
+    checkout the master branch
+    m m
+    select the feature branch
+
+    (now delete the feature branch)
+    b k
+    select the feature branch
+
+*** magit pushing commits upstream
+    P
+    u
+
+*** magit stashing
+    z
+
 ** org
 #+BEGIN_SRC emacs-lisp
  (use-package org
