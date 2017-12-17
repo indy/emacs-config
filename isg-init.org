@@ -398,7 +398,6 @@
 ** magit
  #+BEGIN_SRC emacs-lisp
    (use-package magit
-     :pin melpa-stable
      :commands magit-status
      :init
      (global-set-key "\C-cv" 'magit-status)
@@ -451,7 +450,6 @@
 ** org
 #+BEGIN_SRC emacs-lisp
  (use-package org
-   :pin gnu
    :demand t)
 
  ;;; org-mode
@@ -472,7 +470,6 @@
 
 #+BEGIN_SRC emacs-lisp
   ;; (use-package org-gcal
-  ;;   :pin melpa-stable
   ;;   :ensure t
   ;;   :config
   ;;   (setq org-gcal-client-id "897993881430-kugvdc95cl65l7ungcfb4c25eoqgu9gm.apps.googleusercontent.com"
@@ -487,7 +484,6 @@
 ** hydra
  #+BEGIN_SRC emacs-lisp
  (use-package hydra
-   :pin melpa-stable
    :ensure t
    :config
    (setq hydra-lv nil)) ;use echo area
@@ -500,7 +496,6 @@
 
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
-    :pin melpa-stable
     :demand t
     :config
     (use-package ivy-rich)
@@ -512,11 +507,9 @@
     (setq ivy-use-virtual-buffers t
           ivy-count-format "%d/%d "))
 
-  (use-package swiper
-    :pin melpa-stable)
+  (use-package swiper)
 
   (use-package counsel
-    :pin melpa-stable
     :init
     (setq counsel-grep-base-command "grep -nEi '%s' %s")
     (global-set-key (kbd "C-M-s") 'isearch-forward)
@@ -586,7 +579,6 @@
 #+BEGIN_SRC emacs-lisp
 
   (use-package company
-    :pin melpa-stable
     :defer t
     :config
     (progn
@@ -659,7 +651,6 @@
 ** clojure
    #+BEGIN_SRC emacs-lisp
  (use-package cider
-   :pin melpa-stable
    :defer t
    :init
    (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode))
@@ -667,7 +658,6 @@
 
    #+BEGIN_SRC emacs-lisp
  (use-package clojure-mode
-   :pin melpa-stable
    :mode "\\.clj\\'"
    :config
    (define-key clojure-mode-map (kbd ")") 'sp-up-sexp)
@@ -678,7 +668,6 @@
 ** csharp
  #+BEGIN_SRC emacs-lisp
  (use-package csharp-mode
-   :pin melpa-stable
    :mode "\\.cs\\'"
    :init
    :config
@@ -687,7 +676,6 @@
 ** css
    #+BEGIN_SRC emacs-lisp
      (use-package css-mode
-       :pin melpa-stable
        :mode (("\\.css\\'" . css-mode)
               ("\\.less\\'" . css-mode))
        :config
@@ -699,7 +687,6 @@
 ** dart
  #+BEGIN_SRC emacs-lisp
  (use-package dart-mode
-   :pin melpa-stable
    :mode "\\.dart\\'"
    :config
    (setq dart-enable-analysis-server t))
@@ -720,7 +707,6 @@
 
   #+BEGIN_SRC emacs-lisp
     (use-package elm-mode
-      :pin melpa-stable
       :mode "\\.elm\\'"
       :config
       (add-hook 'elm-mode-hook
@@ -749,7 +735,6 @@
 ** go
  #+BEGIN_SRC emacs-lisp
  (use-package go-mode
-   :pin melpa-stable
    :mode "\\.go\\'"
    :config
    (add-hook 'before-save-hook #'gofmt-before-save))
@@ -792,7 +777,6 @@
 ** javascript
  #+BEGIN_SRC emacs-lisp
  (use-package js2-mode
-   :pin melpa-stable
    :mode (("\\.js\\'" . js2-mode)
           ("\\.es6\\'" . js2-mode))
    :init
@@ -808,7 +792,6 @@
 ** jsx
  #+BEGIN_SRC emacs-lisp
  (use-package web-mode
-   :pin melpa-stable
    :mode (("\\.jsx\\'" . web-mode)
           ("\\.tsx\\'" . web-mode))
    :init
@@ -824,7 +807,6 @@
 ** markdown
  #+BEGIN_SRC emacs-lisp
  (use-package markdown-mode
-   :pin melpa-stable
    :mode (("\\.md\\'" . markdown-mode)
           ("\\.markdown\\'" . markdown-mode)))
  #+END_SRC
@@ -1073,7 +1055,6 @@
 
  #+BEGIN_SRC emacs-lisp
  (use-package typescript-mode
-   :pin melpa-stable
    :mode "\\.ts\\'"
    :config
    (use-package tide)
@@ -1130,7 +1111,6 @@
   :defer t)
 
 (use-package color-theme-sanityinc-solarized
-  :pin melpa-stable
   :defer t)
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
@@ -1157,14 +1137,12 @@ _DEL_: none
 ** avy - moving the cursor by searching
  #+BEGIN_SRC emacs-lisp
  (use-package avy
-   :pin melpa-stable
    :bind ("M-h" . avy-goto-char-timer))
  #+END_SRC
 
 ** deft
  #+BEGIN_SRC emacs-lisp
  (use-package deft
-   :pin melpa-stable
    :commands deft
    :config
    (setq deft-directory (isg/val 'deft-directory)
@@ -1203,7 +1181,6 @@ _DEL_: none
    ;;
 
    (use-package exec-path-from-shell
-     :pin melpa-stable
      :ensure t
      :demand t
      :config
@@ -1229,11 +1206,9 @@ _DEL_: none
    ;; C-c ! n : next error
    ;; C-c ! p : previous error
    (use-package flycheck
-     :pin melpa-stable
      :config
      (use-package pkg-info
-       :pin melpa-stable
-       :defer t)
+        :defer t)
      (setq-default flycheck-disabled-checkers
                    (list 'json-jsonlist
                          'javascript-jshint ;; disable jshint since we prefer eslint checking
@@ -1264,7 +1239,6 @@ _DEL_: none
 ** smartparens-config
  #+BEGIN_SRC emacs-lisp
  (use-package smartparens-config
-   :pin melpa-stable
    :ensure smartparens
    :defer t
    :init
@@ -1378,7 +1352,6 @@ _DEL_: none
 ** which key
  #+BEGIN_SRC emacs-lisp
  (use-package which-key
-   :pin melpa-stable
    :demand t
    :config
    (which-key-mode))
@@ -1386,9 +1359,8 @@ _DEL_: none
 
 ** ws-butler
  #+BEGIN_SRC emacs-lisp
- (use-package ws-butler
-   :pin melpa-stable
-   :defer t)
+   (use-package ws-butler
+     :defer t)
  #+END_SRC
 
 * global settings
