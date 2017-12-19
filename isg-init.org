@@ -511,7 +511,7 @@
 
   (use-package counsel
     :init
-    (setq counsel-grep-base-command "grep -nEi '%s' %s")
+    (setq counsel-grep-base-command "rg -i -M 120 --no-heading --line-number --color never %s %s")
     (global-set-key (kbd "C-M-s") 'isearch-forward)
     (global-set-key (kbd "C-M-r") 'isearch-backward)
 
@@ -852,7 +852,8 @@
     (company-mode)
     (flycheck-mode)
     (turn-on-purescript-indentation)
-    (substitute-purescript-syntax-with-unicode))
+    ;;(substitute-purescript-syntax-with-unicode)
+    )
 #+END_SRC
 
    purescript syntax:
