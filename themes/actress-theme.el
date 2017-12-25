@@ -244,7 +244,7 @@
    `(org-scheduled             ((,class (:foreground ,type))))
    `(org-sexp-date             ((,class (:foreground ,fg4))))
    `(org-special-keyword       ((,class (:foreground ,func))))
-   `(org-todo                  ((,class :foreground ,keyword :bold t)))
+   `(org-todo                  ((,class (:foreground ,keyword :bold t))))
    `(org-verbatim              ((,class (:foreground ,fg4 :underline t :slant italic))))
    `(org-verse                 ((,class (:inherit org-block :slant italic))))
    `(org-warning               ((,class (:underline t :foreground ,warning))))
