@@ -280,6 +280,15 @@
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+  (defvar isg/config-old-ubuntu-laptop
+    '((get-extra-paths (lambda ()
+                         (list (concat (getenv "HOME") "/local/bin")
+                               "/usr/local/bin")))
+      (frame-l ((top . 0) (left . 210) (width . 80) (height . 59)))
+      (frame-r ((top . 0) (left . 780) (width . 80) (height . 59)))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
   (defvar isg/config-macbook-air
     '((default-font "-apple-Inconsolata-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
       (machine-os "osx")
@@ -300,19 +309,20 @@
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (defun isg/machine-settings ()
-    "System specific overrides go here."
-    (cond
-     ((string-match "^BERTRAND"  system-name) isg/config-windows-home-pc)
-     ((string-match "^localhost" system-name) isg/config-chromebook)
-     ((string-match "^ernesto"   system-name) isg/config-macbook-air)))
+    (defun isg/machine-settings ()
+      "System specific overrides go here."
+      (cond
+       ((string-match "^BERTRAND"  system-name) isg/config-windows-home-pc)
+       ((string-match "^localhost" system-name) isg/config-chromebook)
+       ((string-match "^socrates" system-name) isg/config-old-ubuntu-laptop)
+       ((string-match "^ernesto"   system-name) isg/config-macbook-air)))
 
-  (cl-labels ((load-settings (which)
-                             (mapcar (lambda (pair)
-                                       (put 'isg/local (car pair) (cadr pair)))
-                                     which)))
-    (load-settings (isg/default-machine-settings))
-    (load-settings (isg/machine-settings)))
+    (cl-labels ((load-settings (which)
+                               (mapcar (lambda (pair)
+                                         (put 'isg/local (car pair) (cadr pair)))
+                                       which)))
+      (load-settings (isg/default-machine-settings))
+      (load-settings (isg/machine-settings)))
 #+END_SRC
 
 
@@ -606,7 +616,8 @@
       (define-key company-active-map (kbd "C-n") 'company-select-next)
       (define-key company-active-map (kbd "C-p") 'company-select-previous)))
 
-  (use-package company-eshell-autosuggest
+  (use-package esh-autosuggest
+    :hook (eshell-mode . esh-autosuggest-mode)
     :ensure t)
 #+END_SRC
 
@@ -1171,12 +1182,12 @@ _DEL_: none
         (rename-uniquely)
       (rename-buffer shell-name)))
 
-  (defun setup-company-eshell-autosuggest ()
-    (with-eval-after-load 'company
-      (setq-local company-backends '(company-eshell-autosuggest))
-      (setq-local company-frontends '(company-preview-frontend))))
+  ; (defun setup-company-eshell-autosuggest ()
+  ;   (with-eval-after-load 'company
+  ;     (setq-local company-backends '(company-eshell-autosuggest))
+  ;     (setq-local company-frontends '(company-preview-frontend))))
 
-  (add-hook 'eshell-mode-hook 'setup-company-eshell-autosuggest)
+  ; (add-hook 'eshell-mode-hook 'setup-company-eshell-autosuggest)
 #+END_SRC
 
 ** exec-path-from-shell
