@@ -92,6 +92,7 @@
    `(widget-field      ((,class (:foreground ,hi1 :background ,bg2)))) ; M-x customize
 
    `(mmm-default-submode-face ((,class (:foreground ,fg2 :background ,bg2))))
+   `(vhl/default-face ((,class (:foreground ,hi1 :background ,bg4))))
 
    `(font-lock-builtin-face       ((,class (:foreground ,builtin))))
    `(font-lock-comment-face       ((,class (:foreground ,comment))))

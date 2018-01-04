@@ -1363,6 +1363,17 @@ _DEL_: none
     (global-set-key (kbd "C-M-/") 'hydra-undo-tree/body))
 #+END_SRC
 
+** volatile-highlights
+
+   When undoing text this highlights the changes
+
+ #+BEGIN_SRC emacs-lisp
+   (use-package volatile-highlights
+     :demand t
+     :config
+     (volatile-highlights-mode))
+ #+END_SRC
+
 ** wgrep
  #+BEGIN_SRC emacs-lisp
  (use-package wgrep
