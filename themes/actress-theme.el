@@ -91,6 +91,8 @@
    `(match             ((,class (:foreground ,bg1 :background ,hi1))))
    `(widget-field      ((,class (:foreground ,hi1 :background ,bg2)))) ; M-x customize
 
+   `(mmm-default-submode-face ((,class (:foreground ,fg2 :background ,bg2))))
+
    `(font-lock-builtin-face       ((,class (:foreground ,builtin))))
    `(font-lock-comment-face       ((,class (:foreground ,comment))))
    `(font-lock-constant-face      ((,class (:foreground ,const))))
