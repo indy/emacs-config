@@ -94,6 +94,20 @@
    `(mmm-default-submode-face ((,class (:foreground ,fg2 :background ,bg2))))
    `(vhl/default-face ((,class (:foreground ,hi1 :background ,bg4))))
 
+
+   `(mode-line           ((,class (:foreground ,fg2 :background ,bg2 :bold nil :box (:line-width 1 :color ,bg2 :style none)))))
+   `(mode-line-buffer-id ((,class (:foreground ,fg1 :background nil :bold nil))))
+   `(mode-line-highlight ((,class (:background ,bg4))))
+   `(mode-line-inactive  ((,class (:foreground ,fg4 :background ,bg1 :box (:line-width 1 :color ,bg2 :style none)))))
+
+   `(spaceline-highlight-face ((,class (:foreground ,bg1 :background ,cursor))))
+   `(powerline-active1 ((,class (:foreground ,fg1 :background ,bg3))))
+   `(powerline-active2 ((,class (:foreground ,fg1 :background ,bg4))))
+
+   `(powerline-inactive1 ((,class (:foreground ,fg4 :background ,bg1))))
+   `(powerline-inactive2 ((,class (:foreground ,fg3 :background ,bg2))))
+   `(mode-line-inactive ((,class (:foreground ,fg2 :background ,bg3))))
+
    `(font-lock-builtin-face       ((,class (:foreground ,builtin))))
    `(font-lock-comment-face       ((,class (:foreground ,comment))))
    `(font-lock-constant-face      ((,class (:foreground ,const))))
@@ -215,12 +229,6 @@
    `(magit-process-ok             ((,class (:foreground ,func :weight bold))))
    `(magit-section-heading        ((,class (:foreground ,keyword :weight bold))))
    `(magit-section-highlight      ((,class (:background ,bg2))))
-
-   `(mode-line           ((,class (:foreground ,fg2 :background ,bg2 :bold nil :box (:line-width 1 :color ,bg2 :style none)))))
-   `(mode-line-buffer-id ((,class (:foreground ,fg1 :background nil :bold nil))))
-   `(mode-line-highlight ((,class (:background ,bg4))))
-   `(mode-line-inactive  ((,class (:foreground ,fg4 :background ,bg1 :box (:line-width 1 :color ,bg2 :style none)))))
-
 
    `(org-agenda-date           ((,class (:foreground ,var :height 1.1 ))))
    `(org-agenda-date-today     ((,class (:weight bold :foreground ,keyword :height 1.4))))

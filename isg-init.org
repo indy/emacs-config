@@ -1105,6 +1105,18 @@
 
   [[http://www.greghendershott.com/2017/02/emacs-themes.html]]
 
+#+BEGIN_SRC emacs-lisp
+  (require 'spaceline-config)
+  (spaceline-emacs-theme)
+  (spaceline-toggle-minor-modes-on)
+
+  (setq powerline-height 20)
+  (setq powerline-raw " ")
+  (setq ns-use-srgb-colorspace nil)
+
+  (setq powerline-default-separator 'wave)
+  (spaceline-compile)
+#+END_SRC
 
 
 #+BEGIN_SRC emacs-lisp
