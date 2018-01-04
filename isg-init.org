@@ -1079,6 +1079,16 @@
    (tide-hl-identifier-mode +1))
 
  #+END_SRC
+** vue
+
+#+BEGIN_SRC emacs-lisp
+  (use-package vue-mode
+    :mode "\\.vue\\'"
+    :config
+    ;; 0, 1, or 2, representing (respectively) none, low, and high coloring
+    (setq mmm-submode-decoration-level 0))
+#+END_SRC
+
 
 * theming
 
