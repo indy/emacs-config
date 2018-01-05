@@ -3,6 +3,7 @@
   | Section      | Key         | Command                                          |
   |--------------+-------------+--------------------------------------------------|
   | Misc.        | M-/         | dabbrev-expand                                   |
+  |              | M-x imenu   | list all functions and top-level variables       |
   |              |             |                                                  |
   | Undo         | C-/         | undo-tree-undo                                   |
   |              | C-M-/       | hydra-undo-tree/body                             |
@@ -33,7 +34,6 @@
   |--------------+-------------+--------------------------------------------------|
 
 
-
   |---------------+---------+---------------------|
   | [[magit]]         |         |                     |
   |---------------+---------+---------------------|
@@ -58,7 +58,8 @@
   | Stashing (z)  |         |                     |
   |               |         |                     |
   | Merging (m)   |         |                     |
-  |               |         |                     |
+  |---------------+---------+---------------------|
+
 
   |-----------+---------+---------------------------------------|
   | Registers | C-x r   | Prefix all commands with C-x r        |
@@ -280,6 +281,15 @@
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+  (defvar isg/config-old-ubuntu-laptop
+    '((get-extra-paths (lambda ()
+                         (list (concat (getenv "HOME") "/local/bin")
+                               "/usr/local/bin")))
+      (frame-l ((top . 0) (left . 210) (width . 80) (height . 59)))
+      (frame-r ((top . 0) (left . 780) (width . 80) (height . 59)))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
   (defvar isg/config-macbook-air
     '((default-font "-apple-Inconsolata-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
       (machine-os "osx")
@@ -300,19 +310,20 @@
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (defun isg/machine-settings ()
-    "System specific overrides go here."
-    (cond
-     ((string-match "^BERTRAND"  system-name) isg/config-windows-home-pc)
-     ((string-match "^localhost" system-name) isg/config-chromebook)
-     ((string-match "^ernesto"   system-name) isg/config-macbook-air)))
+    (defun isg/machine-settings ()
+      "System specific overrides go here."
+      (cond
+       ((string-match "^BERTRAND"  system-name) isg/config-windows-home-pc)
+       ((string-match "^localhost" system-name) isg/config-chromebook)
+       ((string-match "^socrates" system-name) isg/config-old-ubuntu-laptop)
+       ((string-match "^ernesto"   system-name) isg/config-macbook-air)))
 
-  (cl-labels ((load-settings (which)
-                             (mapcar (lambda (pair)
-                                       (put 'isg/local (car pair) (cadr pair)))
-                                     which)))
-    (load-settings (isg/default-machine-settings))
-    (load-settings (isg/machine-settings)))
+    (cl-labels ((load-settings (which)
+                               (mapcar (lambda (pair)
+                                         (put 'isg/local (car pair) (cadr pair)))
+                                       which)))
+      (load-settings (isg/default-machine-settings))
+      (load-settings (isg/machine-settings)))
 #+END_SRC
 
 
@@ -1079,11 +1090,33 @@
    (tide-hl-identifier-mode +1))
 
  #+END_SRC
+** vue
+
+#+BEGIN_SRC emacs-lisp
+  (use-package vue-mode
+    :mode "\\.vue\\'"
+    :config
+    ;; 0, 1, or 2, representing (respectively) none, low, and high coloring
+    (setq mmm-submode-decoration-level 0))
+#+END_SRC
+
 
 * theming
 
   [[http://www.greghendershott.com/2017/02/emacs-themes.html]]
 
+#+BEGIN_SRC emacs-lisp
+  (require 'spaceline-config)
+  (spaceline-emacs-theme)
+  (spaceline-toggle-minor-modes-on)
+
+  (setq powerline-height 20)
+  (setq powerline-raw " ")
+  (setq ns-use-srgb-colorspace nil)
+
+  (setq powerline-default-separator 'wave)
+  (spaceline-compile)
+#+END_SRC
 
 
 #+BEGIN_SRC emacs-lisp
@@ -1341,6 +1374,17 @@ _DEL_: none
       ("q"   nil "quit" :color blue))
     (global-set-key (kbd "C-M-/") 'hydra-undo-tree/body))
 #+END_SRC
+
+** volatile-highlights
+
+   When undoing text this highlights the changes
+
+ #+BEGIN_SRC emacs-lisp
+   (use-package volatile-highlights
+     :demand t
+     :config
+     (volatile-highlights-mode))
+ #+END_SRC
 
 ** wgrep
  #+BEGIN_SRC emacs-lisp
