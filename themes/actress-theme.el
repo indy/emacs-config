@@ -30,7 +30,6 @@
 
 (deftheme actress)
 (let ((class '((class color) (min-colors 89)))
-      (cursor "#4f643c")
       (bg1 "#13100a")
       (bg2 "#1c1910")
       (bg3 "#252117")
@@ -39,6 +38,12 @@
       (fg2 "#838383")
       (fg3 "#6a6a6a")
       (fg4 "#525252")
+      (cursor "#4f643c")
+      (modeline "#1a1c19")
+      (active1 "#2d312b")
+      (active2 "#1c2018")
+      (inactive1 "#161815")
+      (inactive2 "#0d0e0c")
       (clock12 "#b69b48")
       (clock01 "#95a547")
       (clock02 "#4cb246")
@@ -76,7 +81,7 @@
    `(default-italic    ((,class (:italic t))))
    `(error             ((,class (:foreground ,error))))
    `(ffap              ((,class (:foreground ,fg4))))
-   `(fringe            ((,class (:foreground ,fg4 :background ,bg1))))
+   `(fringe            ((,class (:foreground ,fg4 :background ,modeline))))
    `(highlight         ((,class (:foreground ,fg3 :background ,bg3))))
    `(hl-line           ((,class (:background  ,bg2))))
    `(italic            ((,class (:slant italic))))
@@ -95,18 +100,17 @@
    `(vhl/default-face ((,class (:foreground ,hi1 :background ,bg4))))
 
 
-   `(mode-line           ((,class (:foreground ,fg2 :background ,bg2 :bold nil :box (:line-width 1 :color ,bg2 :style none)))))
+   `(mode-line           ((,class (:foreground ,fg2 :background ,modeline :bold nil :box (:line-width 1 :color ,bg2 :style none)))))
    `(mode-line-buffer-id ((,class (:foreground ,fg1 :background nil :bold nil))))
-   `(mode-line-highlight ((,class (:background ,bg4))))
-   `(mode-line-inactive  ((,class (:foreground ,fg4 :background ,bg1 :box (:line-width 1 :color ,bg2 :style none)))))
+   `(mode-line-highlight ((,class (:background ,bg4)))) ;; ???
+   `(mode-line-inactive  ((,class (:foreground ,fg4 :background ,bg1 :box (:line-width 1 :color ,bg2 :style none))))) ; ???
 
    `(spaceline-highlight-face ((,class (:foreground ,bg1 :background ,cursor))))
-   `(powerline-active1 ((,class (:foreground ,fg1 :background ,bg3))))
-   `(powerline-active2 ((,class (:foreground ,fg1 :background ,bg4))))
+   `(powerline-active1 ((,class (:foreground ,fg1 :background ,active1))))
+   `(powerline-active2 ((,class (:foreground ,fg1 :background ,active2))))
 
-   `(powerline-inactive1 ((,class (:foreground ,fg4 :background ,bg1))))
-   `(powerline-inactive2 ((,class (:foreground ,fg3 :background ,bg2))))
-   `(mode-line-inactive ((,class (:foreground ,fg2 :background ,bg3))))
+   `(powerline-inactive1 ((,class (:foreground ,fg4 :background ,inactive1))))
+   `(powerline-inactive2 ((,class (:foreground ,fg4 :background ,inactive2))))
 
    `(font-lock-builtin-face       ((,class (:foreground ,builtin))))
    `(font-lock-comment-face       ((,class (:foreground ,comment))))
