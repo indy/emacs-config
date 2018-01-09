@@ -309,20 +309,32 @@
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-    (defun isg/machine-settings ()
-      "System specific overrides go here."
-      (cond
-       ((string-match "^BERTRAND"  system-name) isg/config-windows-home-pc)
-       ((string-match "^localhost" system-name) isg/config-chromebook)
-       ((string-match "^socrates" system-name) isg/config-old-ubuntu-laptop)
-       ((string-match "^ernesto"   system-name) isg/config-macbook-air)))
+  (defvar isg/config-ubuntu-vm
+    '((default-font "-unknown-Inconsolata-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
+      (get-extra-paths (lambda ()
+                         (list (concat (getenv "HOME") "/local/bin")
+                               "/usr/local/bin")))
+      (url-opener "firefox")
+      (frame-l ((top . 0) (left . 600) (width . 120) (height . 90)))
+      (frame-r ((top . 0) (left . 1500) (width . 120) (height . 90)))))
+#+END_SRC
 
-    (cl-labels ((load-settings (which)
-                               (mapcar (lambda (pair)
-                                         (put 'isg/local (car pair) (cadr pair)))
-                                       which)))
-      (load-settings (isg/default-machine-settings))
-      (load-settings (isg/machine-settings)))
+#+BEGIN_SRC emacs-lisp
+      (defun isg/machine-settings ()
+        "System specific overrides go here."
+        (cond
+         ((string-match "^BERTRAND"  system-name) isg/config-windows-home-pc)
+         ((string-match "^localhost" system-name) isg/config-chromebook)
+         ((string-match "^socrates"  system-name) isg/config-old-ubuntu-laptop)
+         ((string-match "^ernesto"   system-name) isg/config-macbook-air)
+         ((string-match "^vb1604"    system-name) isg/config-ubuntu-vm)))
+
+      (cl-labels ((load-settings (which)
+                                 (mapcar (lambda (pair)
+                                           (put 'isg/local (car pair) (cadr pair)))
+                                         which)))
+        (load-settings (isg/default-machine-settings))
+        (load-settings (isg/machine-settings)))
 #+END_SRC
 
 
