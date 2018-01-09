@@ -238,7 +238,7 @@
       (machine-os "linux") ; one of "linux" "osx" "windows"
       (url-opener "chromium-browser")
       (save-folder "/tmp/emacs.d-saves")
-      (deft-directory "~/work/deft")
+      (deft-directory "~/personal/deft")
       (gcal-file "~/notes/gcal.org")
       (racer-cmd "/home/indy/code/rust/racer/target/release/racer")
       (racer-rust-src-path "/home/indy/code/rust/rust/src/")
@@ -247,6 +247,7 @@
                                "/usr/local/bin"
                                "/usr/local/go/bin")))
       (magit-repos (("~/.emacs.d" . 0)
+                    ("~/personal" . 0)
                     ("~/work" . 1)))))
 #+END_SRC
 
@@ -258,9 +259,10 @@
       (racer-rust-src-path "c:\\Users\\indy\\.rustup\\toolchains\\nightly-x86_64-pc-windows-msvc\\lib\\rustlib\\src\\rust\\src\\")
       (save-folder "d:/scratch/emacs-saves")
       (url-opener "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome")
-      (deft-directory "C:\\Users\\indy\\work\\deft")
+      (deft-directory "C:\\Users\\indy\\personal\\deft")
       (gcal-file "D:\\Google Drive\\Docs\\notes\\gcal.org")
       (magit-repos (("C:\\Users\\indy\\.emacs.d" . 0)
+                    ("C:\\Users\\indy\\personal" . 0)
                     ("C:\\Users\\indy\\work" . 1)
                     ("D:\\work" . 1)))
       (frame-l ((top . 0) (left . 600) (width . 120) (height . 87)))
@@ -297,7 +299,6 @@
       (racer-cmd "/Users/indy/.cargo/bin/racer")
       (racer-rust-src-path "/Users/indy/code/rust/rust/src/")
       (url-opener "open")
-      (deft-directory "~/work/deft")
 
       (frame-r ((top . 0) (left . 746) (width . 100) (height . 55)))
       (frame-l ((top . 0) (left . 126) (width . 100) (height . 55)))
