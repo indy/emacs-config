@@ -782,12 +782,54 @@
   | C-c ! n     | jump to next error                             |
   | C-c ! p     | jump to previous error                         |
 
-
 #+BEGIN_SRC emacs-lisp
+
+  ;; the haskell config code uses -iterate and -zip-pair
+  (use-package dash
+    :demand t)
+
+  ;; https://github.com/i-tu/Hasklig/issues/84
+
+  (defun my-correct-symbol-bounds (pretty-alist)
+    "Prepend a TAB character to each symbol in this alist,
+  this way compose-region called by prettify-symbols-mode
+  will use the correct width of the symbols
+  instead of the width measured by char-width."
+    (mapcar (lambda (el)
+              (setcdr el (string ?\t (cdr el)))
+              el)
+            pretty-alist))
+
+  (defun my-ligature-list (ligatures codepoint-start)
+    "Create an alist of strings to replace with
+  codepoints starting from codepoint-start."
+    (let ((codepoints (-iterate '1+ codepoint-start (length ligatures))))
+      (-zip-pair ligatures codepoints)))
+
+  ; list can be found at https://github.com/i-tu/Hasklig/blob/master/GlyphOrderAndAliasDB#L1588
+  (defvar my-hasklig-ligatures
+        (let* ((ligs '("&&" "***" "*>" "\\\\" "||" "|>" "::"
+                       "==" "===" "==>" "=>" "=<<" "!!" ">>"
+                       ">>=" ">>>" ">>-" ">-" "->" "-<" "-<<"
+                       "<*" "<*>" "<|" "<|>" "<$>" "<>" "<-"
+                       "<<" "<<<" "<+>" ".." "..." "++" "+++"
+                       "/=" ":::" ">=>" "->>" "<=>" "<=<" "<->")))
+          (my-correct-symbol-bounds (my-ligature-list ligs #Xe100))))
+
+  (defun isg/haskell-config ()
+    (interactive)
+    (intero-mode)
+    ;; use the Hasklig font for Haskell mode
+    (setq buffer-face-mode-face '(:family "Hasklig"))
+    (buffer-face-mode)
+    ;; nice glyphs for haskell with hasklig
+    (setq prettify-symbols-alist (append my-hasklig-ligatures prettify-symbols-alist))
+    (prettify-symbols-mode))
+
   (use-package haskell-mode
     :mode "\\.hs\\'"
     :init
-    (add-hook 'haskell-mode-hook 'intero-mode))
+    (add-hook 'haskell-mode-hook 'isg/haskell-config))
 #+END_SRC
 
 
