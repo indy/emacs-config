@@ -263,9 +263,13 @@
                     ("~/work" . 1)))))
 #+END_SRC
 
+-outline-Hasklig-normal-normal-normal-mono-13-*-*-*-c-*-iso10646-1
+-outline-Hack-normal-normal-normal-mono-13-*-*-*-c-*-iso10646-1
+"-outline-Courier New-normal-normal-normal-mono-13-*-*-*-c-*-fontset-startup"
+
 #+BEGIN_SRC emacs-lisp
   (defvar isg/config-windows-home-pc
-    '((default-font "-outline-Courier New-normal-normal-normal-mono-13-*-*-*-c-*-fontset-startup")
+    '((default-font "-outline-Hack-normal-normal-normal-mono-13-*-*-*-c-*-iso10646-1")
       (machine-os "windows") ; one of "linux" "osx" "windows"
       (racer-cmd "C:\\Users\\indy\\bin\\racer.exe")
       (racer-rust-src-path "c:\\Users\\indy\\.rustup\\toolchains\\nightly-x86_64-pc-windows-msvc\\lib\\rustlib\\src\\rust\\src\\")
