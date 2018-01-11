@@ -191,6 +191,8 @@
                         (logical-and #X2227)
                         (logical-or #X2228)
                         (logical-neg #X00AC)
+                        (nary-logical-and #X22C0)
+                        (capital-lambda #X039B)
                         ('nil #X2205)
                         (horizontal-ellipsis #X2026)
                         (double-exclamation #X203C)
@@ -224,6 +226,16 @@
                 (isg/substitute-pattern-with-unicode (car x)
                                                      (cdr x)))
             patterns))
+
+  (defun isg/correct-symbol-bounds (pretty-alist)
+    "Prepend a TAB character to each symbol in this alist,
+  this way compose-region called by prettify-symbols-mode
+  will use the correct width of the symbols
+  instead of the width measured by char-width."
+    (mapcar (lambda (el)
+              (setcdr el (string ?\t (cdr el)))
+              el)
+            pretty-alist))
 #+END_SRC
 
 * machine settings
@@ -238,7 +250,7 @@
       (machine-os "linux") ; one of "linux" "osx" "windows"
       (url-opener "chromium-browser")
       (save-folder "/tmp/emacs.d-saves")
-      (deft-directory "~/work/deft")
+      (deft-directory "~/personal/deft")
       (gcal-file "~/notes/gcal.org")
       (racer-cmd "/home/indy/code/rust/racer/target/release/racer")
       (racer-rust-src-path "/home/indy/code/rust/rust/src/")
@@ -247,6 +259,7 @@
                                "/usr/local/bin"
                                "/usr/local/go/bin")))
       (magit-repos (("~/.emacs.d" . 0)
+                    ("~/personal" . 0)
                     ("~/work" . 1)))))
 #+END_SRC
 
@@ -258,9 +271,10 @@
       (racer-rust-src-path "c:\\Users\\indy\\.rustup\\toolchains\\nightly-x86_64-pc-windows-msvc\\lib\\rustlib\\src\\rust\\src\\")
       (save-folder "d:/scratch/emacs-saves")
       (url-opener "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome")
-      (deft-directory "C:\\Users\\indy\\work\\deft")
+      (deft-directory "C:\\Users\\indy\\personal\\deft")
       (gcal-file "D:\\Google Drive\\Docs\\notes\\gcal.org")
       (magit-repos (("C:\\Users\\indy\\.emacs.d" . 0)
+                    ("C:\\Users\\indy\\personal" . 0)
                     ("C:\\Users\\indy\\work" . 1)
                     ("D:\\work" . 1)))
       (frame-l ((top . 0) (left . 600) (width . 120) (height . 87)))
@@ -297,7 +311,6 @@
       (racer-cmd "/Users/indy/.cargo/bin/racer")
       (racer-rust-src-path "/Users/indy/code/rust/rust/src/")
       (url-opener "open")
-      (deft-directory "~/work/deft")
 
       (frame-r ((top . 0) (left . 746) (width . 100) (height . 55)))
       (frame-l ((top . 0) (left . 126) (width . 100) (height . 55)))
@@ -310,20 +323,32 @@
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-    (defun isg/machine-settings ()
-      "System specific overrides go here."
-      (cond
-       ((string-match "^BERTRAND"  system-name) isg/config-windows-home-pc)
-       ((string-match "^localhost" system-name) isg/config-chromebook)
-       ((string-match "^socrates" system-name) isg/config-old-ubuntu-laptop)
-       ((string-match "^ernesto"   system-name) isg/config-macbook-air)))
+  (defvar isg/config-ubuntu-vm
+    '((default-font "-unknown-Inconsolata-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
+      (get-extra-paths (lambda ()
+                         (list (concat (getenv "HOME") "/local/bin")
+                               "/usr/local/bin")))
+      (url-opener "firefox")
+      (frame-l ((top . 0) (left . 600) (width . 120) (height . 90)))
+      (frame-r ((top . 0) (left . 1500) (width . 120) (height . 90)))))
+#+END_SRC
 
-    (cl-labels ((load-settings (which)
-                               (mapcar (lambda (pair)
-                                         (put 'isg/local (car pair) (cadr pair)))
-                                       which)))
-      (load-settings (isg/default-machine-settings))
-      (load-settings (isg/machine-settings)))
+#+BEGIN_SRC emacs-lisp
+      (defun isg/machine-settings ()
+        "System specific overrides go here."
+        (cond
+         ((string-match "^BERTRAND"  system-name) isg/config-windows-home-pc)
+         ((string-match "^localhost" system-name) isg/config-chromebook)
+         ((string-match "^socrates"  system-name) isg/config-old-ubuntu-laptop)
+         ((string-match "^ernesto"   system-name) isg/config-macbook-air)
+         ((string-match "^vb1604"    system-name) isg/config-ubuntu-vm)))
+
+      (cl-labels ((load-settings (which)
+                                 (mapcar (lambda (pair)
+                                           (put 'isg/local (car pair) (cadr pair)))
+                                         which)))
+        (load-settings (isg/default-machine-settings))
+        (load-settings (isg/machine-settings)))
 #+END_SRC
 
 
@@ -491,7 +516,6 @@
   ;;   (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync))))
 #+END_SRC
 
-
 ** hydra
  #+BEGIN_SRC emacs-lisp
  (use-package hydra
@@ -652,6 +676,32 @@
 #+END_SRC
 
 * language modes
+** language prep
+#+BEGIN_SRC emacs-lisp
+  ;; the ligature config code uses -iterate and -zip-pair
+  (use-package dash
+    :demand t)
+
+  ;; https://github.com/i-tu/Hasklig/issues/84
+
+  (defun my-ligature-list (ligatures codepoint-start)
+    "Create an alist of strings to replace with
+  codepoints starting from codepoint-start."
+    (let ((codepoints (-iterate '1+ codepoint-start (length ligatures))))
+      (-zip-pair ligatures codepoints)))
+
+  ; list can be found at https://github.com/i-tu/Hasklig/blob/master/GlyphOrderAndAliasDB#L1588
+  (defvar my-hasklig-ligatures
+        (let* ((ligs '("&&" "***" "*>" "\\\\" "||" "|>" "::"
+                       "==" "===" "==>" "=>" "=<<" "!!" ">>"
+                       ">>=" ">>>" ">>-" ">-" "->" "-<" "-<<"
+                       "<*" "<*>" "<|" "<|>" "<$>" "<>" "<-"
+                       "<<" "<<<" "<+>" ".." "..." "++" "+++"
+                       "/=" ":::" ">=>" "->>" "<=>" "<=<" "<->")))
+          (isg/correct-symbol-bounds (my-ligature-list ligs #Xe100))))
+#+END_SRC
+
+
 ** c
  #+BEGIN_SRC emacs-lisp
    (add-hook 'c-mode-hook (lambda ()
@@ -781,12 +831,21 @@
   | C-c ! n     | jump to next error                             |
   | C-c ! p     | jump to previous error                         |
 
-
 #+BEGIN_SRC emacs-lisp
+  (defun isg/haskell-config ()
+    (interactive)
+    (intero-mode)
+    ;; use the Hasklig font for Haskell mode
+    (setq buffer-face-mode-face '(:family "Hasklig"))
+    (buffer-face-mode)
+    ;; nice glyphs for haskell with hasklig
+    (setq prettify-symbols-alist (append my-hasklig-ligatures prettify-symbols-alist))
+    (prettify-symbols-mode))
+
   (use-package haskell-mode
     :mode "\\.hs\\'"
     :init
-    (add-hook 'haskell-mode-hook 'intero-mode))
+    (add-hook 'haskell-mode-hook 'isg/haskell-config))
 #+END_SRC
 
 
@@ -834,6 +893,8 @@
  #+END_SRC
 
 ** purescript
+
+
 #+BEGIN_SRC emacs-lisp
   (use-package purescript-mode
     :mode "\\.purs\\'"
@@ -843,18 +904,19 @@
 
   (defun substitute-purescript-syntax-with-unicode ()
     (isg/substitute-patterns-with-unicode
-     (list (cons "\\(<-\\)" 'left-arrow)
-           (cons "\\(->\\)" 'right-arrow)
-           (cons "\\(/=\\)" 'not-equal)
+     (list ;(cons "\\(<-\\)" 'left-arrow)
+           ;(cons "\\(->\\)" 'right-arrow)
+           ;(cons "\\(/=\\)" 'not-equal)
            (cons "\\(()\\)" 'nil)
+           (cons "\\(/\\\\\\)" 'capital-lambda) ; /\ : should be nary-logical-and but that looks bad
            (cons "\\<\\(forall\\)\\>" 'for-all)
-           (cons "\\(&&\\)" 'logical-and)
-           (cons "\\(||\\)" 'logical-or)
+           ;(cons "\\(&&\\)" 'logical-and)
+           ;(cons "\\(||\\)" 'logical-or)
            (cons "\\<\\(not\\)\\>" 'logical-neg)
-           (cons "\\(>\\)\\[^=\\]" 'greater-than)
-           (cons "\\(<\\)\\[^=\\]" 'less-than)
-           (cons "[^>]\\(>=\\)" 'greater-than-or-equal-to) ; substitute >= but ignore >>=
-           (cons "\\(<=\\)" 'less-than-or-equal-to)
+           ;(cons "\\(>\\)\\[^=\\]" 'greater-than)
+           ;(cons "\\(<\\)\\[^=\\]" 'less-than)
+           ;(cons "[^>]\\(>=\\)" 'greater-than-or-equal-to) ; substitute >= but ignore >>=
+           ;(cons "\\(<=\\)" 'less-than-or-equal-to)
            (cons "\\(''\\)" 'double-prime)
            (cons "\\('\\)" 'prime))))
 
@@ -864,8 +926,15 @@
     (company-mode)
     (flycheck-mode)
     (turn-on-purescript-indentation)
-    ;;(substitute-purescript-syntax-with-unicode)
-    )
+
+    (substitute-purescript-syntax-with-unicode)
+
+    ;; use the Hasklig font for Purescript mode
+    (setq buffer-face-mode-face '(:family "Hasklig"))
+    (buffer-face-mode)
+    ;; nice glyphs for purescript with hasklig
+    (setq prettify-symbols-alist (append my-hasklig-ligatures prettify-symbols-alist))
+    (prettify-symbols-mode))
 #+END_SRC
 
    purescript syntax:
