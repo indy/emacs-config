@@ -287,7 +287,7 @@
 
 #+BEGIN_SRC emacs-lisp
   (defvar isg/config-chromebook
-    '((default-font "-unknown-Inconsolata-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
+    '((default-font "-unknown-Hack-normal-normal-normal-*-11-*-*-*-m-0-iso10646-1")
       (post-setup-fn (lambda ()
                        (setenv "GOPATH" (concat (getenv "HOME") "/work/go"))))
       (get-extra-paths (lambda ()
@@ -327,20 +327,32 @@
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-    (defun isg/machine-settings ()
-      "System specific overrides go here."
-      (cond
-       ((string-match "^BERTRAND"  system-name) isg/config-windows-home-pc)
-       ((string-match "^localhost" system-name) isg/config-chromebook)
-       ((string-match "^socrates" system-name) isg/config-old-ubuntu-laptop)
-       ((string-match "^ernesto"   system-name) isg/config-macbook-air)))
+  (defvar isg/config-ubuntu-vm
+    '((default-font "-unknown-Inconsolata-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
+      (get-extra-paths (lambda ()
+                         (list (concat (getenv "HOME") "/local/bin")
+                               "/usr/local/bin")))
+      (url-opener "firefox")
+      (frame-l ((top . 0) (left . 600) (width . 120) (height . 90)))
+      (frame-r ((top . 0) (left . 1500) (width . 120) (height . 90)))))
+#+END_SRC
 
-    (cl-labels ((load-settings (which)
-                               (mapcar (lambda (pair)
-                                         (put 'isg/local (car pair) (cadr pair)))
-                                       which)))
-      (load-settings (isg/default-machine-settings))
-      (load-settings (isg/machine-settings)))
+#+BEGIN_SRC emacs-lisp
+      (defun isg/machine-settings ()
+        "System specific overrides go here."
+        (cond
+         ((string-match "^BERTRAND"  system-name) isg/config-windows-home-pc)
+         ((string-match "^localhost" system-name) isg/config-chromebook)
+         ((string-match "^socrates"  system-name) isg/config-old-ubuntu-laptop)
+         ((string-match "^ernesto"   system-name) isg/config-macbook-air)
+         ((string-match "^vb1604"    system-name) isg/config-ubuntu-vm)))
+
+      (cl-labels ((load-settings (which)
+                                 (mapcar (lambda (pair)
+                                           (put 'isg/local (car pair) (cadr pair)))
+                                         which)))
+        (load-settings (isg/default-machine-settings))
+        (load-settings (isg/machine-settings)))
 #+END_SRC
 
 
@@ -524,6 +536,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
     :demand t
+    :delight
     :config
     (use-package ivy-rich)
     (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer)
@@ -608,9 +621,9 @@
 
 ** company - auto completion
 #+BEGIN_SRC emacs-lisp
-
   (use-package company
     :defer t
+    :delight
     :config
     (progn
       ;; Reduce the time after which the company auto completion popup opens
@@ -692,7 +705,6 @@
                        "/=" ":::" ">=>" "->>" "<=>" "<=<" "<->")))
           (isg/correct-symbol-bounds (my-ligature-list ligs #Xe100))))
 #+END_SRC
-
 
 ** c
  #+BEGIN_SRC emacs-lisp
@@ -1160,8 +1172,11 @@
     ;; 0, 1, or 2, representing (respectively) none, low, and high coloring
     (setq mmm-submode-decoration-level 0))
 #+END_SRC
-
-
+** yaml
+#+BEGIN_SRC emacs-lisp
+  (use-package yaml-mode
+    :mode "\\.yaml\\'")
+#+END_SRC
 * theming
 
   [[http://www.greghendershott.com/2017/02/emacs-themes.html]]
@@ -1299,6 +1314,7 @@ _DEL_: none
    ;; C-c ! n : next error
    ;; C-c ! p : previous error
    (use-package flycheck
+     :delight
      :config
      (use-package pkg-info
         :defer t)
@@ -1331,8 +1347,11 @@ _DEL_: none
 
 ** smartparens-config
  #+BEGIN_SRC emacs-lisp
+ (use-package smartparens
+   :delight)
  (use-package smartparens-config
    :ensure smartparens
+   :delight
    :defer t
    :init
    (smartparens-global-mode t)
@@ -1419,6 +1438,7 @@ _DEL_: none
 #+BEGIN_SRC emacs-lisp
   (use-package undo-tree
     :ensure t
+    :delight
     :init
     (global-undo-tree-mode)
     :config
@@ -1443,6 +1463,7 @@ _DEL_: none
  #+BEGIN_SRC emacs-lisp
    (use-package volatile-highlights
      :demand t
+     :delight
      :config
      (volatile-highlights-mode))
  #+END_SRC
@@ -1457,6 +1478,7 @@ _DEL_: none
  #+BEGIN_SRC emacs-lisp
  (use-package which-key
    :demand t
+   :delight
    :config
    (which-key-mode))
  #+END_SRC
