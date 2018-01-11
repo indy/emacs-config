@@ -532,6 +532,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
     :demand t
+    :delight
     :config
     (use-package ivy-rich)
     (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer)
@@ -616,9 +617,9 @@
 
 ** company - auto completion
 #+BEGIN_SRC emacs-lisp
-
   (use-package company
     :defer t
+    :delight
     :config
     (progn
       ;; Reduce the time after which the company auto completion popup opens
@@ -700,7 +701,6 @@
                        "/=" ":::" ">=>" "->>" "<=>" "<=<" "<->")))
           (isg/correct-symbol-bounds (my-ligature-list ligs #Xe100))))
 #+END_SRC
-
 
 ** c
  #+BEGIN_SRC emacs-lisp
@@ -1168,8 +1168,11 @@
     ;; 0, 1, or 2, representing (respectively) none, low, and high coloring
     (setq mmm-submode-decoration-level 0))
 #+END_SRC
-
-
+** yaml
+#+BEGIN_SRC emacs-lisp
+  (use-package yaml-mode
+    :mode "\\.yaml\\'")
+#+END_SRC
 * theming
 
   [[http://www.greghendershott.com/2017/02/emacs-themes.html]]
@@ -1307,6 +1310,7 @@ _DEL_: none
    ;; C-c ! n : next error
    ;; C-c ! p : previous error
    (use-package flycheck
+     :delight
      :config
      (use-package pkg-info
         :defer t)
@@ -1339,8 +1343,11 @@ _DEL_: none
 
 ** smartparens-config
  #+BEGIN_SRC emacs-lisp
+ (use-package smartparens
+   :delight)
  (use-package smartparens-config
    :ensure smartparens
+   :delight
    :defer t
    :init
    (smartparens-global-mode t)
@@ -1427,6 +1434,7 @@ _DEL_: none
 #+BEGIN_SRC emacs-lisp
   (use-package undo-tree
     :ensure t
+    :delight
     :init
     (global-undo-tree-mode)
     :config
@@ -1451,6 +1459,7 @@ _DEL_: none
  #+BEGIN_SRC emacs-lisp
    (use-package volatile-highlights
      :demand t
+     :delight
      :config
      (volatile-highlights-mode))
  #+END_SRC
@@ -1465,6 +1474,7 @@ _DEL_: none
  #+BEGIN_SRC emacs-lisp
  (use-package which-key
    :demand t
+   :delight
    :config
    (which-key-mode))
  #+END_SRC
