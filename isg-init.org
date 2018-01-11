@@ -283,7 +283,7 @@
 
 #+BEGIN_SRC emacs-lisp
   (defvar isg/config-chromebook
-    '((default-font "-unknown-Inconsolata-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
+    '((default-font "-unknown-Hack-normal-normal-normal-*-11-*-*-*-m-0-iso10646-1")
       (post-setup-fn (lambda ()
                        (setenv "GOPATH" (concat (getenv "HOME") "/work/go"))))
       (get-extra-paths (lambda ()
