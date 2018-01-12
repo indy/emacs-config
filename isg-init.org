@@ -281,8 +281,8 @@
                     ("C:\\Users\\indy\\personal" . 0)
                     ("C:\\Users\\indy\\work" . 1)
                     ("D:\\work" . 1)))
-      (frame-l ((top . 0) (left . 600) (width . 120) (height . 87)))
-      (frame-r ((top . 0) (left . 1575) (width . 120) (height . 87)))))
+      (frame-l ((top . 0) (left . 600) (width . 120) (height . 93)))
+      (frame-r ((top . 0) (left . 1575) (width . 120) (height . 93)))))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
