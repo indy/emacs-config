@@ -299,12 +299,13 @@
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (defvar isg/config-old-ubuntu-laptop
-    '((get-extra-paths (lambda ()
-                         (list (concat (getenv "HOME") "/local/bin")
-                               "/usr/local/bin")))
-      (frame-l ((top . 0) (left . 210) (width . 80) (height . 59)))
-      (frame-r ((top . 0) (left . 780) (width . 80) (height . 59)))))
+    (defvar isg/config-old-ubuntu-laptop
+      '((default-font "-SRC-Hack-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
+        (get-extra-paths (lambda ()
+                           (list (concat (getenv "HOME") "/local/bin")
+                                 "/usr/local/bin")))
+        (frame-l ((top . 0) (left . 210) (width . 80) (height . 59)))
+        (frame-r ((top . 0) (left . 780) (width . 80) (height . 59)))))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
