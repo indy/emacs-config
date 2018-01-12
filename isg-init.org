@@ -263,10 +263,6 @@
                     ("~/work" . 1)))))
 #+END_SRC
 
--outline-Hasklig-normal-normal-normal-mono-13-*-*-*-c-*-iso10646-1
--outline-Hack-normal-normal-normal-mono-13-*-*-*-c-*-iso10646-1
-"-outline-Courier New-normal-normal-normal-mono-13-*-*-*-c-*-fontset-startup"
-
 #+BEGIN_SRC emacs-lisp
   (defvar isg/config-windows-home-pc
     '((default-font "-outline-Hack-normal-normal-normal-mono-13-*-*-*-c-*-iso10646-1")
@@ -1230,16 +1226,16 @@
   :defer t)
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-(load-theme 'actress t)
+(load-theme 'athens t)
 
 (defhydra isg/hydra-themes (:hint nil :color pink)
   "
 Themes
 ----------------------------------------------------
-_A_: Actress _S_: Solarized _s_: Solarized light
+_A_: Athens _S_: Solarized _s_: Solarized light
 _DEL_: none
 "
-  ("A" (load-theme 'actress t))
+  ("A" (load-theme 'athens t))
   ("s" (load-theme 'sanityinc-solarized-light t))
   ("S" (load-theme 'sanityinc-solarized-dark t))
   ("DEL" (isg/disable-all-themes))

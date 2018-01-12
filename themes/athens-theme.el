@@ -1,11 +1,11 @@
-;;; actress-theme.el --- Emacs 24 theme with a light background.
+;;; athens-theme.el --- Emacs 24 theme with a light background.
 
-;; Copyright (C) 2015 Inderjit Gill <email@indy.io>
+;; Copyright (C) 2018 Inderjit Gill <email@indy.io>
 
 ;; Author: Inderjit Gill
 ;; Keywords: dark color theme
-;; URL: http://github.com/indy/color-theme-actress
-;; Version: 0.2.2
+;; URL: http://github.com/indy/color-theme-athens
+;; Version: 1.0.0
 ;; Package-Requires: ((emacs "24"))
 ;; This version is based on mark-theme (https://github.com/mjfeller/mark-theme)
 
@@ -28,7 +28,7 @@
 
 ;;; Code:
 
-(deftheme actress)
+(deftheme athens)
 (let ((class '((class color) (min-colors 89)))
       (bg1 "#100d08")
       (bg2 "#1b170f")
@@ -72,7 +72,7 @@
 
   (custom-theme-set-faces
 
-   'actress
+   'athens
 
    `(default           ((,class (:foreground ,fg1 :background ,bg1))))
    `(bold              ((,class (:weight bold))))
@@ -330,10 +330,10 @@
   (add-to-list 'custom-theme-load-path
                (file-name-as-directory (file-name-directory load-file-name))))
 
-(provide-theme 'actress)
+(provide-theme 'athens)
 
 ;; Local Variables:
 ;; no-byte-compile: t
 ;; End:
 
-;;; actress-theme.el ends here
+;;; athens-theme.el ends here
