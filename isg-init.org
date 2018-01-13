@@ -698,15 +698,15 @@
      :mode "CMakeLists\\.txt")
 
  #+END_SRC
-** clojure
-   #+BEGIN_SRC emacs-lisp
+** clojure :disabled:
+   #+BEGIN_SRC text
  (use-package cider
    :defer t
    :init
    (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode))
    #+END_SRC
 
-   #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC text
  (use-package clojure-mode
    :mode "\\.clj\\'"
    :config
@@ -734,28 +734,22 @@
        (setq css-indent-offset 2))
      (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
    #+END_SRC
-** dart
- #+BEGIN_SRC emacs-lisp
+** dart :disabled:
+ #+BEGIN_SRC text
  (use-package dart-mode
    :mode "\\.dart\\'"
    :config
    (setq dart-enable-analysis-server t))
-
-
-
-
  #+END_SRC
 
-** elm
-
+** elm :disabled:
 
   | key     | elm-repl                          |
   |---------+-----------------------------------|
   | C-c C-l | load the current file in a REPL   |
   | C-c C-p | push the current region to a REPL |
 
-
-  #+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC text
     (use-package elm-mode
       :mode "\\.elm\\'"
       :config
@@ -789,8 +783,8 @@
    :config
    (add-hook 'before-save-hook #'gofmt-before-save))
  #+END_SRC
-** groovy
- #+BEGIN_SRC emacs-lisp
+** groovy :disabled:
+ #+BEGIN_SRC text
   (add-to-list 'auto-mode-alist '("\\.gradle$" . groovy-mode))
  #+END_SRC
 ** haskell
@@ -870,8 +864,8 @@
           ("\\.markdown\\'" . markdown-mode)))
  #+END_SRC
 
-** nim
- #+BEGIN_SRC emacs-lisp
+** nim :disabled:
+ #+BEGIN_SRC text
  (use-package nim-mode
    :mode "\\.nim\\'")
  #+END_SRC
@@ -1143,9 +1137,8 @@
    (tide-hl-identifier-mode +1))
 
  #+END_SRC
-** vue
-
-#+BEGIN_SRC emacs-lisp
+** vue :disabled:
+#+BEGIN_SRC text
   (use-package vue-mode
     :mode "\\.vue\\'"
     :config
