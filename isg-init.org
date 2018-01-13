@@ -129,23 +129,6 @@
 (push "~/.emacs.d/external" load-path)  ; third party code that isn't in melpa-stable yet
 #+END_SRC
 
-* pomidor
-  | key   | command              |
-  |-------+----------------------|
-  | Enter | Start new pomodoro.  |
-  | Space | Start a break.       |
-  | R     | Resets the timer.    |
-  | q     | Quit pomidor buffer. |
-  | Q     | Turns off pomidor.   |
-
-#+BEGIN_SRC emacs-lisp
-(require 'pomidor)
-(setq pomidor-sound-tick nil
-      pomidor-sound-tack nil
-      pomidor-sound-overwork nil)
-(global-set-key (kbd "<f12>") #'pomidor)
-#+END_SRC
-
 * helper functions
 #+BEGIN_SRC emacs-lisp
   ;;; display 'fn' as the lambda symbol
