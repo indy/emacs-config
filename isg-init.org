@@ -1140,7 +1140,7 @@
     :mode "\\.vue\\'"
     :config
     ;; 0, 1, or 2, representing (respectively) none, low, and high coloring
-    (setq mmm-submode-decoration-level 0))
+    (setq mmm-submode-decoration-level 2))
 #+END_SRC
 ** yaml
 #+BEGIN_SRC emacs-lisp
