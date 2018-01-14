@@ -626,9 +626,6 @@
       (define-key company-active-map (kbd "C-n") 'company-select-next)
       (define-key company-active-map (kbd "C-p") 'company-select-previous)))
 
-  (use-package esh-autosuggest
-    :hook (eshell-mode . esh-autosuggest-mode)
-    :ensure t)
 #+END_SRC
 
 ** ibuffer
@@ -1137,8 +1134,8 @@
    (tide-hl-identifier-mode +1))
 
  #+END_SRC
-** vue :disabled:
-#+BEGIN_SRC text
+** vue
+#+BEGIN_SRC emacs-lisp
   (use-package vue-mode
     :mode "\\.vue\\'"
     :config
