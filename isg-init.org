@@ -638,6 +638,7 @@
                  ("c" (mode . c-mode))
                  ("seni" (mode . seni-mode))
                  ("rust" (mode . rust-mode))
+                 ("vue" (name . "\\.vue"))
                  ("js" (mode . js2-mode))
                  ("purescript" (mode . purescript-mode))
                  ("haskell" (mode . haskell-mode))
@@ -647,6 +648,7 @@
                  ("web" (or
                          (mode . html-mode)
                          (mode . css-mode)))
+                 ("magit" (name . "^\\*magit"))
                  ("emacs" (or
                            (name . "^\\*scratch\\*$")
                            (name . "^\\*Messages\\*$"))))))
@@ -825,6 +827,12 @@
 
 
 ** javascript
+
+  | key     | command                                                                |
+  |---------+------------------------------------------------------------------------|
+  | C-c C-w | js2-mode-toggle-warnings-and-errors (stops annoying orange underlines) |
+  |         |                                                                        |
+
  #+BEGIN_SRC emacs-lisp
  (use-package js2-mode
    :mode (("\\.js\\'" . js2-mode)
