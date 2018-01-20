@@ -249,6 +249,8 @@
 #+BEGIN_SRC emacs-lisp
   (defvar isg/config-windows-home-pc
     '((default-font "-outline-Hack-normal-normal-normal-mono-13-*-*-*-c-*-iso10646-1")
+      (post-setup-fn (lambda ()
+                       (setenv "GOPATH" "D:\\work\\go")))
       (machine-os "windows") ; one of "linux" "osx" "windows"
       (racer-cmd "C:\\Users\\indy\\bin\\racer.exe")
       (racer-rust-src-path "c:\\Users\\indy\\.rustup\\toolchains\\nightly-x86_64-pc-windows-msvc\\lib\\rustlib\\src\\rust\\src\\")
@@ -634,6 +636,7 @@
 
   (setq ibuffer-saved-filter-groups
         (quote (("default"
+                 ("eshell" (mode . eshell-mode))
                  ("dired" (mode . dired-mode))
                  ("c" (mode . c-mode))
                  ("seni" (mode . seni-mode))
@@ -648,10 +651,10 @@
                  ("web" (or
                          (mode . html-mode)
                          (mode . css-mode)))
-                 ("magit" (name . "^\\*magit"))
                  ("emacs" (or
                            (name . "^\\*scratch\\*$")
-                           (name . "^\\*Messages\\*$"))))))
+                           (name . "^\\*Messages\\*$")))
+                 ("magit" (name . "^\\*magit")))))
         ibuffer-show-empty-filter-groups nil)
 
   (add-hook 'ibuffer-mode-hook
