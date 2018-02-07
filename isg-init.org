@@ -852,7 +852,7 @@
 
  #+BEGIN_SRC emacs-lisp
  (use-package js2-mode
-   :mode (("\\.js\\'" . js2-mode)
+   :mode (;; ("\\.js\\'" . js2-mode)
           ("\\.es6\\'" . js2-mode))
    :init
    (use-package js-comint :defer t)
@@ -862,6 +862,10 @@
    (setq js-indent-level 2)
    (setq js2-global-externs '("require" "expect" "describe" "it" "beforeEach"))
    (define-key js2-mode-map (kbd "<tab>") #'company-indent-or-complete-common))
+
+
+(use-package rjsx-mode
+   :mode "\\.js\\'")
  #+END_SRC
 
 ** jsx
