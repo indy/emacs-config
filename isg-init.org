@@ -1326,7 +1326,8 @@ _DEL_: none
      (flycheck-add-mode 'javascript-eslint 'web-mode)
      ;; (setq flycheck-eslintrc "~/work/seni-web/.eslintrc.json")
      ;; customize flycheck temp file prefix
-     (setq-default flycheck-temp-prefix ".flycheck"))
+     (setq-default flycheck-temp-prefix ".flycheck")
+     (setq flycheck-global-modes '(not go-mode org-mode)))
  #+END_SRC
 
 ** highlight thing
