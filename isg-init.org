@@ -94,138 +94,105 @@
   C-)
   the 0 in subsequent invocations will be replaced with the next integer
 
-* package
-  https://github.com/jwiegley/use-package
-
-#+BEGIN_SRC emacs-lisp
-  (require 'package)
-  (setq package-enable-at-startup nil)
-  (setcdr (last package-archives)
-          '(("melpa-stable" . "https://stable.melpa.org/packages/")
-            ("melpa" . "https://melpa.org/packages/")
-            ("org" . "https://orgmode.org/elpa/")))
-
-  (package-initialize) ; most of this section's time is spent here
-  (setq package-check-signature nil)
-
-  (unless (package-installed-p 'use-package)
-    ;; check for new packages (package versions)
-    (message "%s" "Emacs Prelude is now refreshing its package database...")
-    (package-refresh-contents)
-    (message "%s" " done.")
-    (package-install 'use-package))
-
-  ;(require 'use-package)
-
-  ;; after use-package-always-ensure is set, all subsequent use-package
-  ;; statements will download packages if needed
-  (setq use-package-always-ensure t)
-  (setq use-package-verbose t)
-#+END_SRC
-
-* cl and external load paths
-
-#+BEGIN_SRC emacs-lisp
-(require 'cl)
-(push "~/.emacs.d/external" load-path)  ; third party code that isn't in melpa-stable yet
-#+END_SRC
-
 * helper functions
 #+BEGIN_SRC emacs-lisp
-  ;;; display 'fn' as the lambda symbol
-  (defun pretty-fn nil
-    (font-lock-add-keywords
-     nil `(("(\\(fn\\>\\)"
-            (0 (progn (compose-region (match-beginning 1) (match-end 1)
-                                      ,(make-char 'greek-iso8859-7 107))
-                      nil)))
-           ("\\(#\\)("
-            (0 (progn (compose-region (match-beginning 1) (match-end 1)
-                                      402)
-                      nil))))))
+  (isg/time-section "-helper-functions")
+    ;;; display 'fn' as the lambda symbol
+    (defun pretty-fn nil
+      (font-lock-add-keywords
+       nil `(("(\\(fn\\>\\)"
+              (0 (progn (compose-region (match-beginning 1) (match-end 1)
+                                        ,(make-char 'greek-iso8859-7 107))
+                        nil)))
+             ("\\(#\\)("
+              (0 (progn (compose-region (match-beginning 1) (match-end 1)
+                                        402)
+                        nil))))))
 
-  (defun isg/val (property)
-    (get 'isg/local property))
+    (defun isg/val (property)
+      (get 'isg/local property))
 
-  (defun isg/start-shell (shell-name)
-    "start a new shell"
-    (interactive "sShell name: ")
-    (shell)
-    (if (string= "" shell-name)
-        (rename-uniquely)
-      (rename-buffer shell-name)))
+    (defun isg/start-shell (shell-name)
+      "start a new shell"
+      (interactive "sShell name: ")
+      (shell)
+      (if (string= "" shell-name)
+          (rename-uniquely)
+        (rename-buffer shell-name)))
 
-  (defun isg/unicode-symbol (name)
-    "Translate a symbolic name for a Unicode character -- e.g., LEFT-ARROW
-         or GREATER-THAN into an actual Unicode character code. "
-    (decode-char 'ucs (case name
-                        (left-arrow 8592)
-                        (up-arrow 8593)
-                        (right-arrow 8594)
-                        (down-arrow 8595)
-                        (double-vertical-bar #X2551)
-                        (equal #X003d)
-                        (not-equal #X2260)
-                        (identical #X2261)
-                        (not-identical #X2262)
-                        (less-than #X003c)
-                        (greater-than #X003e)
-                        (less-than-or-equal-to #X2264)
-                        (greater-than-or-equal-to #X2265)
-                        (logical-and #X2227)
-                        (logical-or #X2228)
-                        (logical-neg #X00AC)
-                        (nary-logical-and #X22C0)
-                        (capital-lambda #X039B)
-                        ('nil #X2205)
-                        (horizontal-ellipsis #X2026)
-                        (double-exclamation #X203C)
-                        (prime #X2032)
-                        (double-prime #X2033)
-                        (for-all #X2200)
-                        (there-exists #X2203)
-                        (element-of #X2208)
-                        (square-root #X221A)
-                        (squared #X00B2)
-                        (cubed #X00B3)
-                        (lambda #X03BB)
-                        (alpha #X03B1)
-                        (beta #X03B2)
-                        (gamma #X03B3)
-                        (delta #X03B4))))
+    (defun isg/unicode-symbol (name)
+      "Translate a symbolic name for a Unicode character -- e.g., LEFT-ARROW
+           or GREATER-THAN into an actual Unicode character code. "
+      (decode-char 'ucs (case name
+                          (left-arrow 8592)
+                          (up-arrow 8593)
+                          (right-arrow 8594)
+                          (down-arrow 8595)
+                          (double-vertical-bar #X2551)
+                          (equal #X003d)
+                          (not-equal #X2260)
+                          (identical #X2261)
+                          (not-identical #X2262)
+                          (less-than #X003c)
+                          (greater-than #X003e)
+                          (less-than-or-equal-to #X2264)
+                          (greater-than-or-equal-to #X2265)
+                          (logical-and #X2227)
+                          (logical-or #X2228)
+                          (logical-neg #X00AC)
+                          (nary-logical-and #X22C0)
+                          (capital-lambda #X039B)
+                          ('nil #X2205)
+                          (horizontal-ellipsis #X2026)
+                          (double-exclamation #X203C)
+                          (prime #X2032)
+                          (double-prime #X2033)
+                          (for-all #X2200)
+                          (there-exists #X2203)
+                          (element-of #X2208)
+                          (square-root #X221A)
+                          (squared #X00B2)
+                          (cubed #X00B3)
+                          (lambda #X03BB)
+                          (alpha #X03B1)
+                          (beta #X03B2)
+                          (gamma #X03B3)
+                          (delta #X03B4))))
 
-  (defun isg/substitute-pattern-with-unicode (pattern symbol)
-    "Add a font lock hook to replace the matched part of PATTERN with the
-         Unicode symbol SYMBOL looked up with UNICODE-SYMBOL."
-    (font-lock-add-keywords
-     nil `((,pattern
-            (0 (progn (compose-region (match-beginning 1) (match-end 1)
-                                      ,(isg/unicode-symbol symbol)
-                                      'decompose-region)
-                      nil))))))
+    (defun isg/substitute-pattern-with-unicode (pattern symbol)
+      "Add a font lock hook to replace the matched part of PATTERN with the
+           Unicode symbol SYMBOL looked up with UNICODE-SYMBOL."
+      (font-lock-add-keywords
+       nil `((,pattern
+              (0 (progn (compose-region (match-beginning 1) (match-end 1)
+                                        ,(isg/unicode-symbol symbol)
+                                        'decompose-region)
+                        nil))))))
 
-  (defun isg/substitute-patterns-with-unicode (patterns)
-    "Call SUBSTITUTE-PATTERN-WITH-UNICODE repeatedly."
-    (mapcar #'(lambda (x)
-                (isg/substitute-pattern-with-unicode (car x)
-                                                     (cdr x)))
-            patterns))
+    (defun isg/substitute-patterns-with-unicode (patterns)
+      "Call SUBSTITUTE-PATTERN-WITH-UNICODE repeatedly."
+      (mapcar #'(lambda (x)
+                  (isg/substitute-pattern-with-unicode (car x)
+                                                       (cdr x)))
+              patterns))
 
-  (defun isg/correct-symbol-bounds (pretty-alist)
-    "Prepend a TAB character to each symbol in this alist,
-  this way compose-region called by prettify-symbols-mode
-  will use the correct width of the symbols
-  instead of the width measured by char-width."
-    (mapcar (lambda (el)
-              (setcdr el (string ?\t (cdr el)))
-              el)
-            pretty-alist))
+    (defun isg/correct-symbol-bounds (pretty-alist)
+      "Prepend a TAB character to each symbol in this alist,
+    this way compose-region called by prettify-symbols-mode
+    will use the correct width of the symbols
+    instead of the width measured by char-width."
+      (mapcar (lambda (el)
+                (setcdr el (string ?\t (cdr el)))
+                el)
+              pretty-alist))
+  (isg/time-section "helper-functions")
 #+END_SRC
 
 * machine settings
   split this into multiple source blocks to avoid a lot of git conflicts
 
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-machine-settings")
   (defun isg/default-machine-settings ()
     "Settings which apply to most of the machines."
     '((foreground-color "grey60")
@@ -245,9 +212,11 @@
       (magit-repos (("~/.emacs.d" . 0)
                     ("~/personal" . 0)
                     ("~/work" . 1)))))
+(isg/time-section "machine-settings")
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-windows-home-pc")
   (defvar isg/config-windows-home-pc
     '((default-font "-outline-Hack-normal-normal-normal-mono-13-*-*-*-c-*-iso10646-1")
       (post-setup-fn (lambda ()
@@ -265,9 +234,11 @@
                     ("D:\\work" . 1)))
       (frame-l ((top . 0) (left . 600) (width . 120) (height . 93)))
       (frame-r ((top . 0) (left . 1575) (width . 120) (height . 93)))))
+(isg/time-section "windows-home-pc")
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-chromebook")
   (defvar isg/config-chromebook
     '((default-font "-unknown-Hack-normal-normal-normal-*-11-*-*-*-m-0-iso10646-1")
       (post-setup-fn (lambda ()
@@ -278,9 +249,11 @@
                                "/usr/local/bin")))
       (frame-l ((top . 0) (left . 210) (width . 80) (height . 59)))
       (frame-r ((top . 0) (left . 780) (width . 80) (height . 59)))))
+(isg/time-section "chromebook")
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-old-ubuntu-laptop")
     (defvar isg/config-old-ubuntu-laptop
       '((default-font "-SRC-Hack-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
         (get-extra-paths (lambda ()
@@ -288,9 +261,11 @@
                                  "/usr/local/bin")))
         (frame-l ((top . 0) (left . 210) (width . 80) (height . 59)))
         (frame-r ((top . 0) (left . 780) (width . 80) (height . 59)))))
+(isg/time-section "old-ubuntu-laptop")
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-macbook-air")
   (defvar isg/config-macbook-air
     '((default-font "-apple-Inconsolata-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
       (machine-os "osx")
@@ -307,9 +282,11 @@
 
       (post-setup-fn (lambda ()
                        (setq inferior-lisp-program "lein repl")))))
+(isg/time-section "macbook-air")
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-ubuntu-vm")
   (defvar isg/config-ubuntu-vm
     '((default-font "-unknown-Inconsolata-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
       (get-extra-paths (lambda ()
@@ -318,6 +295,7 @@
       (url-opener "firefox")
       (frame-l ((top . 0) (left . 600) (width . 120) (height . 90)))
       (frame-r ((top . 0) (left . 1500) (width . 120) (height . 90)))))
+(isg/time-section "ubuntu-vm")
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -420,6 +398,7 @@
 * essential packages
 ** magit
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-magit")
    (use-package magit
      :commands magit-status
      :init
@@ -428,6 +407,7 @@
      (setq magit-repository-directories (isg/val 'magit-repos))
      :config
      (setq magit-push-always-verify nil))
+(isg/time-section "magit")
  #+END_SRC
 
 *** magit rebasing (e.g. squashing commits)
@@ -472,6 +452,7 @@
 
 ** org
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-org")
  (use-package org
    :demand t)
 
@@ -482,6 +463,7 @@
    (setq truncate-lines nil)
    (setq word-wrap t))
  (add-hook 'org-mode-hook 'soft-wrap-lines)
+(isg/time-section "org")
 #+END_SRC
 
  <2017-05-15 Mon>
@@ -492,6 +474,7 @@
  test by calling: org-gcal-fetch
 
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-gcal")
   ;; (use-package org-gcal
   ;;   :ensure t
   ;;   :config
@@ -501,14 +484,17 @@
   ;;   (add-to-list 'org-gcal-file-alist (cons "inderjit.gill@gmail.com" (isg/val 'gcal-file)))
   ;;   (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync)))
   ;;   (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync))))
+(isg/time-section "gcal")
 #+END_SRC
 
 ** hydra
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-hydra")
  (use-package hydra
    :ensure t
    :config
    (setq hydra-lv nil)) ;use echo area
+(isg/time-section "hydra")
  #+END_SRC
 
 ** ivy + swiper + counsel
@@ -517,6 +503,7 @@
    - It provides an interface to list, search, filter and perform actions on a collection of "things". These "things" can range from strings to buffers, Ivy doesn't really care. It just provides a way for the user to interact with this collection.
 
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-ivy/swiper/counsel")
   (use-package ivy
     :demand t
     :delight
@@ -600,10 +587,12 @@
     ("RET" nil "done" :color blue))
 
   (bind-keys ("C-c f"  . isg/hydra-counsel/body))
+(isg/time-section "ivy/swiper/counsel")
    #+END_SRC
 
 ** company - auto completion
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-company")
   (use-package company
     :defer t
     :delight
@@ -629,10 +618,12 @@
       (define-key company-active-map (kbd "C-n") 'company-select-next)
       (define-key company-active-map (kbd "C-p") 'company-select-previous)))
 
+(isg/time-section "company")
 #+END_SRC
 
 ** ibuffer
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-ibuffer")
   (defalias 'list-buffers 'ibuffer)
 
   (setq ibuffer-saved-filter-groups
@@ -661,11 +652,13 @@
   (add-hook 'ibuffer-mode-hook
             (lambda ()
               (ibuffer-switch-to-saved-filter-groups "default")))
+(isg/time-section "ibuffer")
 #+END_SRC
 
 * language modes
 ** language prep
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-lang-prep")
   ;; the ligature config code uses -iterate and -zip-pair
   (use-package dash
     :demand t)
@@ -687,10 +680,12 @@
                        "<<" "<<<" "<+>" ".." "..." "++" "+++"
                        "/=" ":::" ">=>" "->>" "<=>" "<=<" "<->")))
           (isg/correct-symbol-bounds (my-ligature-list ligs #Xe100))))
+(isg/time-section "lang-prep")
 #+END_SRC
 
 ** c
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-c")
    (add-hook 'c-mode-hook (lambda ()
                             ;;(add-to-list (make-local-variable 'company-backends) 'company-clang)
                             (setq comment-start "// "
@@ -700,6 +695,7 @@
    (use-package cmake-mode
      :mode "CMakeLists\\.txt")
 
+(isg/time-section "c")
  #+END_SRC
 ** clojure :disabled:
    #+BEGIN_SRC text
@@ -707,6 +703,7 @@
    :defer t
    :init
    (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode))
+(isg/time-section "cl")
    #+END_SRC
 
    #+BEGIN_SRC text
@@ -717,17 +714,21 @@
    (pretty-fn))
 
  (setq nrepl-hide-special-buffers t)
+(isg/time-section "cl")
    #+END_SRC
 ** csharp
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-csharp")
  (use-package csharp-mode
    :mode "\\.cs\\'"
    :init
    :config
    (setq default-tab-width 4))
+(isg/time-section "csharp")
  #+END_SRC
 ** css
    #+BEGIN_SRC emacs-lisp
+(isg/time-section "-css")
      (use-package css-mode
        :mode (("\\.css\\'" . css-mode)
               ("\\.less\\'" . css-mode))
@@ -736,6 +737,7 @@
        (add-hook 'css-mode-hook 'rainbow-mode)
        (setq css-indent-offset 2))
      (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
+(isg/time-section "css")
    #+END_SRC
 ** dart :disabled:
  #+BEGIN_SRC text
@@ -743,6 +745,7 @@
    :mode "\\.dart\\'"
    :config
    (setq dart-enable-analysis-server t))
+(isg/time-section "cl")
  #+END_SRC
 
 ** elm :disabled:
@@ -767,10 +770,12 @@
       ;;
       ;;(elm-oracle--get-completions-cached "List.a"))
       )
+(isg/time-section "cl")
   #+END_SRC
 
 ** glsl
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-glsl")
  (use-package glsl-mode
    :mode (("\\.glsl\\'" . glsl-mode)
           ("\\.vert\\'" . glsl-mode)
@@ -778,17 +783,21 @@
           ("\\.geom\\'" . glsl-mode))
    :init
    (autoload 'glsl-mode "glsl-mode" nil t))
+(isg/time-section "glsl")
  #+END_SRC
 ** go
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-go")
  (use-package go-mode
    :mode "\\.go\\'"
    :config
    (add-hook 'before-save-hook #'gofmt-before-save))
+(isg/time-section "go")
  #+END_SRC
 ** groovy :disabled:
  #+BEGIN_SRC text
   (add-to-list 'auto-mode-alist '("\\.gradle$" . groovy-mode))
+(isg/time-section "cl")
  #+END_SRC
 ** haskell
    https://commercialhaskell.github.io/intero/
@@ -821,6 +830,7 @@
 
 
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-haskell-config")
   (defun isg/haskell-config ()
     (interactive)
     (intero-mode)
@@ -840,6 +850,7 @@
     (add-hook 'haskell-mode-hook #'hindent-mode)
     :config
     (setq hindent-reformat-buffer-on-save t))
+(isg/time-section "haskell-config")
 #+END_SRC
 
 
@@ -851,6 +862,7 @@
   |         |                                                                        |
 
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-javascript")
  (use-package js2-mode
    :mode (;; ("\\.js\\'" . js2-mode)
           ("\\.es6\\'" . js2-mode))
@@ -866,10 +878,12 @@
 
 (use-package rjsx-mode
    :mode "\\.js\\'")
+(isg/time-section "javascript")
  #+END_SRC
 
 ** jsx
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-jsx")
  (use-package web-mode
    :mode (("\\.jsx\\'" . web-mode)
           ("\\.tsx\\'" . web-mode))
@@ -882,24 +896,29 @@
          (let ((web-mode-enable-part-face nil))
            ad-do-it)
        ad-do-it)))
+(isg/time-section "jsx")
  #+END_SRC
 ** markdown
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-markdown")
  (use-package markdown-mode
    :mode (("\\.md\\'" . markdown-mode)
           ("\\.markdown\\'" . markdown-mode)))
+(isg/time-section "markdown")
  #+END_SRC
 
 ** nim :disabled:
  #+BEGIN_SRC text
  (use-package nim-mode
    :mode "\\.nim\\'")
+(isg/time-section "cl")
  #+END_SRC
 
 ** purescript
 
 
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-purescript")
   (use-package purescript-mode
     :mode "\\.purs\\'"
     :config
@@ -939,6 +958,7 @@
     ;; nice glyphs for purescript with hasklig
     (setq prettify-symbols-alist (append my-hasklig-ligatures prettify-symbols-alist))
     (prettify-symbols-mode))
+(isg/time-section "purescript")
 #+END_SRC
 
    purescript syntax:
@@ -1023,6 +1043,7 @@
 
 ** reasonml
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-reasonml")
    (defun shell-cmd (cmd)
      "Returns the stdout output of a shell command or nil if the command returned
       an error"
@@ -1051,12 +1072,15 @@
 
      (setq merlin-ac-setup t))
 
+(isg/time-section "reasonml")
  #+END_SRC
 
 
 ** ruby
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-ruby")
  (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
+(isg/time-section "ruby")
  #+END_SRC
 ** rust
    http://julienblanchard.com/2016/fancy-rust-development-with-emacs/
@@ -1069,6 +1093,7 @@
    | C-c C-c C-t | cargo test  |
 
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-rust")
     ;; from: https://christian.kellner.me/2017/05/31/language-server-protocol-lsp-rust-and-emacs/
     ;; (use-package rust-mode
     ;;   :mode "\\.rs\\'"
@@ -1113,16 +1138,20 @@
                  )))
 
 
+(isg/time-section "rust")
 #+END_SRC
 
 ** scheme
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-scheme")
  (add-hook 'scheme-mode-hook
            (lambda ()
              (define-key scheme-mode-map (kbd ")") 'sp-up-sexp)))
+(isg/time-section "scheme")
  #+END_SRC
 ** seni
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-seni")
  (autoload 'seni-mode "seni" nil t)
  (add-to-list 'auto-mode-alist '("\\.seni$" . seni-mode))
  (add-hook 'seni-mode-hook 'smartparens-strict-mode)
@@ -1130,16 +1159,20 @@
            (lambda ()
              (define-key seni-mode-map (kbd ")") 'sp-up-sexp)))
 
+(isg/time-section "seni")
  #+END_SRC
 ** shader-mode
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-shader")
  (use-package shader-mode
    :mode "\\.shader\\'"
    :config
    (setq shader-indent-offset 2))
+(isg/time-section "shader")
  #+END_SRC
 ** sql
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-sql")
  (add-to-list 'auto-mode-alist
               '("\\.sql$" . (lambda ()
                               (sql-mode)
@@ -1148,11 +1181,14 @@
               '("\\.psql$" . (lambda ()
                               (sql-mode)
                               (sql-highlight-postgres-keywords))))
+(isg/time-section "sql")
  #+END_SRC
 ** toml-mode
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-toml")
  (use-package toml-mode
    :mode "\\.toml\\'")
+(isg/time-section "toml")
  #+END_SRC
 ** typescript
 
@@ -1177,6 +1213,7 @@
 
 
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-typescript")
  (use-package typescript-mode
    :mode "\\.ts\\'"
    :config
@@ -1195,25 +1232,31 @@
    (setq company-tooltip-align-annotations t)
    (tide-hl-identifier-mode +1))
 
+(isg/time-section "typescript")
  #+END_SRC
 ** vue
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-vue")
   (use-package vue-mode
     :mode "\\.vue\\'"
     :config
     ;; 0, 1, or 2, representing (respectively) none, low, and high coloring
     (setq mmm-submode-decoration-level 2))
+(isg/time-section "vue")
 #+END_SRC
 ** yaml
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-yaml")
   (use-package yaml-mode
     :mode "\\.yaml\\'")
+(isg/time-section "yaml")
 #+END_SRC
 * theming
 
   [[http://www.greghendershott.com/2017/02/emacs-themes.html]]
 
 #+BEGIN_SRC emacs-lisp
+  (isg/time-section "-spaceline-config")
   (require 'spaceline-config)
   (spaceline-emacs-theme)
   (spaceline-toggle-minor-modes-on)
@@ -1222,12 +1265,18 @@
   (setq powerline-raw " ")
   (setq ns-use-srgb-colorspace nil)
 
-  (setq powerline-default-separator 'wave)
-  (spaceline-compile)
+
+  ;; if the separate is going to be changed then spaceline-compile needs to be called
+  ;; this increases load time by 1s
+  ;; (setq powerline-default-separator 'wave)
+  ;; (spaceline-compile)
+
+  (isg/time-section "spaceline-config")
 #+END_SRC
 
 
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-theme-hydra")
 (defun isg/disable-all-themes ()
   (interactive)
   (mapc #'disable-theme custom-enabled-themes))
@@ -1278,17 +1327,21 @@ _DEL_: none
 
 (bind-keys ("C-c w t"  . isg/hydra-themes/body))
 
+(isg/time-section "theme-hydra")
 #+END_SRC
 
 * misc helper packages
 ** avy - moving the cursor by searching
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-avy")
  (use-package avy
    :bind ("M-h" . avy-goto-char-timer))
+(isg/time-section "avy")
  #+END_SRC
 
 ** deft
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-deft")
  (use-package deft
    :commands deft
    :config
@@ -1297,6 +1350,7 @@ _DEL_: none
          deft-text-mode 'org-mode
          deft-use-filename-as-title t
          deft-auto-save-interval 5.0))
+(isg/time-section "deft")
  #+END_SRC
 
 ** eshell
@@ -1305,6 +1359,7 @@ _DEL_: none
    $ cd /ssh:indy.io:
 
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-eshell")
   (defun isg/start-eshell (shell-name)
     "SHELL-NAME the name of the shell."
     (interactive "sEshell name: ")
@@ -1312,10 +1367,12 @@ _DEL_: none
     (if (string= "" shell-name)
         (rename-uniquely)
       (rename-buffer shell-name)))
+(isg/time-section "eshell")
 #+END_SRC
 
 ** exec-path-from-shell
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-exec-path")
    ;; have to ensure that this is run at startup so that 'cargo' can be
    ;; found when in rust mode and also so that the eshell works as expected
    ;;
@@ -1335,10 +1392,12 @@ _DEL_: none
        (exec-path-from-shell-initialize)))
 
 
+(isg/time-section "exec-path")
  #+END_SRC
 
 ** flycheck
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-flycheck")
    ;; setting up flycheck for eslint checks using instructions from:
    ;; http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
    ;;
@@ -1361,25 +1420,31 @@ _DEL_: none
      ;; customize flycheck temp file prefix
      (setq-default flycheck-temp-prefix ".flycheck")
      (setq flycheck-global-modes '(not go-mode org-mode)))
+(isg/time-section "flycheck")
  #+END_SRC
 
 ** highlight thing
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-highlight")
  (use-package highlight-thing
    :config
    (setq highlight-thing-delay-seconds 0.5)
    (setq highlight-thing-exclude-thing-under-point t))
+(isg/time-section "highlight")
  #+END_SRC
 
 
 ** htmlize
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-htmlize")
  (use-package htmlize
    :commands htmlize-buffer)
+(isg/time-section "htmlize")
  #+END_SRC
 
 ** smartparens-config
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-smartparens")
  (use-package smartparens
    :delight)
  (use-package smartparens-config
@@ -1455,6 +1520,7 @@ _DEL_: none
    ;; (define-key scheme-mode-map (kbd ")") 'sp-up-sexp)
    ;; (define-key clojure-mode-map (kbd ")") 'sp-up-sexp)
    )
+(isg/time-section "smartparens")
  #+END_SRC
 
 
@@ -1469,6 +1535,7 @@ _DEL_: none
   | C-x r U | Restore buffer state from register    |
 
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-undo-tree")
   (use-package undo-tree
     :ensure t
     :delight
@@ -1487,6 +1554,7 @@ _DEL_: none
       ("u"   undo-tree-visualize "visualize" :color blue)
       ("q"   nil "quit" :color blue))
     (global-set-key (kbd "C-M-/") 'hydra-undo-tree/body))
+(isg/time-section "undo-tree")
 #+END_SRC
 
 ** volatile-highlights
@@ -1494,36 +1562,45 @@ _DEL_: none
    When undoing text this highlights the changes
 
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-volatile")
    (use-package volatile-highlights
      :demand t
      :delight
      :config
      (volatile-highlights-mode))
+(isg/time-section "volatile")
  #+END_SRC
 
 ** wgrep
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-wgrep")
  (use-package wgrep
    :demand t)
+(isg/time-section "wgrep")
  #+END_SRC
 
 ** which key
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-which-key")
  (use-package which-key
    :demand t
    :delight
    :config
    (which-key-mode))
+(isg/time-section "which-key")
  #+END_SRC
 
 ** ws-butler
  #+BEGIN_SRC emacs-lisp
+(isg/time-section "-ws-butler")
    (use-package ws-butler
      :defer t)
+(isg/time-section "ws-butler")
  #+END_SRC
 
 * global settings
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-global")
   (defun isg/frame-setup ()
     (when (and (isg/val 'frame-r) (isg/val 'frame-l))
       (setq initial-frame-alist (isg/val 'frame-r)
@@ -1655,10 +1732,12 @@ _DEL_: none
     ("RET" nil "done" :color blue))
 
   (bind-keys ("C-c w s"  . isg/hydra-text-scale/body))
+(isg/time-section "global")
 #+END_SRC
 
 * global key settings
 #+BEGIN_SRC emacs-lisp
+(isg/time-section "-global-key")
   ;;; use winner mode keys for undo/redo operations on window configurations
   ;;; C-c left
   ;;; C-c right
@@ -1692,4 +1771,5 @@ _DEL_: none
               (global-set-key (car kons) (cdr kons)))
             (isg/val 'key-setup)))
   (isg/machine-set-keys)                 ; machine specific key bindings
+(isg/time-section "global-key")
 #+END_SRC

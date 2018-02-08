@@ -24,10 +24,54 @@
 
 
 ;; Added by Package.el.  This must come before configurations of
-;; installed packages.
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
 (package-initialize)
 
-(org-babel-load-file (expand-file-name "~/.emacs.d/isg-init.org"))
+(defvar isg/section-start-time (float-time))
+(defvar isg/section-end-time (float-time))
+(defvar isg/timings '())
+
+(defun isg/time-section (msg)
+  (setq isg/section-end-time (float-time))
+  (add-to-list 'isg/timings
+               (cons msg (format "%.3f" (- isg/section-end-time
+                                           isg/section-start-time))) t)
+  (setq isg/section-start-time (float-time)))
+
+(isg/time-section "timing-decl")
+
+(require 'package)
+(setq package-enable-at-startup nil)
+(setcdr (last package-archives)
+        '(("melpa-stable" . "https://stable.melpa.org/packages/")
+          ("melpa" . "https://melpa.org/packages/")
+          ("org" . "https://orgmode.org/elpa/")))
+
+(setq package-check-signature nil)
+
+(unless (package-installed-p 'use-package)
+  ;; check for new packages (package versions)
+  (message "%s" "Emacs Prelude is now refreshing its package database...")
+  (package-refresh-contents)
+  (message "%s" " done.")
+  (package-install 'use-package))
+
+;; after use-package-always-ensure is set, all subsequent use-package
+;; statements will download packages if needed
+(setq use-package-always-ensure t)
+(setq use-package-verbose t)
+
+(require 'cl)
+; third party code that isn't in melpa-stable yet
+(push "~/.emacs.d/external" load-path)
+
+(defvar isg/fully-refreshed-load nil)
+
+(if isg/fully-refreshed-load
+    (org-babel-load-file (expand-file-name "~/.emacs.d/isg-init.org"))
+  (load "~/.emacs.d/isg-init.el"))
 
 (setq custom-file "~/.emacs.d/isg-custom.el")
 (load custom-file)
