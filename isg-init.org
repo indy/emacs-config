@@ -451,16 +451,15 @@
 ** org
 #+BEGIN_SRC emacs-lisp
   (isg/timer "org"
-             (use-package org
-               :demand t)
              (defun soft-wrap-lines ()
                "Make lines wrap at window edge and on word boundary, in current buffer."
                (interactive)
                (setq truncate-lines nil)
                (setq word-wrap t))
-             (add-hook 'org-mode-hook 'soft-wrap-lines))
-
-
+             (use-package org-mode
+               :mode "\\.org\\'"
+               :config
+               (add-hook 'org-mode-hook 'soft-wrap-lines)))
 #+END_SRC
 
  <2017-05-15 Mon>
@@ -1477,9 +1476,9 @@
              (use-package ws-butler
                :defer t))
 #+END_SRC
-* global settings
+* frame-setup
 #+BEGIN_SRC emacs-lisp
-  (isg/timer "global"
+  (isg/timer "frame-setup"
              (defun isg/frame-setup ()
                (when (and (isg/val 'frame-r) (isg/val 'frame-l))
                  (setq initial-frame-alist (isg/val 'frame-r)
@@ -1492,6 +1491,17 @@
                (let ((fn (isg/val property)))
                  (if fn (funcall fn))))
 
+             (isg/frame-setup)
+             (make-frame)
+
+             (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+             (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+             (if (fboundp 'menu-bar-mode) (menu-bar-mode -1)))
+#+END_SRC
+* global settings
+#+BEGIN_SRC emacs-lisp
+  (isg/timer "global-settings"
+             (isg/run-machine-function 'post-setup-fn)
              (setq-default show-trailing-whitespace nil)
              (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
@@ -1506,29 +1516,20 @@
              (when (display-graphic-p)
                (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
 
-             (isg/frame-setup)
-             (isg/run-machine-function 'post-setup-fn)
-
              (autoload 'zap-up-to-char "misc"
                "Kill up to, but not including ARGth occurrence of CHAR." t)
 
              ;; give buffers unique names
              (require 'uniquify)
              (setq uniquify-buffer-name-style 'post-forward)
-
              (global-auto-revert-mode t) ; reload files that have been changed outside of emacs
              (show-paren-mode t)
              (global-font-lock-mode t)
              (transient-mark-mode t) ; highlight selected text region
-
              (fset 'yes-or-no-p 'y-or-n-p)
              (setq-default font-lock-maximum-decoration t)
              (setq-default indent-tabs-mode nil)
              (blink-cursor-mode 0)
-             (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-             (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-             (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-
              (if (not (file-exists-p (isg/val 'save-folder)))
                  (make-directory (isg/val 'save-folder)))
 
@@ -1583,10 +1584,11 @@
                 default-directory "~/"
                 multi-term-program "/bin/bash")))
 
-             (make-frame)
-
              ;; the standard set of company backends
-             (setq company-backends '(company-semantic company-dabbrev-code company-dabbrev company-keywords))
+             (setq company-backends '(company-semantic
+                                      company-dabbrev-code
+                                      company-dabbrev
+                                      company-keywords))
 
              ;; turn on flychecking globally
              (add-hook 'after-init-hook #'global-flycheck-mode)
@@ -1595,9 +1597,6 @@
              (require 'tramp)
              (if (eq system-type 'windows-nt)
                  (setq tramp-default-method "plinkx"))
-
-             ;; C-c   == user defined prefixes
-             ;; C-c w == window related functions
 
              (defhydra isg/hydra-text-scale (:hint nil :color pink)
                "
@@ -1611,6 +1610,9 @@
                ("RET" nil "done" :color blue))
 
              (bind-keys ("C-c w s"  . isg/hydra-text-scale/body)))
+
+
+
 #+END_SRC
 * global key settings
 #+BEGIN_SRC emacs-lisp

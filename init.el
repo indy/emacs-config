@@ -22,6 +22,9 @@
 
 ;;; Code:
 
+;; set this to t in order to rebuild isg-init.el from isg-init.org
+;;
+(defvar isg/fully-refreshed-load nil)
 (defvar isg/timing-hash (make-hash-table :test 'equal))
 
 (defun isg/time-section-start (key)
@@ -38,6 +41,13 @@
      (isg/time-section-start ,key)
      ,@body
      (isg/time-section-stop ,key)))
+
+(defun isg/time-show-slower-than (min)
+    (progn
+      (message "________________________START TIMES________________________")
+      (maphash (lambda (k _v) (if (> _v min) (message "%.3f: %s" _v k))) isg/timing-hash)
+      (message "___________________________________________________________")
+      nil))
 
 (isg/time-section-start "overall")
 
@@ -73,12 +83,10 @@
 ; third party code that isn't in melpa-stable yet
 (push "~/.emacs.d/external" load-path)
 
-(defvar isg/fully-refreshed-load nil)
-
 (if isg/fully-refreshed-load
-    (isg/timer "load org-babel-load-file"
+    (isg/timer "load isg-init.org"
                (org-babel-load-file (expand-file-name "~/.emacs.d/isg-init.org")))
-  (isg/timer "load isg-init.org"
+  (isg/timer "load isg-init.el"
              (load "~/.emacs.d/isg-init.el")))
 
 (isg/timer "custom-file"
@@ -86,9 +94,7 @@
            (load custom-file))
 
 (isg/time-section-stop "overall")
-
-(message "________________________START TIMES________________________")
-(maphash (lambda (k _v) (if (> _v 0.01) (message "%.3f: %s" _v k))) isg/timing-hash)
-(message "___________________________________________________________")
+;; show slowest sections in the *Messages* buffer
+(isg/time-show-slower-than 0.09)
 
 (provide 'init)
