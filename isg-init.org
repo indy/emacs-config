@@ -1186,24 +1186,6 @@
   [[http://www.greghendershott.com/2017/02/emacs-themes.html]]
 
 #+BEGIN_SRC emacs-lisp
-  (isg/timer "spaceline-config"
-             (require 'spaceline-config)
-             (spaceline-emacs-theme)
-             (spaceline-toggle-minor-modes-on)
-
-             (setq powerline-height 20)
-             (setq powerline-raw " ")
-             (setq ns-use-srgb-colorspace nil)
-
-             ;; if the separate is going to be changed then spaceline-compile needs to be called
-             ;; this increases load time by 1s
-             ;; (setq powerline-default-separator 'wave)
-             ;; (spaceline-compile)
-             )
-#+END_SRC
-
-
-#+BEGIN_SRC emacs-lisp
   (isg/timer "theme-hydra"
              (defun isg/disable-all-themes ()
                (interactive)
