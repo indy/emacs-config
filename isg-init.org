@@ -482,7 +482,7 @@
    - It provides an interface to list, search, filter and perform actions on a collection of "things". These "things" can range from strings to buffers, Ivy doesn't really care. It just provides a way for the user to interact with this collection.
 
 #+BEGIN_SRC emacs-lisp
-  (isg/timer "ivy/swiper/counsel"
+  (isg/timer "ivy"
              (use-package ivy
                :demand t
                :delight
@@ -494,10 +494,12 @@
                      ivy-rich-path-style 'abbrev)
                (ivy-mode 1)
                (setq ivy-use-virtual-buffers t
-                     ivy-count-format "%d/%d "))
+                     ivy-count-format "%d/%d ")))
 
-             (use-package swiper)
+  (isg/timer "swiper"
+             (use-package swiper))
 
+  (isg/timer "counsel"
              (use-package counsel
                :init
                (setq counsel-grep-base-command "rg -i -M 120 --no-heading --line-number --color never %s %s")
