@@ -22,6 +22,24 @@
 
 ;;; Code:
 
+(defvar isg/timing-hash (make-hash-table :test 'equal))
+
+(defun isg/time-section-start (key)
+  (puthash key (float-time) isg/timing-hash))
+
+(defun isg/time-section-stop (key)
+  (if (gethash key isg/timing-hash)
+      (puthash key (- (float-time)
+                      (gethash key isg/timing-hash))
+               isg/timing-hash)))
+
+(defmacro isg/timer (key &rest body)
+  `(progn
+     (isg/time-section-start ,key)
+     ,@body
+     (isg/time-section-stop ,key)))
+
+(isg/time-section-start "overall")
 
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
@@ -29,34 +47,22 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
-(defvar isg/section-start-time (float-time))
-(defvar isg/section-end-time (float-time))
-(defvar isg/timings '())
+(isg/timer "package"
+           (require 'package)
+           (setq package-enable-at-startup nil)
+           (setcdr (last package-archives)
+                   '(("melpa-stable" . "https://stable.melpa.org/packages/")
+                     ("melpa" . "https://melpa.org/packages/")
+                     ("org" . "https://orgmode.org/elpa/")))
 
-(defun isg/time-section (msg)
-  (setq isg/section-end-time (float-time))
-  (add-to-list 'isg/timings
-               (cons msg (format "%.3f" (- isg/section-end-time
-                                           isg/section-start-time))) t)
-  (setq isg/section-start-time (float-time)))
+           (setq package-check-signature nil)
 
-(isg/time-section "timing-decl")
-
-(require 'package)
-(setq package-enable-at-startup nil)
-(setcdr (last package-archives)
-        '(("melpa-stable" . "https://stable.melpa.org/packages/")
-          ("melpa" . "https://melpa.org/packages/")
-          ("org" . "https://orgmode.org/elpa/")))
-
-(setq package-check-signature nil)
-
-(unless (package-installed-p 'use-package)
-  ;; check for new packages (package versions)
-  (message "%s" "Emacs Prelude is now refreshing its package database...")
-  (package-refresh-contents)
-  (message "%s" " done.")
-  (package-install 'use-package))
+           (unless (package-installed-p 'use-package)
+             ;; check for new packages (package versions)
+             (message "%s" "Emacs Prelude is now refreshing its package database...")
+             (package-refresh-contents)
+             (message "%s" " done.")
+             (package-install 'use-package)))
 
 ;; after use-package-always-ensure is set, all subsequent use-package
 ;; statements will download packages if needed
@@ -70,10 +76,19 @@
 (defvar isg/fully-refreshed-load nil)
 
 (if isg/fully-refreshed-load
-    (org-babel-load-file (expand-file-name "~/.emacs.d/isg-init.org"))
-  (load "~/.emacs.d/isg-init.el"))
+    (isg/timer "load org-babel-load-file"
+               (org-babel-load-file (expand-file-name "~/.emacs.d/isg-init.org")))
+  (isg/timer "load isg-init.org"
+             (load "~/.emacs.d/isg-init.el")))
 
-(setq custom-file "~/.emacs.d/isg-custom.el")
-(load custom-file)
+(isg/timer "custom-file"
+           (setq custom-file "~/.emacs.d/isg-custom.el")
+           (load custom-file))
+
+(isg/time-section-stop "overall")
+
+(message "________________________START TIMES________________________")
+(maphash (lambda (k _v) (if (> _v 0.01) (message "%.3f: %s" _v k))) isg/timing-hash)
+(message "___________________________________________________________")
 
 (provide 'init)
