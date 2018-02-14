@@ -55,7 +55,8 @@
   |               |         |                     |
   | Reset (X)     | X h     | hard reset          |
   |               |         |                     |
-  | Stashing (z)  |         |                     |
+  | Stashing (z)  | z z     | stash               |
+  |               | z p     | pop stash           |
   |               |         |                     |
   | Merging (m)   |         |                     |
   |---------------+---------+---------------------|
