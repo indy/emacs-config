@@ -1,37 +1,41 @@
 
-  |--------------+-------------+--------------------------------------------------|
-  | Section      | Key         | Command                                          |
-  |--------------+-------------+--------------------------------------------------|
-  | Misc.        | M-/         | dabbrev-expand                                   |
-  |              | M-x imenu   | list all functions and top-level variables       |
-  |              |             |                                                  |
-  | Undo         | C-/         | undo-tree-undo                                   |
-  |              | C-M-/       | hydra-undo-tree/body                             |
-  |              |             |                                                  |
-  | Search       | C-s         | Counsel grep (C-y = search current word)         |
-  |              | C-r         | counsel-rg                                       |
-  |              | C-M-s       | isearch forward                                  |
-  |              | C-M-r       | isearch backward                                 |
-  |              | C-M-g       | counsel-git                                      |
-  |              |             |                                                  |
-  |              | C-c C-o     | print search results into new buffer             |
-  |              | C-x C-q     | ivy-wgrep-change-to-wgrep-mode                   |
-  |              | C-c C-c     | commit changes made in wgrep mode                |
-  |              |             |                                                  |
-  |              | C-c f       | hydra show counsel options                       |
-  |              |             |                                                  |
-  | Org Mode     | C-c C-c     | Eval code within BEGIN_SRC/END_SRC blocks        |
-  |              | C-c '       | Open up a mini-buffer for editing the code block |
-  |              |             |                                                  |
-  | Highlighting | C-h .       | highlight-symbol-at-point                        |
-  |              | C-h r       | remove highlights                                |
-  |              | C-h h       | highlight-regexp                                 |
-  |              | C-h p       | highlight-phrase and choose colour               |
-  |              |             |                                                  |
-  | Navigation   | C-spc C-spc | set mark, push onto mark ring                    |
-  |              | C-u C-spc   | restore mark from mark ring                      |
-  |              | M-h         | avy-goto-char-timer                              |
-  |--------------+-------------+--------------------------------------------------|
+  |--------------+----------------+--------------------------------------------------|
+  | Section      | Key            | Command                                          |
+  |--------------+----------------+--------------------------------------------------|
+  | Misc.        | M-/            | dabbrev-expand                                   |
+  |              | M-x imenu      | list all functions and top-level variables       |
+  |              |                |                                                  |
+  | Undo         | C-/            | undo-tree-undo                                   |
+  |              | C-M-/          | hydra-undo-tree/body                             |
+  |              |                |                                                  |
+  | Search       | C-s            | Counsel grep (C-y = search current word)         |
+  |              | C-r            | counsel-rg                                       |
+  |              | C-M-s          | isearch forward                                  |
+  |              | C-M-r          | isearch backward                                 |
+  |              | C-M-g          | counsel-git                                      |
+  |              |                |                                                  |
+  |              | C-c C-o        | print search results into new buffer             |
+  |              | C-x C-q        | ivy-wgrep-change-to-wgrep-mode                   |
+  |              | C-c C-c        | commit changes made in wgrep mode                |
+  |              |                |                                                  |
+  |              | C-c f          | hydra show counsel options                       |
+  |              |                |                                                  |
+  | Org Mode     | C-c C-c        | Eval code within BEGIN_SRC/END_SRC blocks        |
+  |              | C-c '          | Open up a mini-buffer for editing the code block |
+  |              |                |                                                  |
+  | Highlighting | C-h .          | highlight-symbol-at-point                        |
+  |              | C-h r          | remove highlights                                |
+  |              | C-h h          | highlight-regexp                                 |
+  |              | C-h p          | highlight-phrase and choose colour               |
+  |              |                |                                                  |
+  | Navigation   | C-spc C-spc    | set mark, push onto mark ring                    |
+  |              | C-u C-spc      | restore mark from mark ring                      |
+  |              | M-h            | avy-goto-char-timer                              |
+  |              |                |                                                  |
+  | Sql          | M-x sql-sqlite |                                                  |
+  |              | C-c C-c        | send paragraph to sql buffer                     |
+  |              | C-c C-r        | send region to sql buffer                        |
+  |--------------+----------------+--------------------------------------------------|
 
 
   |---------------+---------+---------------------|
@@ -478,7 +482,7 @@
                (setq word-wrap t))
              (use-package org-mode
                :mode "\\.org\\'"
-               :config
+               :init
                (add-hook 'org-mode-hook 'soft-wrap-lines)))
 #+END_SRC
 
@@ -1133,7 +1137,7 @@
              (add-to-list 'auto-mode-alist
                           '("\\.sql$" . (lambda ()
                                           (sql-mode)
-                                          (sql-highlight-postgres-keywords))))
+                                          (sql-highlight-sqlite-keywords))))
              (add-to-list 'auto-mode-alist
                           '("\\.psql$" . (lambda ()
                                            (sql-mode)
