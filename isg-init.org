@@ -260,6 +260,8 @@
   (isg/timer "old-ubuntu-laptop"
              (defvar isg/config-old-ubuntu-laptop
                '((default-font "-SRC-Hack-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
+                 (racer-cmd "/home/indy/code/rust/racer/target/release/racer")
+                 (racer-rust-src-path "/home/indy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src")
                  (get-extra-paths (lambda ()
                                     (list (concat (getenv "HOME") "/local/bin")
                                           "/usr/local/bin")))
@@ -1057,27 +1059,19 @@
    cargo.el is a minor mode which allows us to run cargo commands from emacs like:
    | key         | command     |
    |-------------+-------------|
+   | C-c C-c ret | cargo fmt   |
    | C-c C-c C-b | cargo build |
    | C-c C-c C-r | cargo run   |
    | C-c C-c C-t | cargo test  |
 
+   cargo-process-run-bin
+
+
+   one day try and get the lsp stuff working:
+   https://christian.kellner.me/2017/05/31/language-server-protocol-lsp-rust-and-emacs/
+
 #+BEGIN_SRC emacs-lisp
   (isg/timer "rust"
-             ;; from: https://christian.kellner.me/2017/05/31/language-server-protocol-lsp-rust-and-emacs/
-             ;; (use-package rust-mode
-             ;;   :mode "\\.rs\\'"
-             ;;   :init
-             ;;   (setq rust-format-on-save t))
-             ;; (use-package lsp-mode
-             ;;   :init
-             ;;   (add-hook 'prog-mode-hook 'lsp-mode)
-             ;;   :config
-             ;;   (use-package lsp-flycheck
-             ;;     :ensure f ; comes with lsp-mode
-             ;;     :after flycheck))
-             ;; (use-package lsp-rust
-             ;;   :after lsp-mode)
-
              (use-package company-racer
                :defer t)
 
@@ -1098,12 +1092,12 @@
                (add-hook 'rust-mode-hook
                          '(lambda ()
                             (racer-mode)
-                            (add-to-list (make-local-variable 'company-backends) 'company-racer)
+                            (add-to-list (make-local-variable 'company-backends)
+                                         'company-racer)
                             (cargo-minor-mode)
                             ;; Key binding to jump to method definition
-                            (local-set-key (kbd "M-.") #'racer-find-definition)
                             (local-set-key (kbd "<tab>") #'company-indent-or-complete-common)
-                            (local-set-key (kbd "C-c <tab>") #'rust-format-buffer)))))
+                            (local-set-key (kbd "M-.") #'racer-find-definition)))))
 
 #+END_SRC
 ** scheme
