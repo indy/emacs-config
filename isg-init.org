@@ -475,23 +475,28 @@
     z
 
 ** org
+
 #+BEGIN_SRC emacs-lisp
   (isg/timer "org"
-             (defun soft-wrap-lines ()
-               "Make lines wrap at window edge and on word boundary, in current buffer."
-               (interactive)
-               (setq truncate-lines nil)
-               (setq word-wrap t))
              (use-package org-mode
                :mode "\\.org\\'"
                :init
-               (add-hook 'org-mode-hook 'soft-wrap-lines)))
+               (use-package org-bullets
+                 :init
+                 (setq org-bullets-bullet-list '("▶")))
+               (add-hook 'org-mode-hook (lambda ()
+                                          (setq truncate-lines nil)
+                                          (setq word-wrap t)
+                                          (org-bullets-mode 1)))
+               :config
+               (setq org-hide-leading-stars t)
+               (setq org-startup-folded t)))
 #+END_SRC
 
- <2017-05-15 Mon>
- http://cestlaz.github.io/posts/using-emacs-26-gcal/
- https://www.youtube.com/watch?v=vO_RF2dK7M0
- https://github.com/myuhe/org-gcal.el
+       <2017-05-15 Mon>
+       http://cestlaz.github.io/posts/using-emacs-26-gcal/
+       https://www.youtube.com/watch?v=vO_RF2dK7M0
+       https://github.com/myuhe/org-gcal.el
 
 ** hydra
 #+BEGIN_SRC emacs-lisp
