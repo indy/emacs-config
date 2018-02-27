@@ -229,7 +229,7 @@
                  (racer-cmd "C:\\Users\\indy\\bin\\racer.exe")
                  (racer-rust-src-path "c:\\Users\\indy\\.rustup\\toolchains\\nightly-x86_64-pc-windows-msvc\\lib\\rustlib\\src\\rust\\src\\")
                  (save-folder "d:/scratch/emacs-saves")
-                 (url-opener "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome")
+                 (url-opener "C:\\Program Files\\Mozilla Firefox\\firefox")
                  (deft-directory "C:\\Users\\indy\\personal\\deft")
                  (gcal-file "D:\\Google Drive\\Docs\\notes\\gcal.org")
                  (magit-repos (("C:\\Users\\indy\\.emacs.d" . 0)
@@ -1074,6 +1074,8 @@
 
    one day try and get the lsp stuff working:
    https://christian.kellner.me/2017/05/31/language-server-protocol-lsp-rust-and-emacs/
+   https://gist.github.com/jonathandturner/f529be1ed6e25f06952f0600dcfa9a3d
+   last attempt at this was <2018-02-27 Tue> - tried it on the Mac, which should have been the easiest to get working. It took ages to compile, worked like the existing setup for a few minutes and then stopped working.
 
 #+BEGIN_SRC emacs-lisp
   (isg/timer "rust"
