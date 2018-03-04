@@ -1,70 +1,35 @@
 
-  |--------------+----------------+--------------------------------------------------|
-  | Section      | Key            | Command                                          |
-  |--------------+----------------+--------------------------------------------------|
-  | Misc.        | M-/            | dabbrev-expand                                   |
-  |              | M-x imenu      | list all functions and top-level variables       |
-  |              |                |                                                  |
-  | Undo         | C-/            | undo-tree-undo                                   |
-  |              | C-M-/          | hydra-undo-tree/body                             |
-  |              |                |                                                  |
-  | Search       | C-s            | Counsel grep (C-y = search current word)         |
-  |              | C-r            | counsel-rg                                       |
-  |              | C-M-s          | isearch forward                                  |
-  |              | C-M-r          | isearch backward                                 |
-  |              | C-M-g          | counsel-git                                      |
-  |              |                |                                                  |
-  |              | C-c C-o        | print search results into new buffer             |
-  |              | C-x C-q        | ivy-wgrep-change-to-wgrep-mode                   |
-  |              | C-c C-c        | commit changes made in wgrep mode                |
-  |              |                |                                                  |
-  |              | C-c f          | hydra show counsel options                       |
-  |              |                |                                                  |
-  | Org Mode     | C-c C-c        | Eval code within BEGIN_SRC/END_SRC blocks        |
-  |              | C-c '          | Open up a mini-buffer for editing the code block |
-  |              |                |                                                  |
-  | Highlighting | C-h .          | highlight-symbol-at-point                        |
-  |              | C-h r          | remove highlights                                |
-  |              | C-h h          | highlight-regexp                                 |
-  |              | C-h p          | highlight-phrase and choose colour               |
-  |              |                |                                                  |
-  | Navigation   | C-spc C-spc    | set mark, push onto mark ring                    |
-  |              | C-u C-spc      | restore mark from mark ring                      |
-  |              | M-h            | avy-goto-char-timer                              |
-  |              |                |                                                  |
-  | Sql          | M-x sql-sqlite |                                                  |
-  |              | C-c C-c        | send paragraph to sql buffer                     |
-  |              | C-c C-r        | send region to sql buffer                        |
-  |--------------+----------------+--------------------------------------------------|
-
-
-  |---------------+---------+---------------------|
-  | [[magit]]         |         |                     |
-  |---------------+---------+---------------------|
-  |               | C-c v   | magit-status        |
-  |               | C-c C-c | magit-status        |
-  |               |         |                     |
-  |               | c c     | commit              |
-  |               | C-c C-c | actually commit     |
-  |               |         |                     |
-  | Push/Pull     | F u     | pull                |
-  |               | P u     | push                |
-  |               |         |                     |
-  | Staging       | s       | stage a file        |
-  |               | S       | stage all files     |
-  |               | u       | unstage file        |
-  |               |         |                     |
-  | Branching (b) | b b     | switch branch       |
-  |               | b c     | checkout new branch |
-  |               |         |                     |
-  | Reset (X)     | X h     | hard reset          |
-  |               |         |                     |
-  | Stashing (z)  | z z     | stash               |
-  |               | z p     | pop stash           |
-  |               |         |                     |
-  | Merging (m)   |         |                     |
-  |---------------+---------+---------------------|
-
+  |--------------+-------------+--------------------------------------------|
+  | Section      | Key         | Command                                    |
+  |--------------+-------------+--------------------------------------------|
+  | Misc.        | M-/         | dabbrev-expand                             |
+  |              | M-x imenu   | list all functions and top-level variables |
+  |              |             |                                            |
+  | Undo         | C-/         | undo-tree-undo                             |
+  |              | C-M-/       | hydra-undo-tree/body                       |
+  |              |             |                                            |
+  | Search       | C-s         | Counsel grep (C-y = search current word)   |
+  |              | C-r         | counsel-rg                                 |
+  |              | C-M-s       | isearch forward                            |
+  |              | C-M-r       | isearch backward                           |
+  |              | C-M-g       | counsel-git                                |
+  |              |             |                                            |
+  |              | C-c C-o     | print search results into new buffer       |
+  |              | C-x C-q     | ivy-wgrep-change-to-wgrep-mode             |
+  |              | C-c C-c     | commit changes made in wgrep mode          |
+  |              |             |                                            |
+  |              | C-c f       | hydra show counsel options                 |
+  |              |             |                                            |
+  | Highlighting | C-h .       | highlight-symbol-at-point                  |
+  |              | C-h r       | remove highlights                          |
+  |              | C-h h       | highlight-regexp                           |
+  |              | C-h p       | highlight-phrase and choose colour         |
+  |              |             |                                            |
+  | Navigation   | C-spc C-spc | set mark, push onto mark ring              |
+  |              | C-u C-spc   | restore mark from mark ring                |
+  |              | M-h         | avy-goto-char-timer                        |
+  |              |             |                                            |
+  |--------------+-------------+--------------------------------------------|
 
   |-----------+---------+---------------------------------------|
   | Registers | C-x r   | Prefix all commands with C-x r        |
@@ -98,6 +63,8 @@
   press f3 to insert a 0
   C-)
   the 0 in subsequent invocations will be replaced with the next integer
+
+  kmacro-set-counter to change value
 
 * helper functions
 #+BEGIN_SRC emacs-lisp
@@ -422,6 +389,34 @@
 
 * essential packages
 ** magit
+  |---------------+---------+---------------------|
+  | Section       | Key     | Command             |
+  |---------------+---------+---------------------|
+  |               | C-c v   | magit-status        |
+  |               | C-c C-c | magit-status        |
+  |               |         |                     |
+  |               | c c     | commit              |
+  |               | C-c C-c | actually commit     |
+  |               |         |                     |
+  | Push/Pull     | F u     | pull                |
+  |               | P u     | push                |
+  |               |         |                     |
+  | Staging       | s       | stage a file        |
+  |               | S       | stage all files     |
+  |               | u       | unstage file        |
+  |               |         |                     |
+  | Branching (b) | b b     | switch branch       |
+  |               | b c     | checkout new branch |
+  |               |         |                     |
+  | Reset (X)     | X h     | hard reset          |
+  |               |         |                     |
+  | Stashing (z)  | z z     | stash               |
+  |               | z p     | pop stash           |
+  |               |         |                     |
+  | Merging (m)   |         |                     |
+  |---------------+---------+---------------------|
+
+
  #+BEGIN_SRC emacs-lisp
    (isg/timer "magit"
               (use-package magit
@@ -475,6 +470,13 @@
     z
 
 ** org
+
+  |----------+---------+--------------------------------------------------|
+  | Section  | Key     | Command                                          |
+  |----------+---------+--------------------------------------------------|
+  | Org Mode | C-c C-c | Eval code within BEGIN_SRC/END_SRC blocks        |
+  |          | C-c '   | Open up a mini-buffer for editing the code block |
+  |----------+---------+--------------------------------------------------|
 
 #+BEGIN_SRC emacs-lisp
   (isg/timer "org"
@@ -643,7 +645,8 @@
                             ("seni" (mode . seni-mode))
                             ("rust" (mode . rust-mode))
                             ("vue" (name . "\\.vue"))
-                            ("js" (mode . js2-mode))
+                            ("js" (or (mode . js2-mode)
+                                      (mode . rjsx-mode)))
                             ("purescript" (mode . purescript-mode))
                             ("haskell" (mode . haskell-mode))
                             ("go" (mode . go-mode))
@@ -1133,6 +1136,22 @@
                (setq shader-indent-offset 2)))
 #+END_SRC
 ** sql
+
+   to connect to a sql process, first open an sql file, then from that buffer run M-x sql-sqlite
+   C-c C-c should now work
+
+   to formatting the results in the *SQL* buffer:
+   .headers on
+   .mode column
+
+  |---------+----------------+------------------------------|
+  | Section | Key            | Command                      |
+  |---------+----------------+------------------------------|
+  | Sql     | M-x sql-sqlite |                              |
+  |         | C-c C-c        | send paragraph to sql buffer |
+  |         | C-c C-r        | send region to sql buffer    |
+  |---------+----------------+------------------------------|
+
 #+BEGIN_SRC emacs-lisp
   (isg/timer "sql"
              (add-to-list 'auto-mode-alist

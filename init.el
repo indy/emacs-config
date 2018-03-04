@@ -24,6 +24,7 @@
 
 ;; set this to t in order to rebuild isg-init.el from isg-init.org
 ;;
+
 (defvar isg/fully-refreshed-load nil)
 (defvar isg/timing-hash (make-hash-table :test 'equal))
 
