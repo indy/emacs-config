@@ -218,6 +218,8 @@
                                     (list (concat (getenv "GOPATH") "/bin")
                                           (concat (getenv "HOME") "/local/bin")
                                           "/usr/local/bin")))
+                 (racer-cmd "/home/indy/.cargo/bin/racer")
+                 (racer-rust-src-path "/home/indy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src")
                  (frame-l ((top . 0) (left . 210) (width . 80) (height . 59)))
                  (frame-r ((top . 0) (left . 780) (width . 80) (height . 59))))))
 
