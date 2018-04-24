@@ -1540,134 +1540,160 @@
 #+END_SRC
 * global settings
 #+BEGIN_SRC emacs-lisp
-    (isg/timer "global-settings"
+  (isg/timer "global-settings"
 
-               (let ((fn (isg/val 'post-setup-fn)))
-                 (if fn (funcall fn)))
+             (let ((fn (isg/val 'post-setup-fn)))
+               (if fn (funcall fn)))
 
-               (setq-default show-trailing-whitespace nil)
-               (add-hook 'before-save-hook 'delete-trailing-whitespace)
+             (setq-default show-trailing-whitespace nil)
+             (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-               ;; Make sure it uses UTF-8 across the board
-               (prefer-coding-system 'utf-8)
-               (set-language-environment "UTF-8")
-               (set-default-coding-systems 'utf-8)
-               (set-terminal-coding-system 'utf-8)
-               (set-keyboard-coding-system 'utf-8)
-               (setq locale-coding-system 'utf-8)
-               (setq default-file-name-coding-system 'utf-8)
-               (when (display-graphic-p)
-                 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
+             ;; Make sure it uses UTF-8 across the board
+             (prefer-coding-system 'utf-8)
+             (set-language-environment "UTF-8")
+             (set-default-coding-systems 'utf-8)
+             (set-terminal-coding-system 'utf-8)
+             (set-keyboard-coding-system 'utf-8)
+             (setq locale-coding-system 'utf-8)
+             (setq default-file-name-coding-system 'utf-8)
+             (when (display-graphic-p)
+               (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
 
-               (autoload 'zap-up-to-char "misc"
-                 "Kill up to, but not including ARGth occurrence of CHAR." t)
+             (autoload 'zap-up-to-char "misc"
+               "Kill up to, but not including ARGth occurrence of CHAR." t)
 
-               ;; give buffers unique names
-               (require 'uniquify)
-               (setq uniquify-buffer-name-style 'post-forward)
-               (global-auto-revert-mode t) ; reload files that have been changed outside of emacs
-               (show-paren-mode t)
-               (global-font-lock-mode t)
-               (transient-mark-mode t) ; highlight selected text region
-               (fset 'yes-or-no-p 'y-or-n-p)
-               (setq-default font-lock-maximum-decoration t)
-               (setq-default indent-tabs-mode nil)
-               (blink-cursor-mode 0)
-               (if (not (file-exists-p (isg/val 'save-folder)))
-                   (make-directory (isg/val 'save-folder)))
+             ;; give buffers unique names
+             (require 'uniquify)
+             (setq uniquify-buffer-name-style 'post-forward)
+             (global-auto-revert-mode t) ; reload files that have been changed outside of emacs
+             (show-paren-mode t)
+             (global-font-lock-mode t)
+             (transient-mark-mode t) ; highlight selected text region
+             (fset 'yes-or-no-p 'y-or-n-p)
+             (setq-default font-lock-maximum-decoration t)
+             (setq-default indent-tabs-mode nil)
+             (blink-cursor-mode 0)
+             (if (not (file-exists-p (isg/val 'save-folder)))
+                 (make-directory (isg/val 'save-folder)))
 
-               (when (fboundp 'windmove-default-keybindings)
-                 (windmove-default-keybindings))
-               (when (fboundp 'winner-mode)
-                 (winner-mode 1))
+             (setq ring-bell-function (lambda () (message "*beep*"))
+                   browse-url-browser-function 'browse-url-generic
+                   browse-url-generic-program (isg/val 'url-opener)
+                   standard-indent 2
+                   create-lockfiles nil        ; don't create lockfiles
+                   x-select-enable-clipboard t
+                   x-select-enable-primary t
+                   save-interprogram-paste-before-kill t
+                   apropos-do-all t
+                   mouse-yank-at-point t
+                   require-final-newline t
+                   visible-bell t
+                   ediff-window-setup-function 'ediff-setup-windows-plain
+                   line-move-visual nil
+                   line-number-mode t
+                   european-calendar-style t
+                   display-time-24hr-format t
+                   default-tab-width 2
+                   column-number-mode t
+                   enable-local-variables nil  ; ignore local variables defined in files
+                   inhibit-startup-message t
+                   initial-scratch-message nil
+                   backup-by-copying t         ; don't clobber symlinks
+                   delete-old-versions t
+                   kept-new-versions 6
+                   kept-old-versions 2
+                   version-control t           ; use versioned backups
+                   create-lockfiles nil
+                   backup-directory-alist `((".*" . ,temporary-file-directory))
+                   auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
-               (setq ring-bell-function (lambda () (message "*beep*"))
-                     browse-url-browser-function 'browse-url-generic
-                     browse-url-generic-program (isg/val 'url-opener)
-                     standard-indent 2
-                     create-lockfiles nil        ; don't create lockfiles
-                     x-select-enable-clipboard t
-                     x-select-enable-primary t
-                     save-interprogram-paste-before-kill t
-                     apropos-do-all t
-                     mouse-yank-at-point t
-                     require-final-newline t
-                     visible-bell t
-                     ediff-window-setup-function 'ediff-setup-windows-plain
-                     line-move-visual nil
-                     line-number-mode t
-                     european-calendar-style t
-                     display-time-24hr-format t
-                     default-tab-width 2
-                     column-number-mode t
-                     enable-local-variables nil  ; ignore local variables defined in files
-                     inhibit-startup-message t
-                     initial-scratch-message nil
-                     backup-by-copying t         ; don't clobber symlinks
-                     delete-old-versions t
-                     kept-new-versions 6
-                     kept-old-versions 2
-                     version-control t           ; use versioned backups
-                     create-lockfiles nil
-                     backup-directory-alist `((".*" . ,temporary-file-directory))
-                     auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+      ;;; os specific settings
+             (cond
+              ((string-match "osx" (isg/val 'machine-os))
+               (setq
+                mac-command-modifier 'meta
+                default-directory "~/"
+                multi-term-program "/bin/bash")
 
-        ;;; os specific settings
-               (cond
-                ((string-match "osx" (isg/val 'machine-os))
-                 (setq
-                  mac-command-modifier 'meta
-                  default-directory "~/"
-                  multi-term-program "/bin/bash")
+               (fset 'insertPound "#")
+               (global-set-key (kbd "C-M-3") 'insertPound))
+              ((string-match "linux" (isg/val 'machine-os))
+               (setq
+                default-directory "~/"
+                multi-term-program "/bin/bash")))
 
-                 (fset 'insertPound "#")
-                 (global-set-key (kbd "C-M-3") 'insertPound))
-                ((string-match "linux" (isg/val 'machine-os))
-                 (setq
-                  default-directory "~/"
-                  multi-term-program "/bin/bash")))
+             ;; the standard set of company backends
+             (setq company-backends '(company-semantic
+                                      company-dabbrev-code
+                                      company-dabbrev
+                                      company-keywords))
 
-               ;; the standard set of company backends
-               (setq company-backends '(company-semantic
-                                        company-dabbrev-code
-                                        company-dabbrev
-                                        company-keywords))
+             ;; turn on flychecking globally
+             (add-hook 'after-init-hook #'global-flycheck-mode)
+             (add-hook 'after-init-hook 'global-company-mode)
 
-               ;; turn on flychecking globally
-               (add-hook 'after-init-hook #'global-flycheck-mode)
-               (add-hook 'after-init-hook 'global-company-mode)
+             (require 'tramp)
+             (if (eq system-type 'windows-nt)
+                 (setq tramp-default-method "plinkx"))
 
-               (require 'tramp)
-               (if (eq system-type 'windows-nt)
-                   (setq tramp-default-method "plinkx"))
+             (defhydra isg/hydra-text-scale (:hint nil :color pink)
+               "
+      Text Scale
+      ----------------------------------------------------
+      _g_: greater
+      _l_: lesser
+      "
+               ("g" text-scale-increase)
+               ("l" text-scale-decrease)
+               ("RET" nil "done" :color blue))
 
-               (defhydra isg/hydra-text-scale (:hint nil :color pink)
-                 "
-        Text Scale
-        ----------------------------------------------------
-        _g_: greater
-        _l_: lesser
-        "
-                 ("g" text-scale-increase)
-                 ("l" text-scale-decrease)
-                 ("RET" nil "done" :color blue))
-
-               (bind-keys ("C-c w s"  . isg/hydra-text-scale/body)))
+             (bind-keys ("C-c w s"  . isg/hydra-text-scale/body)))
 
 
 
 #+END_SRC
-* global key settings
+* global window/frame settings
 #+BEGIN_SRC emacs-lisp
-  (isg/timer "global-key"
+  (isg/timer "window-management"
+             ;; the most common form of navigation
+             (global-set-key "\M-0" 'other-frame)
+             (global-set-key "\M-o" 'other-window)
+
+             ;; label each frame with a number
+             (use-package winum
+               :demand t
+               :init
+               (setq winum-keymap
+                   (let ((map (make-sparse-keymap)))
+                     (define-key map (kbd "M-1") 'winum-select-window-1)
+                     (define-key map (kbd "M-2") 'winum-select-window-2)
+                     (define-key map (kbd "M-3") 'winum-select-window-3)
+                     (define-key map (kbd "M-4") 'winum-select-window-4)
+                     (define-key map (kbd "M-5") 'winum-select-window-5)
+                     (define-key map (kbd "M-6") 'winum-select-window-6)
+                     (define-key map (kbd "M-7") 'winum-select-window-7)
+                     (define-key map (kbd "M-8") 'winum-select-window-8)
+                     map))
+               :config
+               (winum-mode))
+
+             ;; shift+cursorkeys to move between windows in a frame
+             (when (fboundp 'windmove-default-keybindings)
+               (windmove-default-keybindings))
+
              ;; use winner mode keys for undo/redo operations on window configurations
              ;; C-c left
              ;; C-c right
+             (when (fboundp 'winner-mode)
+               (winner-mode 1)))
+#+END_SRC
+
+* global key settings
+#+BEGIN_SRC emacs-lisp
+  (isg/timer "global-key"
              (global-set-key "\C-w"     'backward-kill-word)
              (global-set-key "\C-x\C-k" 'kill-region)
              (global-set-key "\C-c\C-k" 'kill-region)
-             (global-set-key "\M-0" 'other-frame)
-             (global-set-key "\M-o" 'other-window)
              (global-set-key "\M-m" 'call-last-kbd-macro)
              (global-set-key "\M-j" 'eval-print-last-sexp)
 
