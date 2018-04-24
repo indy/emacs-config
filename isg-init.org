@@ -801,7 +801,12 @@
  #+BEGIN_SRC text
   (add-to-list 'auto-mode-alist '("\\.gradle$" . groovy-mode))
  #+END_SRC
-** haskell
+** haskell :disabled:
+
+   was using the intero package
+
+   --------------------------------------------------------------------------------
+
    https://commercialhaskell.github.io/intero/
    https://github.com/commercialhaskell/intero
 
@@ -829,7 +834,7 @@
 | formatting | C-M-\       | format selected region                         |
 |            | M-q         | format current expression                      |
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC text
   (isg/timer "haskell-config"
              (defun isg/haskell-config ()
                (interactive)
@@ -904,8 +909,13 @@
    :mode "\\.nim\\'")
  #+END_SRC
 
-** purescript
-#+BEGIN_SRC emacs-lisp
+** purescript :disabled:
+
+   was using the psc-ide and purescript-mode packages
+
+   --------------------------------------------------------------------------------
+
+#+BEGIN_SRC text
   (isg/timer "purescript"
              (use-package purescript-mode
                :mode "\\.purs\\'"
@@ -1171,7 +1181,11 @@
              (use-package toml-mode
                :mode "\\.toml\\'"))
 #+END_SRC
-** typescript
+** typescript :disabled:
+
+   was using the tide package
+
+   --------------------------------------------------------------------------------
 
 |-----+---------------------------------------------------------------|
 | key | description                                                   |
@@ -1193,7 +1207,7 @@
 |---------------------------------+--------------------------------------------------------|
 
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC text
   (isg/timer "typescript"
              (use-package typescript-mode
                :mode "\\.ts\\'"
@@ -1213,8 +1227,8 @@
                (setq company-tooltip-align-annotations t)
                (tide-hl-identifier-mode +1)))
 #+END_SRC
-** vue
-#+BEGIN_SRC emacs-lisp
+** vue :disabled:
+#+BEGIN_SRC text
   (isg/timer "vue"
              (use-package vue-mode
                :mode "\\.vue\\'"
