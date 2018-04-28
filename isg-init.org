@@ -1071,7 +1071,13 @@
 ** ruby
  #+BEGIN_SRC emacs-lisp
    (isg/timer "ruby"
-              (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode)))
+              (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
+              (use-package ruby-mode
+                :config
+                (add-hook 'ruby-mode-hook
+                            '(lambda ()
+                               (local-set-key (kbd "C-M-p") #'scroll-down-line)
+                               (local-set-key (kbd "C-M-n") #'scroll-up-line)))))
  #+END_SRC
 ** rust
    http://julienblanchard.com/2016/fancy-rust-development-with-emacs/
