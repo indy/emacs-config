@@ -1071,7 +1071,13 @@
 ** ruby
  #+BEGIN_SRC emacs-lisp
    (isg/timer "ruby"
-              (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode)))
+              (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
+              (use-package ruby-mode
+                :config
+                (add-hook 'ruby-mode-hook
+                            '(lambda ()
+                               (local-set-key (kbd "C-M-p") #'scroll-down-line)
+                               (local-set-key (kbd "C-M-n") #'scroll-up-line)))))
  #+END_SRC
 ** rust
    http://julienblanchard.com/2016/fancy-rust-development-with-emacs/
@@ -1703,8 +1709,8 @@
 
              (global-set-key (kbd "C-M-;") 'comment-region)
 
-             (global-set-key "\M-7" 'isg/start-shell)
-             (global-set-key "\M-8" 'isg/start-eshell)
+             (global-set-key "\M-&" 'isg/start-shell)
+             (global-set-key "\M-*" 'isg/start-eshell)
 
              (global-set-key (kbd "C-M-p") 'scroll-down-line)
              (global-set-key (kbd "C-M-n") 'scroll-up-line)
