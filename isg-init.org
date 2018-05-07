@@ -1037,8 +1037,8 @@
    come on #purescript on freenode
    video meetup
    try out Halogen
-** reasonml
-#+BEGIN_SRC emacs-lisp
+** reasonml :disabled:
+#+BEGIN_SRC text
   (isg/timer "reasonml"
              (defun shell-cmd (cmd)
                "Returns the stdout output of a shell command or nil if the command returned
