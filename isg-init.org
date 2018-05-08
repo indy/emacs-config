@@ -201,8 +201,7 @@
                  (gcal-file "D:\\Google Drive\\Docs\\notes\\gcal.org")
                  (magit-repos (("C:\\Users\\indy\\.emacs.d" . 0)
                                ("C:\\Users\\indy\\personal" . 0)
-                               ("C:\\Users\\indy\\work" . 1)
-                               ("D:\\work" . 1)))
+                               ("C:\\Users\\indy\\work" . 1)))
                  (frame-l ((top . 0) (left . 600) (width . 120) (height . 93)))
                  (frame-r ((top . 0) (left . 1575) (width . 120) (height . 93))))))
 
@@ -669,7 +668,7 @@
 #+END_SRC
 
 * language modes
-** language prep
+** COMMENT language prep
 #+BEGIN_SRC emacs-lisp
   (isg/timer "lang-prep"
              ;; the ligature config code uses -iterate and -zip-pair
@@ -708,8 +707,8 @@
               (use-package cmake-mode
                 :mode "CMakeLists\\.txt"))
  #+END_SRC
-** clojure :disabled:
-   #+BEGIN_SRC text
+** COMMENT clojure
+   #+BEGIN_SRC emacs-lisp
  (use-package cider
    :defer t
    :init
@@ -746,22 +745,22 @@
                (setq css-indent-offset 2))
              (add-to-list 'auto-mode-alist '("\\.less$" . css-mode)))
 #+END_SRC
-** dart :disabled:
- #+BEGIN_SRC text
+** COMMENT dart
+ #+BEGIN_SRC emacs-lisp
  (use-package dart-mode
    :mode "\\.dart\\'"
    :config
    (setq dart-enable-analysis-server t))
  #+END_SRC
 
-** elm :disabled:
+** COMMENT elm
 
   | key     | elm-repl                          |
   |---------+-----------------------------------|
   | C-c C-l | load the current file in a REPL   |
   | C-c C-p | push the current region to a REPL |
 
-  #+BEGIN_SRC text
+  #+BEGIN_SRC emacs-lisp
     (use-package elm-mode
       :mode "\\.elm\\'"
       :config
@@ -797,11 +796,11 @@
                :config
                (add-hook 'before-save-hook #'gofmt-before-save)))
 #+END_SRC
-** groovy :disabled:
- #+BEGIN_SRC text
+** COMMENT groovy
+ #+BEGIN_SRC emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.gradle$" . groovy-mode))
  #+END_SRC
-** haskell :disabled:
+** COMMENT haskell
 
    was using the intero package
 
@@ -834,7 +833,7 @@
 | formatting | C-M-\       | format selected region                         |
 |            | M-q         | format current expression                      |
 
-#+BEGIN_SRC text
+#+BEGIN_SRC emacs-lisp
   (isg/timer "haskell-config"
              (defun isg/haskell-config ()
                (interactive)
@@ -903,19 +902,19 @@
                 :mode (("\\.md\\'" . markdown-mode)
                        ("\\.markdown\\'" . markdown-mode))))
  #+END_SRC
-** nim :disabled:
- #+BEGIN_SRC text
+** COMMENT nim
+ #+BEGIN_SRC emacs-lisp
  (use-package nim-mode
    :mode "\\.nim\\'")
  #+END_SRC
 
-** purescript :disabled:
+** COMMENT purescript
 
    was using the psc-ide and purescript-mode packages
 
    --------------------------------------------------------------------------------
 
-#+BEGIN_SRC text
+#+BEGIN_SRC emacs-lisp
   (isg/timer "purescript"
              (use-package purescript-mode
                :mode "\\.purs\\'"
@@ -1037,8 +1036,8 @@
    come on #purescript on freenode
    video meetup
    try out Halogen
-** reasonml :disabled:
-#+BEGIN_SRC text
+** COMMENT reasonml
+#+BEGIN_SRC emacs-lisp
   (isg/timer "reasonml"
              (defun shell-cmd (cmd)
                "Returns the stdout output of a shell command or nil if the command returned
@@ -1068,7 +1067,7 @@
 
                (setq merlin-ac-setup t)))
 #+END_SRC
-** ruby
+** COMMENT ruby
  #+BEGIN_SRC emacs-lisp
    (isg/timer "ruby"
               (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
@@ -1128,7 +1127,7 @@
                             (local-set-key (kbd "M-.") #'racer-find-definition)))))
 
 #+END_SRC
-** scheme
+** COMMENT scheme
 #+BEGIN_SRC emacs-lisp
   (isg/timer "scheme"
              (add-hook 'scheme-mode-hook
@@ -1187,7 +1186,7 @@
              (use-package toml-mode
                :mode "\\.toml\\'"))
 #+END_SRC
-** typescript :disabled:
+** COMMENT typescript
 
    was using the tide package
 
@@ -1213,7 +1212,7 @@
 |---------------------------------+--------------------------------------------------------|
 
 
-#+BEGIN_SRC text
+#+BEGIN_SRC emacs-lisp
   (isg/timer "typescript"
              (use-package typescript-mode
                :mode "\\.ts\\'"
@@ -1233,8 +1232,8 @@
                (setq company-tooltip-align-annotations t)
                (tide-hl-identifier-mode +1)))
 #+END_SRC
-** vue :disabled:
-#+BEGIN_SRC text
+** COMMENT vue
+#+BEGIN_SRC emacs-lisp
   (isg/timer "vue"
              (use-package vue-mode
                :mode "\\.vue\\'"
