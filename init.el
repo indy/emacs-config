@@ -65,7 +65,8 @@
 (package-initialize)
 
 (isg/timer "package"
-           (require 'package)
+           (eval-when-compile
+             (require 'use-package))
            (setq package-enable-at-startup nil)
            (setcdr (last package-archives)
                    '(("melpa-stable" . "https://stable.melpa.org/packages/")
