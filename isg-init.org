@@ -482,7 +482,7 @@
 #+BEGIN_SRC emacs-lisp
   (isg/timer "org"
              (use-package org
-               :mode "\\.org\\'"
+               :mode (("\\.org$" . org-mode))
                :init
                (use-package org-bullets
                  :init
