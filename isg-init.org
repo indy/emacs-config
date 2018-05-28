@@ -715,7 +715,7 @@
    (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode))
    #+END_SRC
 
-   #+BEGIN_SRC text
+   #+BEGIN_SRC emacs-lisp
  (use-package clojure-mode
    :mode "\\.clj\\'"
    :config
@@ -1399,6 +1399,14 @@
   (isg/timer "htmlize"
              (use-package htmlize
                :commands htmlize-buffer))
+#+END_SRC
+** pdf-tools
+#+BEGIN_SRC emacs-lisp
+  (isg/timer "pdf-tools"
+             (use-package pdf-tools
+               :mode "\\.pdf\\'"
+               :init
+               (pdf-tools-install :no-query)))
 #+END_SRC
 ** smartparens-config
 #+BEGIN_SRC emacs-lisp

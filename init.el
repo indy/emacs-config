@@ -32,7 +32,7 @@
 ;;
 ;; (package-selected-packages
 ;;    (quote
-;;     (ag avy cargo cmake-mode color-theme color-theme-sanityinc-solarized company company-racer counsel csharp-mode deft delight edit-server esh-autosuggest exec-path-from-shell find-file-in-git-repo flycheck flycheck-rust glsl-mode go-mode highlight-thing hindent htmlize hydra interleave ivy ivy-rich js-comint js2-mode magit markdown-mode olivetti org org-brain org-bullets org-gcal racer rainbow-mode rjsx-mode rust-mode shader-mode smartparens swiper toml-mode undo-tree use-package volatile-highlights web-mode wgrep which-key winum ws-butler yaml-mode)))
+;;     (ag avy cargo cmake-mode color-theme color-theme-sanityinc-solarized company company-racer counsel csharp-mode deft delight edit-server esh-autosuggest exec-path-from-shell find-file-in-git-repo flycheck flycheck-rust glsl-mode go-mode highlight-thing hindent htmlize hydra interleave ivy ivy-rich js-comint js2-mode magit markdown-mode olivetti org org-brain org-bullets org-gcal pdf-tools racer rainbow-mode rjsx-mode rust-mode shader-mode smartparens swiper toml-mode undo-tree use-package volatile-highlights web-mode wgrep which-key winum ws-butler yaml-mode)))
 
 (defun isg/time-section-start (key)
   (puthash key (float-time) isg/timing-hash))
