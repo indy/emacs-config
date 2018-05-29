@@ -729,7 +729,6 @@
   (isg/timer "csharp"
              (use-package csharp-mode
                :mode "\\.cs\\'"
-               :init
                :config
                (setq default-tab-width 4)))
 #+END_SRC
@@ -1404,9 +1403,9 @@
 #+BEGIN_SRC emacs-lisp
   (isg/timer "pdf-tools"
              (use-package pdf-tools
-               :mode "\\.pdf\\'"
-               :init
-               (pdf-tools-install :no-query)))
+               :magic ("%PDF" . pdf-view-mode)
+               :config
+               (pdf-tools-install)))
 #+END_SRC
 ** smartparens-config
 #+BEGIN_SRC emacs-lisp
