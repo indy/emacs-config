@@ -518,7 +518,8 @@
 #+BEGIN_SRC emacs-lisp
   (isg/timer "ivy"
              (use-package ivy
-               :demand t
+               ;; :demand t
+               :defer 1
                :delight
                :config
                (use-package ivy-rich)
@@ -531,10 +532,12 @@
                      ivy-count-format "%d/%d ")))
 
   (isg/timer "swiper"
-             (use-package swiper))
+             (use-package swiper
+              :defer 1))
 
   (isg/timer "counsel"
              (use-package counsel
+               :defer 1
                :init
                (setq counsel-grep-base-command "rg -i -M 120 --no-heading --line-number --color never %s %s")
                (global-set-key (kbd "C-M-s") 'isearch-forward)
@@ -724,7 +727,7 @@
 
  (setq nrepl-hide-special-buffers t)
    #+END_SRC
-** csharp
+** COMMENT csharp
 #+BEGIN_SRC emacs-lisp
   (isg/timer "csharp"
              (use-package csharp-mode
@@ -776,7 +779,7 @@
       )
   #+END_SRC
 
-** glsl
+** COMMENT glsl
 #+BEGIN_SRC emacs-lisp
   (isg/timer "glsl"
              (use-package glsl-mode
@@ -1133,7 +1136,7 @@
                        (lambda ()
                          (define-key scheme-mode-map (kbd ")") 'sp-up-sexp))))
 #+END_SRC
-** seni
+** COMMENT seni
 #+BEGIN_SRC emacs-lisp
   (isg/timer "seni"
              (autoload 'seni-mode "seni" nil t)
@@ -1143,7 +1146,7 @@
                        (lambda ()
                          (define-key seni-mode-map (kbd ")") 'sp-up-sexp))))
 #+END_SRC
-** shader-mode
+** COMMENT shader-mode
 #+BEGIN_SRC emacs-lisp
   (isg/timer "shader"
              (use-package shader-mode
@@ -1369,6 +1372,7 @@
              ;; C-c ! n : next error
              ;; C-c ! p : previous error
              (use-package flycheck
+               :defer 2
                :delight
                :config
                (use-package pkg-info
@@ -1524,7 +1528,7 @@
 #+BEGIN_SRC emacs-lisp
   (isg/timer "volatile"
              (use-package volatile-highlights
-               :demand t
+               :defer 4
                :delight
                :config
                (volatile-highlights-mode)))
@@ -1533,7 +1537,7 @@
 #+BEGIN_SRC emacs-lisp
   (isg/timer "wgrep"
              (use-package wgrep
-               :demand t))
+               :defer 4))
 #+END_SRC
 ** which key
 #+BEGIN_SRC emacs-lisp
@@ -1553,7 +1557,6 @@
 * global settings
 #+BEGIN_SRC emacs-lisp
   (isg/timer "global-settings"
-
              (let ((fn (isg/val 'post-setup-fn)))
                (if fn (funcall fn)))
 
@@ -1577,14 +1580,20 @@
              ;; give buffers unique names
              (require 'uniquify)
              (setq uniquify-buffer-name-style 'post-forward)
-             (global-auto-revert-mode t) ; reload files that have been changed outside of emacs
-             (show-paren-mode t)
+
+                                          ; reload files that have been changed outside of emacs
+             (run-with-idle-timer 1 nil (lambda () (global-auto-revert-mode t)))
+             (run-with-idle-timer 1 nil (lambda () (show-paren-mode t)))
+
              (global-font-lock-mode t)
+
              (transient-mark-mode t) ; highlight selected text region
              (fset 'yes-or-no-p 'y-or-n-p)
              (setq-default font-lock-maximum-decoration t)
              (setq-default indent-tabs-mode nil)
+
              (blink-cursor-mode 0)
+
              (if (not (file-exists-p (isg/val 'save-folder)))
                  (make-directory (isg/val 'save-folder)))
 
@@ -1619,7 +1628,8 @@
                    backup-directory-alist `((".*" . ,temporary-file-directory))
                    auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
-      ;;; os specific settings
+
+        ;;; os specific settings
              (cond
               ((string-match "osx" (isg/val 'machine-os))
                (setq
@@ -1644,25 +1654,29 @@
              (add-hook 'after-init-hook #'global-flycheck-mode)
              (add-hook 'after-init-hook 'global-company-mode)
 
-             (require 'tramp)
-             (if (eq system-type 'windows-nt)
-                 (setq tramp-default-method "plinkx"))
+
+             ;; todo: read this: https://writequit.org/denver-emacs/presentations/2017-06-20-tramp.html
+
+             (use-package tramp
+               :defer 5
+               :config
+               (with-eval-after-load 'tramp-cache
+                 (setq tramp-persistency-file-name "~/.emacs.d/tramp"))
+               (if (eq system-type 'windows-nt)
+                   (setq tramp-default-method "plinkx")))
 
              (defhydra isg/hydra-text-scale (:hint nil :color pink)
                "
-      Text Scale
-      ----------------------------------------------------
-      _g_: greater
-      _l_: lesser
-      "
+        Text Scale
+        ----------------------------------------------------
+        _g_: greater
+        _l_: lesser
+        "
                ("g" text-scale-increase)
                ("l" text-scale-decrease)
                ("RET" nil "done" :color blue))
 
              (bind-keys ("C-c w s"  . isg/hydra-text-scale/body)))
-
-
-
 #+END_SRC
 * global window/frame settings
 #+BEGIN_SRC emacs-lisp

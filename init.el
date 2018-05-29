@@ -103,6 +103,6 @@
 
 (isg/time-section-stop "overall")
 ;; show slowest sections in the *Messages* buffer
-(isg/time-show-slower-than 0.09)
+(isg/time-show-slower-than 0.00009) ; 0.09
 
 (provide 'init)
